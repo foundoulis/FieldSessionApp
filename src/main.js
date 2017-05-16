@@ -36,7 +36,7 @@ function createWindow() {
     win = null;
   });
 
-  loadLogInScreen();
+  loadMainScreen();
 }
 
 // Run create window function
