@@ -1,32 +1,69 @@
 
+
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <title>Transform Launcher</title>
-  <link rel="stylesheet" href="https://bootswatch.com/cerulean/bootstrap.min.css">
+  <link rel="stylesheet" href="mainscreen.css">
 </head>
 <body>
-  <div class="container">
-    <img src="DI_LOGO.png" width="200" height="100">
-    <h1>Transfrom Launcher</h1>
-    This is some text. What kind of things will you build?
-    <div id="output"></div>
-  </div>
-</body>
-<script type="text/javascript">
-  console.log(process);
-  let output = `
-    <h4 class="page-header">App Version Data</h2>
-    <ul class="list-group">
-      <li class="list-group-item">Node: ${process.versions.node}</li>
-      <li class="list-group-item">Chrome: ${process.versions.chrome}</li>
-      <li class="list-group-item">Electron: ${process.versions.electron}</li>
-    </ul>
-  `;
-  document.getElementById("output").innerHTML = output;
-</script>
-<script type="text/javascript">
-  require('./src/renderer.js');
-</script>
-</html>
+  <table>
+    <tr>
+      <td>
+      <div>
+        <img src="DI_LOGO.png" alt="http://1dhqyu3drpye39jm482ecnjl-wpengine.netdna-ssl.com/wp-content/uploads/2017/03/NEW-DI_LOGO_Color_Spot.png" width="304" height="100">
+      </div>
+       </td>
+  <td>
+        <div class="version" >
+          <h1> Version </h1>
+        </div>
+  </td>
+    <td>
+        <div class="user">
+          <h1> User </h1>
+      </div>
+    </td>
+    </tr>
+    <tr>
+        <td>
+      <div class="news">
+        <h1> News </h1>
+      </div>
+    </td>
+      <td>
+      <div class="news">
+        <h1> Tools </h1>
+      </div>
+    </td>
+    </tr>
+  <tr>
+  <td>
+    <div>
+      <button>Update</button>
+    </div>
+  </td>
+    <td>
+    <div>
+      <button>Launch</button>
+    </div>
+  </td>
+  </tr>
+
+    <!--
+   <footer>
+   <div style="float: left">
+     <button>Update</button>
+   </div>
+   <div style="float: right">
+     <button>Launch</button>
+   </div>
+ </footer> -->
+
+  </body>
+
+  <script type="text/javascript">
+    require('./src/renderer.js');
+  </script>
+  </html>
