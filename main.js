@@ -7,7 +7,11 @@ let win;
 
 function createWindow(){
   // Create browser window
-  win = new BrowserWindow({width:800, height:600});
+  win = new BrowserWindow({
+    width:800,
+    height:600,
+    icon: path.join(__dirname, 'icon.jpeg')
+  });
 
   // Load index.html
   win.loadURL(url.format({
