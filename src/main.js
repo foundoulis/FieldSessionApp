@@ -28,10 +28,10 @@ function createWindow() {
   win = new BrowserWindow({
     width:800,
     height:600,
-    icon: path.join(__dirname, 'icon.jpeg')
+    icon: path.join(__dirname, 'icons/icon.jpeg')
   });
 
-  loadLogInScreen();
+  loadMainScreen();
 
   // Opens devtools
   win.webContents.openDevTools();
