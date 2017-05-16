@@ -1,0 +1,17 @@
+{
+  "name": "transform-launcher",
+  "version": "1.0.0",
+  "description": "Electron based app for opening the application Transform.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Derek Foundoulis",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^1.6.7"
+  },
+  "dependencies": {
+    "electron": "^1.6.7"
+  }
+}
