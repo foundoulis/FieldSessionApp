@@ -2,7 +2,7 @@
   "name": "transform-launcher",
   "version": "1.0.0",
   "description": "Electron based app for opening the application Transform.",
-  "main": "main.js",
+  "main": "src/main.js",
   "scripts": {
     "start": "./node_modules/.bin/electron ."
   },
