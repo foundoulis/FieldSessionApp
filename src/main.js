@@ -5,7 +5,7 @@ const url = require('url');
 
 let win;
 
-//changes the window's current .html file that it uses to render.
+//changes the window's current .html file on display.
 function loadURL(name) {
   win.loadURL(url.format({
     pathname: path.join(__dirname, name),
@@ -13,11 +13,9 @@ function loadURL(name) {
     slashes: true
   }));
 }
-
 function loadLogInScreen() {
   loadURL('login.html');
 }
-
 function loadMainScreen() {
   // Load index.html
   loadURL('index.html');
@@ -28,17 +26,17 @@ function createWindow() {
   win = new BrowserWindow({
     width:800,
     height:600,
-    icon: path.join(__dirname, 'icons/icon.jpeg')
+    icon: path.join(__dirname, '..','icons/icon.jpeg')
   });
 
-  loadMainScreen();
-
   // Opens devtools
-  win.webContents.openDevTools();
+  //win.webContents.openDevTools();
 
   win.on('closed', () => {
     win = null;
   });
+
+  loadLogInScreen();
 }
 
 // Run create window function
