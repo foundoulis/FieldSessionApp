@@ -4,7 +4,7 @@
   "description": "Electron based app for opening the application Transform.",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "./node_modules/.bin/electron ."
   },
   "author": "Derek Foundoulis",
   "license": "ISC",
