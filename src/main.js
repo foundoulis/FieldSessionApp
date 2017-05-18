@@ -15,7 +15,7 @@ function loadURL(name) {
   }));
 }
 function loadLogInScreen() {
-  loadURL('login.html');
+  loadURL('logintest.html');
 }
 function loadMainScreen() {
   // Load index.html
@@ -33,7 +33,7 @@ function runJarFile() {
     if(error !== null){
       console.log('exec error: ' + error);
     }
-  })};
+})};
 
 function createWindow() {
   // Create browser window
@@ -51,8 +51,7 @@ function createWindow() {
     win = null;
   });
 
-  loadMainScreen();
-  runJarFile();
+  loadLogInScreen();
 }
 
 // Run create window function
