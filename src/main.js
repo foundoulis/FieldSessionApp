@@ -15,7 +15,7 @@ function loadURL(name) {
   }));
 }
 function loadLogInScreen() {
-  loadURL('logintest.html');
+  loadURL('login.html');
 }
 function loadMainScreen() {
   // Load index.html
