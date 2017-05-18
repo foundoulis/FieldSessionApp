@@ -3,6 +3,7 @@ const {app, BrowserWindow} = require('electron');
 const path = require('path');
 const url = require('url');
 
+// global window variable
 let win;
 
 //changes the window's current .html file on display.
@@ -21,11 +22,23 @@ function loadMainScreen() {
   loadURL('index.html');
 }
 
+function runJarFile() {
+  var exec = require('child_process').exec, child;
+  child = exec('java -jar ~/FieldSession/TransformLauncher/helloWorld.jar',
+  function (error, stdout, stderr) {
+    console.log('stdout: ' + stdout);
+    console.log('stderr: ' + stderr);
+    if(error !== null){
+      console.log('exec error: ' + error);
+    }
+  })};
+
 function createWindow() {
   // Create browser window
   win = new BrowserWindow({
     width:800,
     height:600,
+    resizeable: false,
     icon: path.join(__dirname, '..','icons/icon.jpeg')
   });
 
@@ -37,6 +50,7 @@ function createWindow() {
   });
 
   loadMainScreen();
+  runJarFile();
 }
 
 // Run create window function
