@@ -151,11 +151,11 @@ button {
   color: #EF3B3A;
 }
 body {
-  background: #4C4C4C; /* fallback for old browsers */
-  background: -webkit-linear-gradient(right, #ABADB0, #3A383A);
+  background: #1C1B1D; /* fallback for old browsers */
+  /*background: -webkit-linear-gradient(right, #ABADB0, #3A383A);
   background: -moz-linear-gradient(right, #ABADB0, #3A383A);
   background: -o-linear-gradient(right, #ABADB0, #3A383A);
-  background: linear-gradient(to left, #ABADB0, #3A383A);
+  background: linear-gradient(to left, #ABADB0, #3A383A);*/
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
