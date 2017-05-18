@@ -39,7 +39,7 @@ function createWindow() {
   // Create browser window
   win = new BrowserWindow({
     width:800,
-    height:600,
+    height:900,
     resizeable: false,
     icon: path.join(__dirname, '..','icons/icon.jpeg')
   });
