@@ -24,10 +24,12 @@ function loadMainScreen() {
 
 function runJarFile() {
   var exec = require('child_process').exec, child;
-  child = exec('java -jar ~/FieldSession/TransformLauncher/helloWorld.jar',
-  function (error, stdout, stderr) {
+  child = exec('java -jar ./jars/helloWorld.jar',
+  (error, stdout, stderr) => {
+    // Directs standard out and standard error.
     console.log('stdout: ' + stdout);
     console.log('stderr: ' + stderr);
+    // Prints error if it doesn't work.
     if(error !== null){
       console.log('exec error: ' + error);
     }
