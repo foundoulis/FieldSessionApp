@@ -2,112 +2,127 @@
 <html xmlns="http://www.w3.org/1999/xhtml" class="">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="robots" content="noindex, nofollow">
 
-            <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-    <title>        Login - Transform
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title> Login - Transform
 
-</title>
-    <link rel="icon" href="/auth/resources/7.0.0.ga/login/di-theme/img/favicon.ico" />
-            <link href="patternfly.css" rel="stylesheet" />
-            <link href="zocial.css" rel="stylesheet" />
-            <link href="login.css" rel="stylesheet" />
-            <link href="main.css" rel="stylesheet" />
-            <script src="/auth/resources/7.0.0.ga/login/di-theme/js/script.js" type="text/javascript"></script>
-            <script src="/auth/resources/7.0.0.ga/login/di-theme/js/load.js" type="text/javascript"></script>
+  </title>
+  <link rel="icon" href="/auth/resources/7.0.0.ga/login/di-theme/img/favicon.ico" />
+  <link href="patternfly.css" rel="stylesheet" />
+  <link href="zocial.css" rel="stylesheet" />
+  <link href="login.css" rel="stylesheet" />
+  <link href="main.css" rel="stylesheet" />
+  <script src="/auth/resources/7.0.0.ga/login/di-theme/js/script.js" type="text/javascript"></script>
+  <script src="/auth/resources/7.0.0.ga/login/di-theme/js/load.js" type="text/javascript"></script>
 </head>
 
 <body class="loginPage container">
 
-    <div id="kc-container" class="row row-centered">
-        <div id="kc-container-wrapper" class="jumbotron jumbotron-white col-md-4 col-centered jumbotron-container">
+  <div id="kc-container" class="row row-centered">
+    <div id="kc-container-wrapper" class="jumbotron jumbotron-white col-md-4 col-centered jumbotron-container">
 
-            <div id="kc-header" class="">
-                <div id="kc-header-wrapper" class="">
-        <img src="di_logo_login.png" alt="https://login.drillinginfo.com/auth/resources/7.0.0.ga/login/di-theme/img/di_logo_login.png">
-</div>
-            </div>
-
-
-            <div id="kc-content" class="">
-                <div id="kc-content-wrapper" class="row">
+      <div id="kc-header" class="">
+        <div id="kc-header-wrapper" class="">
+          <img src="di_logo_login.png" alt="https://login.drillinginfo.com/auth/resources/7.0.0.ga/login/di-theme/img/di_logo_login.png">
+        </div>
+      </div>
 
 
-                    <div id="kc-form" class="login">
-                        <div id="kc-form-wrapper" class="">
+      <div id="kc-content" class="">
+        <div id="kc-content-wrapper" class="row">
 
-        <p class="signInText-login">Sign In</p>
-        <form role="form" id="loginForm" action="https://login.drillinginfo.com/auth/realms/prod/login-actions/authenticate?code=wvjpA69ubxGltBgyEsHvZLiTN27gx7nlWvaLZ1MmtRw.23fcb619-ccd2-42c3-b5db-75312faa7b55&execution=4fb73e8e-faff-40e7-9dfa-9e3d72111587" method="post"
-            name="loginForm">
 
-            <input type="text" autofocus placeholder="Username" id="username" name="username"
-            class="form-control username-login"/>
+          <div id="kc-form" class="login">
+            <div id="kc-form-wrapper" class="">
 
-            <input type="password" placeholder="Password" id="password" name="password"
-            class="form-control password-login"/>
+              <p class="signInText-login">Sign In</p>
+              <!-- <form role="form" id="loginForm" action="https://login.drillinginfo.com/auth/realms/prod/login-actions/authenticate?code=wvjpA69ubxGltBgyEsHvZLiTN27gx7nlWvaLZ1MmtRw.23fcb619-ccd2-42c3-b5db-75312faa7b55&execution=4fb73e8e-faff-40e7-9dfa-9e3d72111587" method="post"
+                name="loginForm"> --> <!-- TODO put this back in -->
 
-            <span class="pull-right">
+              <form role="form" id="loginForm" action="mainscreen.html" method="post"
+                name="loginForm">
+
+                <input type="text" autofocus placeholder="Username" id="username" name="username" class="form-control username-login" />
+
+                <input type="password" placeholder="Password" id="password" name="password" class="form-control password-login" />
+
+                <span class="pull-right">
             <h5 class="help-block forgot-pass">
                 <small><a href="javascript:openFaqWindow('/auth/resources/7.0.0.ga/login/di-theme/signInProblemsFaq.html')">Sign In Questions?</a></small>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
                 <small><a href="http://www.drillinginfo.com/forgotPassword.jsp" target="_blank">Forgot password?</a></small>
             </h5>
             </span>
 
-            <button type="submit" class="btn di-green btn-block signin" id="login" name="login">
+                <button type="submit" class="btn di-green btn-block signin" id="login" name="login">
             <span class="text-white signintext">SIGN IN</span>
             </button>
 
-        </form>
-        <span class="text-center">
+              </form>
+              <span class="text-center">
             <h5 class="help-block subscription-block">
             <small>
                 <span class="no-subscriber">Not a subscriber yet?&nbsp;&nbsp;</span>
-                <a href="https://info.drillinginfo.com/subscriptions/"
-                target="_blank">Get a Subscription</a>
-            </small>
-            </h5>
-        </span>
+              <a href="https://info.drillinginfo.com/subscriptions/" target="_blank">Get a Subscription</a>
+              </small>
+              </h5>
+              </span>
 
 
 
-        <hr style="border-top: 1px solid #CCCCCC">
-                        </div>
-                    </div>
-
-                </div>
+              <hr style="border-top: 1px solid #CCCCCC">
             </div>
+          </div>
+
         </div>
+      </div>
     </div>
+  </div>
 
 
-    <div id="crc-banner-container" class="row row-centered">
+  <div id="crc-banner-container" class="row row-centered">
 
-            <div class="container" style="font-family:Roboto;color:#d3d3d3">
+    <div class="container" style="font-family:Roboto;color:#d3d3d3">
 
-              <div class="row">
-                  <div class="col-md-4 text-center"><br><p style="font-size: 16px; font-weight: normal;"><b>For more information, contact Customer Support:</b></p></div>
-              </div>
-              <div class="row">
-                <div class="col-md-4 text-center">(888) 290-7697</div>
-              </div>
-              <div class="row">
-                <div class="col-md-4 text-center"><a href="mailto:support@drillinginfo.com" target="_top"><u>support@drillinginfo.com</u></a></div>
-              </div>
+      <div class="row">
+        <div class="col-md-4 text-center"><br>
+          <p style="font-size: 16px; font-weight: normal;"><b>For more information, contact Customer Support:</b></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 text-center">(888) 290-7697</div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 text-center"><a href="mailto:support@drillinginfo.com" target="_top"><u>support@drillinginfo.com</u></a></div>
+      </div>
 
-            </div>
     </div>
+  </div>
 
-  <div id="kc-logo"><a href="http://info.drillinginfo.com"><div id="kc-logo-wrapper"></div></a></div>
+  <div id="kc-logo">
+    <a href="http://info.drillinginfo.com">
+      <div id="kc-logo-wrapper"></div>
+    </a>
+  </div>
 
 </body>
+
 </html>
 <script>
-    (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-    function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-    e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-    e.src='//www.google-analytics.com/analytics.js';
-    r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-    ga('create','UA-XXXXX-X');ga('send','pageview');
+  (function(b, o, i, l, e, r) {
+    b.GoogleAnalyticsObject = l;
+    b[l] || (b[l] =
+      function() {
+        (b[l].q = b[l].q || []).push(arguments)
+      });
+    b[l].l = +new Date;
+    e = o.createElement(i);
+    r = o.getElementsByTagName(i)[0];
+    e.src = '//www.google-analytics.com/analytics.js';
+    r.parentNode.insertBefore(e, r)
+  }(window, document, 'script', 'ga'));
+  ga('create', 'UA-XXXXX-X');
+  ga('send', 'pageview');
 </script>

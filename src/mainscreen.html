@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Transform Launcher</title>
+  <link rel="stylesheet" href="mainscreen.css">
+</head>
+
+<body>
+  <div class="logo">
+    <div>
+      <img src="di_logo_login.png" alt="https://login.drillinginfo.com/auth/resources/7.0.0.ga/login/di-theme/img/di_logo_login.png" width="75%" height="19%" id="logo">
+    </div>
+  </div>
+
+  <div id="version">
+    <h3> Version </h3>
+  </div>
+
+  <div class="user">
+    <p id="username">
+      username
+    </p>
+  </div>
+
+  <div class="news-border">
+    <div class="news">
+      <h2> News </h2>
+      <?xml version="1.0" encoding="UTF-8" ?>
+      <rss version="2.0">
+
+        <channel>
+          <title>W3Schools Home Page</title>
+          <link>https://www.w3schools.com</link>
+          <description>Free web building tutorials</description>
+          <item>
+            <title>RSS Tutorial</title>
+            <link>https://www.w3schools.com/xml/xml_rss.asp</link>
+            <description>New RSS tutorial on W3Schools</description>
+          </item>
+          <item>
+            <title>XML Tutorial</title>
+            <link>https://www.w3schools.com/xml</link>
+            <description>New XML tutorial on W3Schools</description>
+          </item>
+        </channel>
+
+      </rss>
+    </div>
+  </div>
+
+  <div class="tools">
+    <h2 id="header"> Tools </h2>
+  </div>
+  <!-- <div id="foot"> -->
+  <!-- <table>
+    <tr>
+      <td> -->
+        <div class="update">
+          <button>Update</button>
+        </div>
+      <!-- </td>
+      <td> -->
+        <div class="launch">
+          <button>Launch</button>
+        </div>
+      <!-- </td>
+    </tr>
+  </table> -->
+<!-- </div> -->
+</body>
+
+<script type="text/javascript">
+  require('./src/renderer.js');
+</script>
+
+</html>
