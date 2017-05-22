@@ -6,9 +6,35 @@
   <meta charset="utf-8">
   <title>Transform Launcher</title>
   <link rel="stylesheet" href="mainscreen.css">
+
+  <!-- Attempting to implement the RSS news feed with the google feed api -->
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script src="http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
+
+  <style type="text/css">
+    @import url("http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.css");
+    #feedControl {
+      margin-top: 10px;
+      margin-left: auto;
+      margin-right: auto;
+      width: 440px;
+      font-size: 12px;
+      color: #9CADD0;
+    }
+  </style>
+  <script type="text/javascript">
+    function load() {
+      var feed = "http://feeds.bbci.co.uk/news/world/rss.xml";
+      new GFdynamicFeedControl(feed, "feedControl");
+
+    }
+    google.load("feeds", "1");
+    google.setOnLoadCallback(load);
+  </script>
+
 </head>
 
-<body>
+<body onload="window.resizeTo(900, 550)">
   <div class="logo">
     <div>
       <img src="di_logo_login.png" alt="https://login.drillinginfo.com/auth/resources/7.0.0.ga/login/di-theme/img/di_logo_login.png" width="75%" height="19%" id="logo">
@@ -31,7 +57,11 @@
       <?xml version="1.0" encoding="UTF-8" ?>
       <rss version="2.0">
 
-        <channel>
+        <div id="body">
+          <div id="feedControl">Loading...</div>
+        </div>
+
+        <!-- <channel>
           <title>W3Schools Home Page</title>
           <link>https://www.w3schools.com</link>
           <description>Free web building tutorials</description>
@@ -45,7 +75,7 @@
             <link>https://www.w3schools.com/xml</link>
             <description>New XML tutorial on W3Schools</description>
           </item>
-        </channel>
+        </channel> -->
 
       </rss>
     </div>
@@ -55,26 +85,25 @@
     <h2 id="header"> Tools </h2>
   </div>
 
-        <div class="update">
-          <button id='update'>Update</button>
-        </div>
+  <div class="update">
+    <button id='update'>Update</button>
+  </div>
 
-        <div class="launch">
-          <button id="launch">Launch</button>
-        </div>
+  <div class="launch">
+    <button id="launch">Launch</button>
+  </div>
 
 </body>
 
 <script type="text/javascript">
-
-var update = document.getElementById('update');
-update.onclick = function () {
- console.log('Update Button');
-}
-var launch = document.getElementById('launch');
-launch.onclick = function () {
- console.log('Launch Button');
-}
+  var update = document.getElementById('update');
+  update.onclick = function() {
+    console.log('Update Button');
+  }
+  var launch = document.getElementById('launch');
+  launch.onclick = function() {
+    console.log('Launch Button');
+  }
 
   require('./src/renderer.js');
   // document.getElementById("update").onClick = function() {update()};
@@ -83,8 +112,6 @@ launch.onclick = function () {
   // function update(){
   //   console.log("Update Works!");
   // }
-
-
 </script>
 
 </html>
