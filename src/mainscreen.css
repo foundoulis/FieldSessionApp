@@ -7,8 +7,8 @@
 
 .logo #logo {
   position: static;
-  top: 10px;
-  left: 10px;
+  top: 2%;
+  left: 2%;
 }
 
 #version {
@@ -44,9 +44,9 @@
   position: fixed;
   border-radius: 5px;
   width: 60%;
-  height: 55%;
+  height: 60%;
   background: #d3d3d3;
-  top: 25%;
+  top: 20%;
   left: 2%;
 }
 
@@ -62,12 +62,12 @@
 .tools {
   border-radius: 5px;
   background: #d3d3d3;
-  width: 28%;
-  height: 55%;
+  width: 33%;
+  height: 60%;
   color: #ffffff;
   position: fixed;
-  top: 25%;
-  left: 70%;
+  top: 20%;
+  left: 65%;
 }
 
 .tools #header {
@@ -96,6 +96,7 @@ button {
   -webkit-transition: all 0.3 ease;
   transition: all 0.3 ease;
   cursor: pointer;
+  border: none;
 }
 
 .update{
