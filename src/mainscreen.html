@@ -67,13 +67,17 @@ if(perm3 == "deny"){
 </script>
 
   <div class="user">
-    <p id="username">
+    <h2 id="username">
       Username: You
-    </p>
+    </h2>
     <div>
-      <img src="../icons/rocket.png" width="10%" height="15%" id="launch">
-      <img src="../icons/support.png" width="10%" height="15%" id="mms">
-      <img src="../icons/testing.png" width="10%" height="15%" id="beta">
+      <!-- TODO add tooltip text to icons -->
+      <img src="../icons/transform.png" width="15%" height="15%" id="launch">
+      <!-- <span class="tooltiptext">transfrom</span> -->
+      <img src="../icons/beta_1.png" width="15%" height="15%" id="beta">
+      <!-- <span class="tooltiptext">beta user</span> -->
+      <img src="../icons/support_1.png" width="15%" height="15%" id="mms">
+      <!-- <span class="tooltiptext">support user</span> -->
     </div>
   </div>
 
@@ -99,11 +103,11 @@ if(perm3 == "deny"){
     <button id='update'>Update</button>
   </div>
 
-<div class="progress-bar">
-  <!-- <span class="bar"> -->
+  <div class="progress-bar">
+    <!-- <span class="bar"> -->
     <div class="progress"></div>
-  <!-- </span> -->
-</div>
+    <!-- </span> -->
+  </div>
 
   <div class="launch">
     <button id="launch">Launch</button>
@@ -125,7 +129,7 @@ if(perm3 == "deny"){
   function execCommand(command, callback) {
     exec(command, (error, stdout, stderr) => {
       if (error !== null) {
-          console.log('exec error: ' + error);
+        console.log('exec error: ' + error);
       }
       callback(stdout);
     });
@@ -151,6 +155,14 @@ if(perm3 == "deny"){
 
 
 
+<<<<<<< HEAD
+  require('./src/renderer.js');
+  var curlCommand =
+    "curl -X POST \ https://di-api.dev.drillinginfo.com/v1/x4m/authorizations \ -H 'authorization: Bearer <<ACCESS TOKEN>>'\ -H 'cache-control: no-cache'\ -H 'content-type: application/json'\ -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13'\ -d '{"
+  requests ":[{"
+  uri ": "
+  http: //app.drillinginfo.com/x4m/x4m60", "action": "GET"},{"uri":"http://app.drillinginfo.com/4xm/x4mms","action": "GET"},{"uri":"http://app.drillinginfo.com/x4m/x4mbeta","action":"GET"}]}'"
+=======
 require('./src/renderer.js');
 var curlCommand = "curl -X POST  https://di-api.dev.drillinginfo.com/v1/x4m/authorizations  -H 'authorization: Bearer <<ACCESS TOKEN>>' -H 'cache-control: no-cache' -H 'content-type: application/json' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d '{"requests":[{"uri": "http://app.drillinginfo.com/x4m/x4m60", "action": "GET"},{"uri":"http://app.drillinginfo.com/4xm/x4mms","action": "GET"},{"uri":"http://app.drillinginfo.com/x4m/x4mbeta","action":"GET"}]}'"
 
@@ -158,7 +170,12 @@ execCommand(curlCommand, parser);
 // var perm1 = auth.authorizations[0].result;
 // var perm2 = auth.authorizations[1].result;
 // var perm3 = auth.authorizations[2].result;
+>>>>>>> d7bd1cbc7d0d4ca47d35a6637704e4ae8c5e0c3f
 
+    execCommand(curlCommand, parser);
+  var perm1 = auth.authorizations[0].result;
+  var perm2 = auth.authorizations[1].result;
+  var perm3 = auth.authorizations[2].result;
 </script>
 
 </html>
