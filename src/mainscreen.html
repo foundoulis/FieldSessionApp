@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="mainscreen.css">
 
   <!-- Attempting to implement the RSS news feed with the google feed api -->
-  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <!-- <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   <script src="http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
 
   <style type="text/css">
@@ -30,7 +30,7 @@
     }
     google.load("feeds", "1");
     google.setOnLoadCallback(load);
-  </script>
+  </script> -->
 
 </head>
 
@@ -45,34 +45,13 @@
     <h3> Version </h3>
   </div>
 
-<script type="text/javascript">
-var perm1 = "deny";
-var perm2 = "permit";
-var perm3 = "deny";
-
-function showImage(id, visible){
-  var img = document.getElementById(id);
-  img.style.visibility = (visible ? 'visible' : 'hidden');
-}
-
-if(perm1 == "deny"){
-  showImage('launch', false);
-}
-if(perm2 == "deny"){
-  showImage('mms', false);
-}
-if(perm3 == "deny"){
-  showImage('beta', false);
-}
-</script>
-
   <div class="user">
     <h2 id="username">
       Username: You
     </h2>
     <div>
       <!-- TODO add tooltip text to icons -->
-      <img src="../icons/transform.png" width="15%" height="15%" id="launch">
+      <img src="../icons/transform.png" width="15%" height="15%" id="basic">
       <!-- <span class="tooltiptext">transfrom</span> -->
       <img src="../icons/beta_1.png" width="15%" height="15%" id="beta">
       <!-- <span class="tooltiptext">beta user</span> -->
@@ -126,6 +105,11 @@ if(perm3 == "deny"){
     console.log('Launch Button');
   }
 
+  function showImage(id, visible) {
+    var img = document.getElementById(id);
+    img.style.opacity = 0.4;
+  }
+
   function execCommand(command, callback) {
     exec(command, (error, stdout, stderr) => {
       if (error !== null) {
@@ -138,44 +122,41 @@ if(perm3 == "deny"){
   function parser(commandOutput) {
     auth = JSON.parse(commandOutput);
     //printJSON(auth);
-    var perm1 = "deny";
+    var perm1 = "permit";
     var perm2 = "permit";
     var perm3 = "deny";
 
-    if(perm1 == "deny"){
-      showImage(launch, false);
+    console.log(perm1);
+    console.log(perm2);
+    console.log(perm3);
+
+    if (perm1 == "deny") {
+      showImage("basic", false);
     }
-    if(perm2 == "deny"){
-      showImage(mms, false);
+    if (perm2 == "deny") {
+      showImage("mms", false);
     }
-    if(perm3 == "deny"){
-      showImage(beta, false);
+    if (perm3 == "deny") {
+      showImage("beta", false);
     }
   }
 
+  parser(null);
 
-
-<<<<<<< HEAD
   require('./src/renderer.js');
-  var curlCommand =
-    "curl -X POST \ https://di-api.dev.drillinginfo.com/v1/x4m/authorizations \ -H 'authorization: Bearer <<ACCESS TOKEN>>'\ -H 'cache-control: no-cache'\ -H 'content-type: application/json'\ -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13'\ -d '{"
-  requests ":[{"
-  uri ": "
-  http: //app.drillinginfo.com/x4m/x4m60", "action": "GET"},{"uri":"http://app.drillinginfo.com/4xm/x4mms","action": "GET"},{"uri":"http://app.drillinginfo.com/x4m/x4mbeta","action":"GET"}]}'"
-=======
-require('./src/renderer.js');
-var curlCommand = "curl -X POST  https://di-api.dev.drillinginfo.com/v1/x4m/authorizations  -H 'authorization: Bearer <<ACCESS TOKEN>>' -H 'cache-control: no-cache' -H 'content-type: application/json' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d '{"requests":[{"uri": "http://app.drillinginfo.com/x4m/x4m60", "action": "GET"},{"uri":"http://app.drillinginfo.com/4xm/x4mms","action": "GET"},{"uri":"http://app.drillinginfo.com/x4m/x4mbeta","action":"GET"}]}'"
 
-execCommand(curlCommand, parser);
-// var perm1 = auth.authorizations[0].result;
-// var perm2 = auth.authorizations[1].result;
-// var perm3 = auth.authorizations[2].result;
->>>>>>> d7bd1cbc7d0d4ca47d35a6637704e4ae8c5e0c3f
 
-    execCommand(curlCommand, parser);
-  var perm1 = auth.authorizations[0].result;
-  var perm2 = auth.authorizations[1].result;
-  var perm3 = auth.authorizations[2].result;
+//var curlCommand = "curl -X POST  https://di-api.dev.drillinginfo.com/v1/x4m/authorizations  -H 'authorization: Bearer <<ACCESS TOKEN>>' -H 'cache-control: no-cache' -H 'content-type: application/json' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d '{"requests":[{"uri": "http://app.drillinginfo.com/x4m/x4m60", "action": "GET"},{"uri":"http://app.drillinginfo.com/4xm/x4mms","action": "GET"},{"uri":"http://app.drillinginfo.com/x4m/x4mbeta","action":"GET"}]}'"
+
+
+  // var curlCommand = "curl -X POST https://di-api.dev.drillinginfo.com/v1/x4m/authorizations -H 'authorization: Bearer <<ACCESS TOKEN>>' -H 'cache-control: no-cache' -H 'content-type: application/json' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d '{"requests":[{"uri":"http://app.drillinginfo.com/x4m/x4m60","action":"GET"},{"uri":"http://app.drillinginfo.com/4xm/x4mms","action":"GET"},{"uri":"http://app.drillinginfo.com/x4m/x4mbeta","action":"GET"}]}'"
+
+  // execCommand(curlCommand, parser);
+  // var perm1 = auth.authorizations[0].result;
+  // var perm2 = auth.authorizations[1].result;
+  // var perm3 = auth.authorizations[2].result;
+
+
 </script>
 
 </html>

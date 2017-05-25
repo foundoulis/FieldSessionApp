@@ -161,6 +161,7 @@ button:hover {
 }
 
 .progress {
+  position: relative;
   box-shadow: inset 3px 3px 2px 0 rgba(0, 0, 0, 0.24);
   animation: loader 8s linear infinite;
   /* Change the animation fill mode 'infinite' to 'forwards' to stop the animation from repeating.*/
