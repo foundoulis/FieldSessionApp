@@ -1,28 +1,25 @@
 {
 
-"authorizations":[
-{
-"reasource":"https://app.drillinginfo.com/x4m/x4m60",
-"result":"permit",
-"obligations":[],
-"advice":[]
-},
-{
+  "authorizations": [{
+        "resource": "https://app.drillinginfo.com/x4m/x4m60",
+        "result": "permit",
+        "obligations": [],
+        "advice": []
+      }, {
 
 
 
-"reasource":"https://app.drillinginfo.com/x4m/x4mms",
-"result":"permit",
-"obligations":[],
-"advice":[]
-},
-{
+        "resource": "https://app.drillinginfo.com/x4m/x4mms",
+        "result": "permit",
+        "obligations": [],
+        "advice": []
+      }, {
 
 
 
-"reasource":"https://app.drillinginfo.com/x4m/x4mbeta",
-"result":"deny",
-"obligations":[],
-"advice":[]
-},
-{
+        "resource": "https://app.drillinginfo.com/x4m/x4mbeta",
+        "result": "deny",
+        "obligations": [],
+        "advice": []
+      }]
+}
