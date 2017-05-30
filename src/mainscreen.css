@@ -70,7 +70,7 @@
   position: relative;
   color: #1c1b1d;
   text-align: center;
-  overflow-y: scroll;
+  overflow-y: hidden;
 }
 
 .tools {
@@ -96,6 +96,22 @@
   height: 20%;
   /*background: #ff6c91;*/
 }
+/*body{margin:0;padding:0;background-image:url(/images/ex-slash.png);}*/
+img {border:0px;}
+.feed-container{font-size:13.5px;border:1px solid #CCCCCC;}
+.feed-container .header{margin:0px;padding:5px 5px 5px 5px;font-size:14px;border-bottom:1px solid #CCCCCC;}
+.feed-container .footer{margin:0px;padding:5px 5px 5px 5px;color:#fff;}
+.feed-container .header .title{margin:0;padding:0;font-weight:bold;color:#000;}
+.feed-container .header a{text-decoration:none;color:#000;}
+.feed-container .header a:hover{text-decoration:underline;color:#666;}
+.feed-container .content{margin:0px;padding:0 3px;}
+.feed-container .content .item{margin:0 0 7px 0;padding:0 0 7px 0;border-bottom:1px dashed #CCCCCC;}
+.feed-container .content .item .title{margin:1px 0 1px 3px;padding:1px 2px 1px 3px;color:#1c1b1d;font-weight:bold;}
+.feed-container .content .item .title a{color:#1c1b1d;text-decoration:none;}
+.feed-container .content .item .title a:hover{color:#1c1b1d;text-decoration:underline;}
+.feed-container .content .item .description{margin:0 0 0 3px;padding:0 2px 0 3px;color:#666;}
+.feed-container .content .item .description a{text-decoration:none;color:#000;}
+.feed-container .content .item .description a:hover{text-decoration:underline;color:#666;}
 
 button {
   font-family: "Roboto", sans-serif;
