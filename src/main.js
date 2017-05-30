@@ -11,7 +11,8 @@ function loadURL(name) {
   win.loadURL(url.format({
     pathname: path.join(__dirname, name),
     protocol: 'file:',
-    slashes: true
+    slashes: true,
+    resizeable: false
   }));
 }
 function loadLogInScreen() {

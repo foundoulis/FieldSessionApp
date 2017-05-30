@@ -35,6 +35,13 @@ function printJSON(jsonObj) {
   console.log("session_state: " + jsonObj.session_state);
 }
 
-var curlCommand = "curl -X POST https://di-api.dev.drillinginfo.com/v1/x4m/tokens -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d 'grant_type=password&client_id=transform-api&username=x4m-mines1&password=mines1'";
+var user = "x4m-mines1";
+var password = "mines1";
+
+function curlCommandAssembler(strings, username, password) {
+  return strings[0] + username + strings[1] + password + strings[2];
+}
+
+var curlCommand = curlCommandAssembler`curl -X POST https://di-api.dev.drillinginfo.com/v1/x4m/tokens -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d 'grant_type=password&client_id=transform-api&username=${user}&password=${password}'`;
 
 execCommand(curlCommand, parser);
