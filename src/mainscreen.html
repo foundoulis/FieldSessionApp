@@ -6,43 +6,9 @@
   <meta charset="utf-8">
   <title>Transform Launcher</title>
   <link rel="stylesheet" href="mainscreen.css">
-
-  <!-- Attempting to implement the RSS news feed with the google feed api -->
-  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-  <script src="http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
-
-  <style type="text/css">
-    @import url("http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.css");
-    #feedControl {
-      margin-top: 10px;
-      margin-left: auto;
-      margin-right: auto;
-      width: 440px;
-      font-size: 12px;
-      color: #9CADD0;
-    }
-  </style>
-  <script type="text/javascript">
-    function load() {
-      var feed = "http://feeds.bbci.co.uk/news/world/rss.xml";
-      new GFdynamicFeedControl(feed, "feedControl");
-
-    }
-    google.load("feeds", "1");
-    google.setOnLoadCallback(load);
-  </script>
-
 </head>
 
 <body onload="window.resizeTo(900, 550)">
-  <div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9&appId=316788666029";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
   <div class="logo">
     <div>
       <img src="di_logo_login.png" alt="https://login.drillinginfo.com/auth/resources/7.0.0.ga/login/di-theme/img/di_logo_login.png" width="75%" height="19%" id="logo">
@@ -50,12 +16,12 @@
   </div>
 
   <div>
-    <h3 id="version"> Version </h3>
+    <h3 id="version"> Version <!-- default value --> </h3>
   </div>
 
   <div class="user">
     <h2 id="username">
-      Username: You
+      Username: <!-- default value -->
     </h2>
     <div>
       <!-- TODO add tooltip text to icons -->
@@ -68,57 +34,50 @@
     </div>
   </div>
 
-  <div class="news-border">
-    <div class="news">
-      <!-- start sw-rss-feed code -->
-      <!-- start sw-rss-feed code -->
-      <script type="text/javascript">
-      <!--
-      rssfeed_url = new Array();
-      rssfeed_url[0]="https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&topic=tc&output=rss";
-      rssfeed_frame_width="100%";
-      rssfeed_frame_height="600";
-      rssfeed_scroll="on";
-      rssfeed_scroll_step="6";
-      rssfeed_scroll_bar="off";
-      rssfeed_target="_blank";
-      rssfeed_font_size="20";
-      rssfeed_font_face="";
-      rssfeed_border="on";
-      // rssfeed_css_url="http://feed.surfing-waves.com/css/style1.css";
-      rssfeed_title="on";
-      rssfeed_title_name="";
-      rssfeed_title_bgcolor="#76be43";
-      rssfeed_title_color="#fff";
-      rssfeed_title_bgimage="http://";
-      rssfeed_footer="off";
-      rssfeed_footer_name="rss feed";
-      rssfeed_footer_bgcolor="#d3d3d3";
-      rssfeed_footer_color="#333";
-      rssfeed_footer_bgimage="http://";
-      rssfeed_item_title_length="50";
-      rssfeed_item_title_color="#1c1b1d";
-      rssfeed_item_bgcolor="#d3d3d3";
-      rssfeed_item_bgimage="http://";
-      rssfeed_item_border_bottom="on";
-      rssfeed_item_source_icon="off";
-      rssfeed_item_date="off";
-      rssfeed_item_description="on";
-      rssfeed_item_description_length="120";
-      rssfeed_item_description_color="#666";
-      rssfeed_item_description_link_color="#333";
-      rssfeed_item_description_tag="off";
-      rssfeed_no_items="0";
-      rssfeed_cache = "de820a463df884c6f106de56b1573ecf";
-      //-->
-      </script>
-      <script type="text/javascript" src="http://feed.surfing-waves.com/js/rss-feed.js"></script>
-      <!-- The link below helps keep this service FREE, and helps other people find the SW widget. Please be cool and keep it! Thanks. -->
-      <div style="text-align:right; width:180px;"><a href="http://www.surfing-waves.com/feed.htm" target="_blank" style="color:#ccc;font-size:10px">widget @</a> <a href="http://www.surfing-waves.com" target="_blank" style="color:#ccc;font-size:10px">surfing-waves.com</a></div>
-      <!-- end sw-rss-feed code -->
-
-<!-- width="340" height="256" -->
-    </div>
+  <div class="news">
+    <!-- start sw-rss-feed code -->
+    <script type="text/javascript">
+    rssfeed_url = new Array();
+    rssfeed_url[0]="https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&topic=tc&output=rss";
+    rssfeed_frame_width="100%";
+    rssfeed_frame_height="600";
+    rssfeed_scroll="on";
+    rssfeed_scroll_step="6";
+    rssfeed_scroll_bar="off";
+    rssfeed_target="_blank";
+    rssfeed_font_size="15";
+    rssfeed_font_face="";
+    rssfeed_border="off";
+    // rssfeed_css_url="http://feed.surfing-waves.com/css/style1.css";
+    rssfeed_title="on";
+    rssfeed_title_name="";
+    rssfeed_title_bgcolor="#76be43";
+    rssfeed_title_color="#fff";
+    rssfeed_title_bgimage="http://";
+    rssfeed_footer="off";
+    rssfeed_footer_name="rss feed";
+    rssfeed_footer_bgcolor="#d3d3d3";
+    rssfeed_footer_color="#333";
+    rssfeed_footer_bgimage="http://";
+    rssfeed_item_title_length="50";
+    rssfeed_item_title_color="#1c1b1d";
+    rssfeed_item_bgcolor="#d3d3d3";
+    rssfeed_item_bgimage="http://";
+    rssfeed_item_border_bottom="on";
+    rssfeed_item_source_icon="off";
+    rssfeed_item_date="off";
+    rssfeed_item_description="on";
+    rssfeed_item_description_length="120";
+    rssfeed_item_description_color="#666";
+    rssfeed_item_description_link_color="#333";
+    rssfeed_item_description_tag="off";
+    rssfeed_no_items="0";
+    rssfeed_cache = "de820a463df884c6f106de56b1573ecf";
+    </script>
+    <script type="text/javascript" src="http://feed.surfing-waves.com/js/rss-feed.js"></script>
+    <!-- The link below helps keep this service FREE, and helps other people find the SW widget. Please be cool and keep it! Thanks. -->
+    <div style="text-align:right; width:180px;"><a href="http://www.surfing-waves.com/feed.htm" target="_blank" style="color:#ccc;font-size:10px">widget @</a> <a href="http://www.surfing-waves.com" target="_blank" style="color:#ccc;font-size:10px">surfing-waves.com</a></div>
+    <!-- end sw-rss-feed code -->
   </div>
 
   <div class="tools">
@@ -126,13 +85,11 @@
   </div>
 
   <div class="update">
-    <button id='update'>Update</button>
+    <button id='update'> Update </button>
   </div>
 
   <div class="progress-bar">
-    <!-- <span class="bar"> -->
     <div class="progress"></div>
-    <!-- </span> -->
   </div>
 
   <div class="launch">
@@ -158,6 +115,12 @@
   function updateVersionNumber(number){
     var version = document.getElementById('version');
     version.innerHTML = "Version " + number;
+  }
+
+  // Updates username TODO: use username from login to do so
+  function updateUsername(name){
+    var version = document.getElementById('username');
+    version.innerHTML = "Username: " + name;
   }
 
   // changes entitlement icons
@@ -191,6 +154,7 @@
 
   parser(test);
   updateVersionNumber('6.0');
+  updateUsername("You");
 
   // parses entitlement JSON
   function parser(commandOutput) {
