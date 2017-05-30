@@ -54,7 +54,11 @@
   margin-bottom: 2px;
 }
 
-.news-border {
+/*.news-border {
+
+}*/
+
+.news {
   position: fixed;
   border-radius: 5px;
   width: 60%;
@@ -62,12 +66,6 @@
   background: #d3d3d3;
   top: 23%;
   left: 2%;
-}
-
-.news {
-  margin: 5px;
-  height: 97%;
-  position: relative;
   color: #1c1b1d;
   text-align: center;
   overflow-y: hidden;
@@ -98,8 +96,8 @@
 }
 /*body{margin:0;padding:0;background-image:url(/images/ex-slash.png);}*/
 img {border:0px;}
-.feed-container{font-size:13.5px;border:1px solid #CCCCCC;}
-.feed-container .header{margin:0px;padding:5px 5px 5px 5px;font-size:14px;border-bottom:1px solid #CCCCCC;}
+.feed-container{font-size:12px;border:1px solid #CCCCCC;}
+.feed-container .header{margin:0px;padding:5px 5px 5px 5px;font-size:12px;border-bottom:1px solid #CCCCCC;}
 .feed-container .footer{margin:0px;padding:5px 5px 5px 5px;color:#fff;}
 .feed-container .header .title{margin:0;padding:0;font-weight:bold;color:#000;}
 .feed-container .header a{text-decoration:none;color:#000;}

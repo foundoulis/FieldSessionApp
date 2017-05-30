@@ -13,6 +13,9 @@
   <link href="zocial.css" rel="stylesheet" />
   <link href="login.css" rel="stylesheet" />
   <link href="main.css" rel="stylesheet" />
+
+  <script type="text/javascript" src="jarParser.js"></script>
+
   <!-- <script src="/auth/resources/7.0.0.ga/login/di-theme/js/script.js" type="text/javascript"></script>
   <script src="/auth/resources/7.0.0.ga/login/di-theme/js/load.js" type="text/javascript"></script> -->
 </head>
@@ -60,15 +63,16 @@
 
               </form>
               <script>
+              // Change this to actually verify through server
               function check(form) {
-                console.log("We have entered the function.");
                 if (form.username.value == "x4m-mines1" && form.password.value == "mines1") {
-                  window.open("mainscreen.html","_self");
+                  window.open("mainscreen.html");
                 } else {
                   alert("Error Password or Username");
                 }
               }
               </script>
+
               <span class="text-center">
             <h5 class="help-block subscription-block">
             <small>

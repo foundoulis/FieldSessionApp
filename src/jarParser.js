@@ -7,7 +7,7 @@ var token;
 function execCommand(command, callback) {
   exec(command, (error, stdout, stderr) => {
     if (error !== null) {
-        console.log('exec error: ' + error);
+      console.log('exec error: ' + error);
     }
     callback(stdout);
   });
@@ -44,13 +44,17 @@ fs.readFile('./token.json', 'utf-8', function(err, data)){
 
 }
 
-var user = "x4m-mines1";
-var password = "mines1";
+var user;
+var password;
 
 function curlCommandAssembler(strings, username, password) {
   return strings[0] + username + strings[1] + password + strings[2];
 }
 
-var curlCommand = curlCommandAssembler`curl -X POST https://di-api.dev.drillinginfo.com/v1/x4m/tokens -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d 'grant_type=password&client_id=transform-api&username=${user}&password=${password}'`;
-
-execCommand(curlCommand, parser);
+function buildAndRunCommand(user, password) {
+  user = user;
+  password = password;
+  var curlCommand = curlCommandAssembler`curl -X POST https://di-api.dev.drillinginfo.com/v1/x4m/tokens -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d 'grant_type=password&client_id=transform-api&username=${user}&password=${password}'`;
+  execCommand(curlCommand, parser); // will not execute
+  console.log("We are in the jarParser. Username: " + user + " Password: " + password);
+}
