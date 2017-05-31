@@ -37,15 +37,6 @@ function printJSON(jsonObj) {
   console.log();
   console.log("session_state: " + jsonObj.session_state);
 }
-function saveToken(jsonObj){
-var fs = require('fs');
-fs.readFile('./token.json', 'utf-8', function(err, data)){
-  if (err) throw err ; 
-  var arrayOfObjects = JSON.parse(data);
-  console.log(arrayOfObjects);
-})
-
-}
 
 var user;
 var password;
