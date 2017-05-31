@@ -2,8 +2,11 @@
 var exec = require('child_process').exec;
 
 var token;
+module.exports.getToken = function getToken() {
+  return token;
+}
 
-//callback is a functiont that is run when the command is complete.
+//callback is a function that is run when the command is complete.
 function execCommand(command, callback) {
   exec(command, (error, stdout, stderr) => {
     if (error !== null) {
@@ -42,7 +45,7 @@ function curlCommandAssembler(strings, username, password) {
   return strings[0] + username + strings[1] + password + strings[2];
 }
 
-function buildAndRunCommand(user, password) {
+module.exports.buildAndRunCommand = function buildAndRunCommand(user, password) {
   user = user;
   password = password;
   var curlCommand = curlCommandAssembler`curl -X POST https://di-api.dev.drillinginfo.com/v1/x4m/tokens -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d 'grant_type=password&client_id=transform-api&username=${user}&password=${password}'`;
