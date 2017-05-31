@@ -100,7 +100,9 @@
 
 <script type="text/javascript">
 var jarParser = require('./jarParser');
+var login = require('./login');
 var accessToken = jarParser.getToken.access_token; // token from jarParser
+var username = login.username; //username from login
 </script>
 
 <script type="text/javascript">
@@ -167,7 +169,7 @@ console.log("accessToken: " + accessToken);
 
   // parser(test);
   updateVersionNumber('6.0');
-  updateUsername("You");
+  updateUsername(username);
 
   // parses entitlement JSON
   function parser(commandOutput) {
