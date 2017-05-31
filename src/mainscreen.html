@@ -100,13 +100,11 @@
 
 <script type="text/javascript">
 var jarParser = require('./jarParser');
-var accessToken = jarParser.getToken.access_token; // token from jarParser
-</script>
-
-<script type="text/javascript">
 jarParser.buildAndRunCommand("x4m-mines1", "mines1");
-console.log("accessToken: " + accessToken);
-
+var accessToken;
+setTimeout(function() {
+  accessToken = jarParser.getToken().access_token; // token from jarParser
+  console.log("accessToken: " + accessToken);
   // TODO: do something when update is pressed
   var update = document.getElementById('update');
   update.onclick = function() {
@@ -148,31 +146,25 @@ console.log("accessToken: " + accessToken);
   }
 
   // var test = require("../test.json");
+  var exec = require('child_process').exec;
+
+  var curlCommand = "curl -X POST https://di-api.dev.drillinginfo.com/v1/x4m/authorizations -H 'authorization: Bearer " + accessToken + "' -H 'cache-control: no-cache' -H 'content-type: application/json' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d '{\"requests\":[{\"uri\":\"http://app.drillinginfo.com/x4m/x4m60\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/4xm/x4mms\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/x4m/x4mbeta\",\"action\":\"GET\"}]}'"
   var auth;
 
-  var curlCommand = "curl -X POST https://di-api.dev.drillinginfo.com/v1/x4m/authorizations -H 'authorization: Bearer <<ACCESS TOKEN>> -H 'cache-control: no-cache' -H 'content-type: application/json' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d '{\"requests\":[{\"uri\":\"http://app.drillinginfo.com/x4m/x4m60\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/4xm/x4mms\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/x4m/x4mbeta\",\"action\":\"GET\"}]}'"
-
   execCommand(curlCommand, parser);
-  var perm1 = auth.authorizations[0].result;
-  var perm2 = auth.authorizations[1].result;
-  var perm3 = auth.authorizations[2].result;
 
-  // var perm1 = test.authorizations[0].result;
-  // var perm2 = test.authorizations[1].result;
-  // var perm3 = test.authorizations[2].result;
-
-  // console.log(perm1);
-  // console.log(perm2);
-  // console.log(perm3);
-
-  // parser(test);
-  updateVersionNumber('6.0');
-  updateUsername("You");
+  var perm1;
+  var perm2;
+  var perm3;
 
   // parses entitlement JSON
   function parser(commandOutput) {
     auth = JSON.parse(commandOutput);
-    printJSON(commandOutput);
+    console.log(auth);
+    var perm1 = auth.authorizations[0].result;
+    var perm2 = auth.authorizations[1].result;
+    var perm3 = auth.authorizations[2].result;
+    // printJSON(commandOutput);
     // TODO: change these to the actual permissions once TOKEN is global
     if (perm1 == "deny") {
       showImage("basic", false);
@@ -184,6 +176,15 @@ console.log("accessToken: " + accessToken);
       showImage("beta", false);
     }
   }
+
+
+  console.log(perm1);
+  console.log(perm2);
+  console.log(perm3);
+
+  updateVersionNumber('6.0');
+  updateUsername("You");
+}, 1700);
 
   require('./renderer.js');
 
