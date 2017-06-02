@@ -108,6 +108,18 @@ var accessToken = jarParser.getToken.access_token; // token from jarParser
 
 jarParser.buildAndRunCommand("x4m-mines1", "mines1");
 var accessToken;
+document.cookie = "username=a test";
+
+  function readCookie(name) {
+  	var nameEQ = name + "=";
+  	var ca = document.cookie.split(';');
+  	for(var i=0;i < ca.length;i++) {
+  		var c = ca[i];
+  		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+  		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+  	}
+  	return null;
+  }
 setTimeout(function() {
   accessToken = jarParser.getToken().access_token; // token from jarParser
   console.log("accessToken: " + accessToken);
@@ -184,18 +196,7 @@ setTimeout(function() {
     }
   }
 
-document.cookie = "username=a test; path=/";
 
-  function readCookie(name) {
-  	var nameEQ = name + "=";
-  	var ca = document.cookie.split(';');
-  	for(var i=0;i < ca.length;i++) {
-  		var c = ca[i];
-  		while (c.charAt(0)==' ') c = c.substring(1,c.length);
-  		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-  	}
-  	return null;
-  }
 
 
   console.log(perm1);
