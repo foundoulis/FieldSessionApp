@@ -18,7 +18,7 @@ function execCommand(command, callback) {
 
 function parser(commandOutput) {
   token = JSON.parse(commandOutput);
-  printJSON(token);
+  // printJSON(token);
 }
 
 function printJSON(jsonObj) {

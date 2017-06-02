@@ -16,6 +16,7 @@ function loadURL(name) {
     resizeable: false
   }));
 }
+
 function loadURLLogin(name) {
   login.loadURL(url.format({
     pathname: path.join(__dirname, name),
@@ -24,6 +25,7 @@ function loadURLLogin(name) {
     resizeable: false
   }));
 }
+
 function loadLogInScreen() {
   loadURLLogin('login.html');
 }
@@ -73,6 +75,8 @@ loadLogInScreen();
 
 
 }
+
+// module.exports.win = win;
 
 // Run create window function
 app.on('ready', createWindow);
