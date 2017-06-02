@@ -37,42 +37,42 @@
   <div class="news">
     <!-- start sw-rss-feed code -->
     <script type="text/javascript">
-    rssfeed_url = new Array();
-    rssfeed_url[0]="https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&topic=tc&output=rss";
-    rssfeed_frame_width="100%";
-    rssfeed_frame_height="600";
-    rssfeed_scroll="on";
-    rssfeed_scroll_step="6";
-    rssfeed_scroll_bar="off";
-    rssfeed_target="_blank";
-    rssfeed_font_size="15";
-    rssfeed_font_face="";
-    rssfeed_border="off";
-    // rssfeed_css_url="http://feed.surfing-waves.com/css/style1.css";
-    rssfeed_title="on";
-    rssfeed_title_name="";
-    rssfeed_title_bgcolor="#76be43";
-    rssfeed_title_color="#fff";
-    rssfeed_title_bgimage="http://";
-    rssfeed_footer="off";
-    rssfeed_footer_name="rss feed";
-    rssfeed_footer_bgcolor="#d3d3d3";
-    rssfeed_footer_color="#333";
-    rssfeed_footer_bgimage="http://";
-    rssfeed_item_title_length="50";
-    rssfeed_item_title_color="#1c1b1d";
-    rssfeed_item_bgcolor="#d3d3d3";
-    rssfeed_item_bgimage="http://";
-    rssfeed_item_border_bottom="on";
-    rssfeed_item_source_icon="off";
-    rssfeed_item_date="off";
-    rssfeed_item_description="on";
-    rssfeed_item_description_length="120";
-    rssfeed_item_description_color="#666";
-    rssfeed_item_description_link_color="#333";
-    rssfeed_item_description_tag="off";
-    rssfeed_no_items="0";
-    rssfeed_cache = "de820a463df884c6f106de56b1573ecf";
+      rssfeed_url = new Array();
+      rssfeed_url[0] = "https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&topic=tc&output=rss";
+      rssfeed_frame_width = "100%";
+      rssfeed_frame_height = "600";
+      rssfeed_scroll = "on";
+      rssfeed_scroll_step = "6";
+      rssfeed_scroll_bar = "off";
+      rssfeed_target = "_blank";
+      rssfeed_font_size = "15";
+      rssfeed_font_face = "";
+      rssfeed_border = "off";
+      // rssfeed_css_url="http://feed.surfing-waves.com/css/style1.css";
+      rssfeed_title = "on";
+      rssfeed_title_name = "";
+      rssfeed_title_bgcolor = "#76be43";
+      rssfeed_title_color = "#fff";
+      rssfeed_title_bgimage = "http://";
+      rssfeed_footer = "off";
+      rssfeed_footer_name = "rss feed";
+      rssfeed_footer_bgcolor = "#d3d3d3";
+      rssfeed_footer_color = "#333";
+      rssfeed_footer_bgimage = "http://";
+      rssfeed_item_title_length = "50";
+      rssfeed_item_title_color = "#1c1b1d";
+      rssfeed_item_bgcolor = "#d3d3d3";
+      rssfeed_item_bgimage = "http://";
+      rssfeed_item_border_bottom = "on";
+      rssfeed_item_source_icon = "off";
+      rssfeed_item_date = "off";
+      rssfeed_item_description = "on";
+      rssfeed_item_description_length = "120";
+      rssfeed_item_description_color = "#666";
+      rssfeed_item_description_link_color = "#333";
+      rssfeed_item_description_tag = "off";
+      rssfeed_no_items = "0";
+      rssfeed_cache = "de820a463df884c6f106de56b1573ecf";
     </script>
     <script type="text/javascript" src="http://feed.surfing-waves.com/js/rss-feed.js"></script>
     <!-- The link below helps keep this service FREE, and helps other people find the SW widget. Please be cool and keep it! Thanks. -->
@@ -98,120 +98,199 @@
 
 </body>
 
+<script src="https://sdk.amazonaws.com/js/aws-sdk-2.61.0.min.js"></script>
 <script type="text/javascript">
-var jarParser = require('./jarParser');
+  var jarParser = require('./jarParser');
 
-var login = require('./login.js');
+  var login = require('./login.js');
 
-var accessToken = jarParser.getToken.access_token; // token from jarParser
-//var username = login.getUsername(); //username from login
+  var accessToken = jarParser.getToken.access_token; // token from jarParser
+  //var username = login.getUsername(); //username from login
 
-jarParser.buildAndRunCommand("x4m-mines1", "mines1");
-var accessToken;
-setTimeout(function() {
-  accessToken = jarParser.getToken().access_token; // token from jarParser
-  console.log("accessToken: " + accessToken);
-  // TODO: do something when update is pressed
-  var update = document.getElementById('update');
-  update.onclick = function() {
-    console.log('Update Button');
-  }
+  jarParser.buildAndRunCommand("x4m-mines1", "mines1");
+  var accessToken;
+  setTimeout(function() {
+    accessToken = jarParser.getToken().access_token; // token from jarParser
+    console.log("accessToken: " + accessToken);
+    // TODO: do something when update is pressed
+    var update = document.getElementById('update');
+    update.onclick = function() {
+      console.log('Update Button');
+    }
 
-  // TODO: do something when launch is pressed
-  var launch = document.getElementById('launch');
-  launch.onclick = function() {
-    console.log('Launch Button');
-  }
+    // TODO: do something when launch is pressed
+    var launch = document.getElementById('launch');
+    launch.onclick = function() {
+      console.log('Launch Button');
+    }
 
-  // Updates version number TODO: use the access token to do so
-  function updateVersionNumber(number){
-    var version = document.getElementById('version');
-    version.innerHTML = "Version " + number;
-  }
+    // Updates version number TODO: use the access token to do so
+    function updateVersionNumber(number) {
+      var version = document.getElementById('version');
+      version.innerHTML = "Version " + number;
+    }
 
-  // Updates username TODO: use username from login to do so
-  function updateUsername(name){
-    var version = document.getElementById('username');
-    version.innerHTML = "Username: " + name;
-  }
+    // Updates username TODO: use username from login to do so
+    function updateUsername(name) {
+      var version = document.getElementById('username');
+      version.innerHTML = "Username: " + name;
+    }
 
-  // changes entitlement icons
-  function showImage(id, visible) {
-    var img = document.getElementById(id);
-    img.style.opacity = 0.4;
-  }
+    // changes entitlement icons
+    function showImage(id, visible) {
+      var img = document.getElementById(id);
+      img.style.opacity = 0.4;
+    }
 
-  // executes the curl instruction
-  function execCommand(command, callback) {
-    exec(command, (error, stdout, stderr) => {
-      if (error !== null) {
-        console.log('exec error: ' + error);
+    // executes the curl instruction
+    function execCommand(command, callback) {
+      exec(command, (error, stdout, stderr) => {
+        if (error !== null) {
+          console.log('exec error: ' + error);
+        }
+        callback(stdout);
+      });
+    }
+
+    // var test = require("../test.json");
+    var exec = require('child_process').exec;
+
+    var curlCommand = "curl -X POST https://di-api.dev.drillinginfo.com/v1/x4m/authorizations -H 'authorization: Bearer " + accessToken +
+      "' -H 'cache-control: no-cache' -H 'content-type: application/json' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d '{\"requests\":[{\"uri\":\"http://app.drillinginfo.com/x4m/x4m60\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/4xm/x4mms\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/x4m/x4mbeta\",\"action\":\"GET\"}]}'"
+    var auth;
+
+    execCommand(curlCommand, parser);
+
+    var perm1;
+    var perm2;
+    var perm3;
+
+
+    // parses entitlement JSON
+    function parser(commandOutput) {
+      auth = JSON.parse(commandOutput);
+      console.log(auth);
+      var perm1 = auth.authorizations[0].result;
+      var perm2 = auth.authorizations[1].result;
+      var perm3 = auth.authorizations[2].result;
+      // printJSON(commandOutput);
+      // TODO: change these to the actual permissions once TOKEN is global
+      if (perm1 == "deny") {
+        showImage("basic", false);
       }
-      callback(stdout);
+      if (perm2 == "deny") {
+        showImage("mms", false);
+      }
+      if (perm3 == "deny") {
+        showImage("beta", false);
+      }
+    }
+
+    /*
+     * S3 server stuff
+     */
+
+    // import entire SDK
+    // var AWS = require('aws-sdk');
+    // // import AWS object without services
+    // var AWS = require('aws-sdk/global');
+
+    // import individual service
+    var S3 = require('aws-sdk/clients/s3');
+
+    var s3 = new AWS.S3({
+      accessKeyId: "yours3key",
+      secretAccessKey: "yours3secret",
+      maxRetries: 3,
+      // any other options are passed to new AWS.S3()
+      // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
     });
-  }
 
-  // var test = require("../test.json");
-  var exec = require('child_process').exec;
+    // var client = s3.createClient({
+    //   maxAsyncS3: 20, // this is the default
+    //   s3RetryCount: 3, // this is the default
+    //   s3RetryDelay: 1000, // this is the default
+    //   multipartUploadThreshold: 20971520, // this is the default (20 MB)
+    //   multipartUploadSize: 15728640, // this is the default (15 MB)
+    //   s3Options: {
+    //
+    //   },
+    // });
 
-  var curlCommand = "curl -X POST https://di-api.dev.drillinginfo.com/v1/x4m/authorizations -H 'authorization: Bearer " + accessToken + "' -H 'cache-control: no-cache' -H 'content-type: application/json' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d '{\"requests\":[{\"uri\":\"http://app.drillinginfo.com/x4m/x4m60\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/4xm/x4mms\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/x4m/x4mbeta\",\"action\":\"GET\"}]}'"
-  var auth;
+    var params = {
+      Bucket: 'di-transform',
+      Key: 'config.json',
+      // other options supported by getObject
+      // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#getObject-property
+      };
 
-  execCommand(curlCommand, parser);
+    s3.getObject(params, function(err, data) {
+      if (err) console.log(err, err.stack); // an error occurred
+      else console.log(data); // successful response
+      /*
+      data = {
+       AcceptRanges: "bytes",
+       ContentLength: 3191,
+       ContentType: "image/jpeg",
+       ETag: "\"6805f2cfc46c0f04559748bb039d69ae\"",
+       LastModified: <Date Representation>,
+       Metadata: {
+       },
+       TagCount: 2,
+       VersionId: "null"
+      }
+      */
+    });
 
-  var perm1;
-  var perm2;
-  var perm3;
+    // var downloader = client.downloadFile(params);
+    // downloader.on('error', function(err) {
+    //   console.error("unable to download:", err.stack);
+    // });
+    // downloader.on('progress', function() {
+    //   console.log("progress", downloader.progressAmount, downloader.progressTotal);
+    // });
+    // downloader.on('end', function() {
+    //   console.log("done downloading");
+    // });
 
+    // document.cookie = "username=a test; path=./";
+    //
+    // const ses = window.session;
+    // console.log("madeit")
+    //
+    // const cookie = {name: "snickerdoodle", value: "workPlease"};
+    // ses.defaultSession.cookies.set(cookie, (error) => {
+    //   if (error) console.error(error);
+    // })
+    //
+    // ses.defaultSession.cookies.get({}, (error, cookies) => {
+    //   console.log(error, cookies);
+    // })
+    //
+    //   function readCookie(name) {
+    //   	var nameEQ = name + "=";
+    //   	var ca = document.cookie.split(';');
+    //   	for(var i=0;i < ca.length;i++) {
+    //   		var c = ca[i];
+    //   		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+    //   		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    //   	}
+    //   	return null;
+    //   }
 
-  // parses entitlement JSON
-  function parser(commandOutput) {
-    auth = JSON.parse(commandOutput);
-    console.log(auth);
-    var perm1 = auth.authorizations[0].result;
-    var perm2 = auth.authorizations[1].result;
-    var perm3 = auth.authorizations[2].result;
-    // printJSON(commandOutput);
-    // TODO: change these to the actual permissions once TOKEN is global
-    if (perm1 == "deny") {
-      showImage("basic", false);
-    }
-    if (perm2 == "deny") {
-      showImage("mms", false);
-    }
-    if (perm3 == "deny") {
-      showImage("beta", false);
-    }
-  }
+    // console.log(perm1);
+    // console.log(perm2);
+    // console.log(perm3);
 
-document.cookie = "username=a test; path=/";
-
-  function readCookie(name) {
-  	var nameEQ = name + "=";
-  	var ca = document.cookie.split(';');
-  	for(var i=0;i < ca.length;i++) {
-  		var c = ca[i];
-  		while (c.charAt(0)==' ') c = c.substring(1,c.length);
-  		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-  	}
-  	return null;
-  }
-
-
-  console.log(perm1);
-  console.log(perm2);
-  console.log(perm3);
-
-  updateVersionNumber('6.0');
-  updateUsername(readCookie(username));
-}, 2000);
+    updateVersionNumber('6.0');
+    // updateUsername(readCookie(username));
+  }, 2000);
 
   require('./renderer.js');
 
   // var curlCommand = "curl -X POST https://di-api.dev.drillinginfo.com/v1/x4m/authorizations -H 'authorization: Bearer <<ACCESS TOKEN>>' -H 'cache-control: no-cache' -H 'content-type: application/json' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d '{"requests":[{"uri":"http://app.drillinginfo.com/x4m/x4m60","action":"GET"},{"uri":"http://app.drillinginfo.com/4xm/x4mms","action":"GET"},{"uri":"http://app.drillinginfo.com/x4m/x4mbeta","action":"GET"}]}'"
 
   // execCommand(curlCommand, parser);
-
 </script>
 
 </html>

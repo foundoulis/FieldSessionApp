@@ -3,10 +3,10 @@
 // var user = "user";
 function check(form) {
   user = form.username.value;
-document.cookie = "username=HI";
+// document.cookie = "username=HI";
 
   if (user == "x4m-mines1" && form.password.value == "mines1") {
-    window.open("mainscreen.html");
+    window.open("mainscreen.html")
   } else {
     alert("Error Password or Username");
   }

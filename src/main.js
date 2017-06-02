@@ -15,6 +15,7 @@ function loadURL(name) {
     resizeable: false
   }));
 }
+
 function loadLogInScreen() {
   loadURL('login.html');
 }
@@ -54,6 +55,8 @@ function createWindow() {
 
   loadLogInScreen();
 }
+
+// module.exports.win = win;
 
 // Run create window function
 app.on('ready', createWindow);
