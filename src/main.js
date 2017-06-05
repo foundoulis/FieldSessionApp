@@ -69,7 +69,7 @@ function createWindow() {
   });
 
 loadMainScreen();
-win.hide();
+// win.hide();
 loadLogInScreen();
 
 

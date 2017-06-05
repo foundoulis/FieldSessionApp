@@ -1,6 +1,4 @@
 
-<<<<<<< HEAD
-=======
 // Change this to actually verify through server
 // var user = "user";
 function check(form) {
@@ -18,4 +16,3 @@ function check(form) {
 // module.exports.getUsername = function getUsername(){
 //   return user;
 // }
->>>>>>> 00649dd4abbca89c7c5bc99d8705e57fd639be7b

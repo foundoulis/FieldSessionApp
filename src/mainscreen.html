@@ -100,76 +100,75 @@
 
 <script src="https://sdk.amazonaws.com/js/aws-sdk-2.61.0.min.js"></script>
 <script type="text/javascript">
-
-// var jarParser = require('./jarParser');
-//
-// var login = require('./login.js');
-//
-// var accessToken = jarParser.getToken.access_token; // token from jarParser
-// //var username = login.getUsername(); //username from login
-//
-// jarParser.buildAndRunCommand("x4m-mines1", "mines1");
-// var accessToken;
-// document.cookie = "username=a test";
-//
-//   function readCookie(name) {
-//   	var nameEQ = name + "=";
-//   	var ca = document.cookie.split(';');
-//   	for(var i=0;i < ca.length;i++) {
-//   		var c = ca[i];
-//   		while (c.charAt(0)==' ') c = c.substring(1,c.length);
-//   		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-//   	}
-//   	return null;
-//   }
-// setTimeout(function() {
-//   accessToken = jarParser.getToken().access_token; // token from jarParser
-//   console.log("accessToken: " + accessToken);
-//   // TODO: do something when update is pressed
-//   var update = document.getElementById('update');
-//   update.onclick = function() {
-//     console.log('Update Button');
-//   }
-//
-//   // TODO: do something when launch is pressed
-//   var launch = document.getElementById('launch');
-//   launch.onclick = function() {
-//     console.log('Launch Button');
-//   }
-//
-//   // Updates version number TODO: use the access token to do so
-//   function updateVersionNumber(number){
-//     var version = document.getElementById('version');
-//     version.innerHTML = "Version " + number;
-//   }
-//
-//   // Updates username TODO: use username from login to do so
-//   function updateUsername(name){
-//     var version = document.getElementById('username');
-//     version.innerHTML = "Username: " + name;
-//   }
-//
-//   // changes entitlement icons
-//   function showImage(id, visible) {
-//     var img = document.getElementById(id);
-//     img.style.opacity = 0.4;
-//   }
-//
-//   // executes the curl instruction
-//   function execCommand(command, callback) {
-//     exec(command, (error, stdout, stderr) => {
-//       if (error !== null) {
-//         console.log('exec error: ' + error);
-//       }
-//       callback(stdout);
-//     });
-//   }
-//
-//   // var test = require("../test.json");
-//   var exec = require('child_process').exec;
-//
-//   var curlCommand = "curl -X POST https://di-api.dev.drillinginfo.com/v1/x4m/authorizations -H 'authorization: Bearer " + accessToken + "' -H 'cache-control: no-cache' -H 'content-type: application/json' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d '{\"requests\":[{\"uri\":\"http://app.drillinginfo.com/x4m/x4m60\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/4xm/x4mms\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/x4m/x4mbeta\",\"action\":\"GET\"}]}'"
-//   var auth;
+  // var jarParser = require('./jarParser');
+  //
+  // var login = require('./login.js');
+  //
+  // var accessToken = jarParser.getToken.access_token; // token from jarParser
+  // //var username = login.getUsername(); //username from login
+  //
+  // jarParser.buildAndRunCommand("x4m-mines1", "mines1");
+  // var accessToken;
+  // document.cookie = "username=a test";
+  //
+  //   function readCookie(name) {
+  //   	var nameEQ = name + "=";
+  //   	var ca = document.cookie.split(';');
+  //   	for(var i=0;i < ca.length;i++) {
+  //   		var c = ca[i];
+  //   		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+  //   		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+  //   	}
+  //   	return null;
+  //   }
+  // setTimeout(function() {
+  //   accessToken = jarParser.getToken().access_token; // token from jarParser
+  //   console.log("accessToken: " + accessToken);
+  //   // TODO: do something when update is pressed
+  //   var update = document.getElementById('update');
+  //   update.onclick = function() {
+  //     console.log('Update Button');
+  //   }
+  //
+  //   // TODO: do something when launch is pressed
+  //   var launch = document.getElementById('launch');
+  //   launch.onclick = function() {
+  //     console.log('Launch Button');
+  //   }
+  //
+  //   // Updates version number TODO: use the access token to do so
+  //   function updateVersionNumber(number){
+  //     var version = document.getElementById('version');
+  //     version.innerHTML = "Version " + number;
+  //   }
+  //
+  //   // Updates username TODO: use username from login to do so
+  //   function updateUsername(name){
+  //     var version = document.getElementById('username');
+  //     version.innerHTML = "Username: " + name;
+  //   }
+  //
+  //   // changes entitlement icons
+  //   function showImage(id, visible) {
+  //     var img = document.getElementById(id);
+  //     img.style.opacity = 0.4;
+  //   }
+  //
+  //   // executes the curl instruction
+  //   function execCommand(command, callback) {
+  //     exec(command, (error, stdout, stderr) => {
+  //       if (error !== null) {
+  //         console.log('exec error: ' + error);
+  //       }
+  //       callback(stdout);
+  //     });
+  //   }
+  //
+  //   // var test = require("../test.json");
+  //   var exec = require('child_process').exec;
+  //
+  //   var curlCommand = "curl -X POST https://di-api.dev.drillinginfo.com/v1/x4m/authorizations -H 'authorization: Bearer " + accessToken + "' -H 'cache-control: no-cache' -H 'content-type: application/json' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d '{\"requests\":[{\"uri\":\"http://app.drillinginfo.com/x4m/x4m60\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/4xm/x4mms\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/x4m/x4mbeta\",\"action\":\"GET\"}]}'"
+  //   var auth;
 
   var jarParser = require('./jarParser');
 
@@ -198,6 +197,7 @@
 
     // Updates version number TODO: use the access token to do so
     function updateVersionNumber(number) {
+      console.log(number);
       var version = document.getElementById('version');
       version.innerHTML = "Version " + number;
     }
@@ -241,7 +241,7 @@
     // parses entitlement JSON
     function parser(commandOutput) {
       auth = JSON.parse(commandOutput);
-      console.log(auth);
+      // console.log(auth);
       var perm1 = auth.authorizations[0].result;
       var perm2 = auth.authorizations[1].result;
       var perm3 = auth.authorizations[2].result;
@@ -268,53 +268,152 @@
     // // import AWS object without services
     // var AWS = require('aws-sdk/global');
 
-
     // import individual service
-    var S3 = require('aws-sdk/clients/s3');
-
-    var s3 = new AWS.S3({
-      accessKeyId: "yours3key",
-      secretAccessKey: "yours3secret",
-      maxRetries: 3,
-      // any other options are passed to new AWS.S3()
-      // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
-    });
-
-    // var client = s3.createClient({
-    //   maxAsyncS3: 20, // this is the default
-    //   s3RetryCount: 3, // this is the default
-    //   s3RetryDelay: 1000, // this is the default
-    //   multipartUploadThreshold: 20971520, // this is the default (20 MB)
-    //   multipartUploadSize: 15728640, // this is the default (15 MB)
-    //   s3Options: {
+    // var S3 = require('aws-sdk/clients/s3');
     //
-    //   },
+    // var s3 = new AWS.S3({
+    //   accessKeyId: "yours3key",
+    //   secretAccessKey: "yours3secret",
+    //   maxRetries: 3,
+    //   // any other options are passed to new AWS.S3()
+    //   // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+    // });
+    //
+    // // var client = s3.createClient({
+    // //   maxAsyncS3: 20, // this is the default
+    // //   s3RetryCount: 3, // this is the default
+    // //   s3RetryDelay: 1000, // this is the default
+    // //   multipartUploadThreshold: 20971520, // this is the default (20 MB)
+    // //   multipartUploadSize: 15728640, // this is the default (15 MB)
+    // //   s3Options: {
+    // //
+    // //   },
+    // // });
+    //
+    // var params = {
+    //   Bucket: 'di-transform',
+    //   Key: 'config.json',
+    //   // other options supported by getObject
+    //   // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#getObject-property
+    //   };
+    //
+    // s3.getObject(params, function(err, data) {
+    //   if (err) console.log(err, err.stack); // an error occurred
+    //   else console.log(data); // successful response
+    //   /*
+    //   data = {
+    //    AcceptRanges: "bytes",
+    //    ContentLength: 3191,
+    //    ContentType: "image/jpeg",
+    //    ETag: "\"6805f2cfc46c0f04559748bb039d69ae\"",
+    //    LastModified: <Date Representation>,
+    //    Metadata: {
+    //    },
+    //    TagCount: 2,
+    //    VersionId: "null"
+    //   }
+    //   */
     // });
 
-    var params = {
-      Bucket: 'di-transform',
-      Key: 'config.json',
-      // other options supported by getObject
-      // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#getObject-property
-      };
 
-    s3.getObject(params, function(err, data) {
-      if (err) console.log(err, err.stack); // an error occurred
-      else console.log(data); // successful response
-      /*
-      data = {
-       AcceptRanges: "bytes",
-       ContentLength: 3191,
-       ContentType: "image/jpeg",
-       ETag: "\"6805f2cfc46c0f04559748bb039d69ae\"",
-       LastModified: <Date Representation>,
-       Metadata: {
-       },
-       TagCount: 2,
-       VersionId: "null"
+    var request = require("request");
+
+    var config = "https://s3.amazonaws.com/di-transform/config.json";
+    var platform;
+    var versions;
+    var configJSON;
+    var platformJSON;
+    var versionsJSON;
+
+    // automatically called to check for updates
+    getRequest(config, setConfigJSON);
+
+    // takes url and returns body in callback
+    function getRequest(requestURL, callback) {
+      request.get(requestURL, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+          callback(body);
+        }
+      });
+    }
+
+    function setConfigJSON(obj) {
+      configJSON = JSON.parse(obj);
+      console.log(configJSON);
+      getPlatform();
+    }
+
+    function getPlatform() {
+      var os = process.platform;
+      switch (os) {
+        case "linux":
+          platforms = configJSON.launcher.installation[0].platforms;
+          break;
+        case "darwin":
+          platforms = configJSON.launcher.installation[1].platforms;
+          break;
+        case "win32":
+        case "win64":
+          platforms = configJSON.launcher.installation[2].platforms;
+          break;
       }
-      */
-    });
+      getRequest(platforms, setPlatformJSON)
+    }
+
+    function setPlatformJSON(obj){
+      platformJSON = JSON.parse(obj);
+      console.log(platformJSON);
+      versions = platformJSON.platform[0].versioning;
+      // TODO: do something in here to handle platform flags for automatic updating or prompting
+      console.log(versions);
+      getRequest(versions, setVersionsJSON);
+    }
+
+    function setVersionsJSON(obj){
+      versionsJSON = JSON.parse(obj);
+      console.log(versionsJSON);
+      // updateVersionNumber(versionsJSON.releases[0].version);
+    }
+
+
+
+    // var configJSON = request({
+    //   url: config,
+    //   json: true
+    // }, function(error, response, body) {
+    //   if (!error && response.statusCode == 200) {
+    //     var os = process.platform;
+    //     var platformsJSON;
+    //     switch (os) {
+    //       case "linux":
+    //         platforms = body.launcher.installation[0].platforms;
+    //         break;
+    //       case "darwin":
+    //         platforms = body.launcher.installation[1].platforms;
+    //         break;
+    //       case "win32":
+    //       case "win64":
+    //         platforms = body.launcher.installation[2].platforms;
+    //         break;
+    //     }
+    //   }
+    // });
+
+    // platformsJSON = JSON.parse(platforms);
+    // console.log(platformsJSON);
+    //
+    // request({
+    //   url: config,
+    //   json: true
+    // }, function(error, response, body) {
+    //   if (!error && response.statusCode == 200) {
+    //     configJSON = body;
+    //   }
+    // });
+
+    /*
+     * S3 server stuff end
+     */
 
     // var downloader = client.downloadFile(params);
     // downloader.on('error', function(err) {
@@ -356,7 +455,6 @@
     // console.log(perm2);
     // console.log(perm3);
 
-    updateVersionNumber('6.0');
     // updateUsername(readCookie(username));
   }, 2000);
 
