@@ -6,6 +6,9 @@ const url = require('url');
 // global window variable
 let win;
 
+global.username = {name: null};
+const {ipcMain} = require('electron');
+
 //changes the window's current .html file on display.
 function loadURL(name) {
   win.loadURL(url.format({

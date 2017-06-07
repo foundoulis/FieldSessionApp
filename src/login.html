@@ -70,6 +70,8 @@
                 document.cookie = "username=HI";
 
                 if (user == "x4m-mines1" && form.password.value == "mines1") {
+                  // used to set username in main.js
+                  require('electron').remote.getGlobal('username').name = user;
                   require('electron').remote.getCurrentWindow().loadURL(url.format({
                     pathname: path.join(__dirname, './mainscreen.html'),
                     protocol: 'file:',

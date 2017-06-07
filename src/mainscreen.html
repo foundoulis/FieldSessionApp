@@ -230,6 +230,8 @@
       "' -H 'cache-control: no-cache' -H 'content-type: application/json' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d '{\"requests\":[{\"uri\":\"http://app.drillinginfo.com/x4m/x4m60\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/4xm/x4mms\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/x4m/x4mbeta\",\"action\":\"GET\"}]}'"
     var auth;
 
+    // Update username display
+    updateUsername(require('electron').remote.getGlobal('username').name);
     execCommand(curlCommand, parser);
 
     var perm1;
