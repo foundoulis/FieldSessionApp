@@ -5,7 +5,6 @@ const url = require('url');
 
 // global window variable
 let win;
-let login;
 
 //changes the window's current .html file on display.
 function loadURL(name) {
@@ -17,21 +16,8 @@ function loadURL(name) {
   }));
 }
 
-function loadURLLogin(name) {
-  login.loadURL(url.format({
-    pathname: path.join(__dirname, name),
-    protocol: 'file:',
-    slashes: true,
-    resizeable: false
-  }));
-}
-
 function loadLogInScreen() {
-  loadURLLogin('login.html');
-}
-function loadMainScreen() {
-  // Load index.html
-  loadURL('mainscreen.html');
+  loadURL('login.html');
 }
 
 function runJarFile() {
@@ -55,28 +41,12 @@ function createWindow() {
     resizeable: false,
     icon: path.join(__dirname, '..','icons/icon.jpeg')
   });
-  login = new BrowserWindow({
-    width:800,
-    height:675,
-    resizeable: false,
-    icon: path.join(__dirname, '..','icons/icon.jpeg')
-  });
-  // Opens devtools
-  //win.webContents.openDevTools();
-
   win.on('closed', () => {
     win = null;
   });
 
-loadMainScreen();
-// win.hide();
 loadLogInScreen();
-
-
-
 }
-
-// module.exports.win = win;
 
 // Run create window function
 app.on('ready', createWindow);

@@ -6,7 +6,9 @@ function check(form) {
 // document.cookie = "username=HI";
 
   if (user == "x4m-mines1" && form.password.value == "mines1") {
-    window.open("mainscreen.html")
+    const {BrowserWindow} = require('electron').remote
+    let win = new BrowserWindow({width: 800, height: 600})
+    win.loadURL('mainscreen.html')
   } else {
     alert("Error Password or Username");
   }

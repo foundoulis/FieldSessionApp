@@ -325,13 +325,6 @@
     var platformJSON;
     var versionsJSON;
 
-    // getRequest(config, setConfigJSON);
-
-    // function callbackHandler(err, results){
-    //   if (err) console.log(err);
-    //   else console.log(results);
-    // }
-
     // takes url and returns body in callback
     function getRequest(requestURL, setJSON, callback) {
       request.get(requestURL, function(error, response, body) {
@@ -405,40 +398,6 @@
       updateVersionNumber(versionsJSON.releases[0].version);
       console.log(versionsJSON);
     }
-
-    // var configJSON = request({
-    //   url: config,
-    //   json: true
-    // }, function(error, response, body) {
-    //   if (!error && response.statusCode == 200) {
-    //     var os = process.platform;
-    //     var platformsJSON;
-    //     switch (os) {
-    //       case "linux":
-    //         platforms = body.launcher.installation[0].platforms;
-    //         break;
-    //       case "darwin":
-    //         platforms = body.launcher.installation[1].platforms;
-    //         break;
-    //       case "win32":
-    //       case "win64":
-    //         platforms = body.launcher.installation[2].platforms;
-    //         break;
-    //     }
-    //   }
-    // });
-
-    // platformsJSON = JSON.parse(platforms);
-    // console.log(platformsJSON);
-    //
-    // request({
-    //   url: config,
-    //   json: true
-    // }, function(error, response, body) {
-    //   if (!error && response.statusCode == 200) {
-    //     configJSON = body;
-    //   }
-    // });
 
     /*
      * S3 server stuff end

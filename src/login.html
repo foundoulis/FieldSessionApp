@@ -50,21 +50,16 @@
               <form role="form" id="loginForm" method="post" name="loginForm">
                 <!-- Above goes the redirect statement to the correct .html, action="mainscreen.html" -->
                 <input type="text" autofocus placeholder="Username" id="username" name="username" class="form-control username-login" required/>
-
                 <input type="password" placeholder="Password" id="password" name="password" class="form-control password-login" required/>
-
-
                 <span class="pull-right">
-            <h5 class="help-block forgot-pass">
-                <small><a href="javascript:openFaqWindow('/auth/resources/7.0.0.ga/login/di-theme/signInProblemsFaq.html')">Sign In Questions?</a></small>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-                <small><a href="http://www.drillinginfo.com/forgotPassword.jsp" target="_blank">Forgot password?</a></small>
-            </h5>
-            </span>
-
+                  <h5 class="help-block forgot-pass">
+                    <small><a href="javascript:openFaqWindow('/auth/resources/7.0.0.ga/login/di-theme/signInProblemsFaq.html')">Sign In Questions?</a></small>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                    <small><a href="http://www.drillinginfo.com/forgotPassword.jsp" target="_blank">Forgot password?</a></small>
+                  </h5>
+                </span>
                 <button type="submit" class="btn di-green btn-block signin" id="login" name="login" outline-color=#109ED9 onclick="check(this.form)">
             <span class="text-white signintext">SIGN IN</span>
             </button>
-
               </form>
 
               <script>
@@ -72,33 +67,22 @@
               // var user = "user";
               function check(form) {
                 user = form.username.value;
-              document.cookie = "username=HI";
+                document.cookie = "username=HI";
 
                 if (user == "x4m-mines1" && form.password.value == "mines1") {
-
-                  this.close();
-                // let mainWindow = new BrowserWindow({width: 1200, height: 800});
-                  // add("Browser Window Created");
-                  // mainWindow.loadURL('file./src/mainscreen.html');
-                  // add("");
-                  // mainWindow.show();
-                  loadMainScreen();
-
-                  // setTimeout( function(){
-                  //   this = "hidden";
-                  // }, 50);
-
-
+                  require('electron').remote.getCurrentWindow().loadURL(url.format({
+                    pathname: path.join(__dirname, './mainscreen.html'),
+                    protocol: 'file:',
+                    slashes: true,
+                    resizeable: false
+                  }));
                 } else {
                   alert("Error Password or Username");
                 }
-                //console.log(document.getElementById("loginForm").username.value);
-
               }
-              // module.exports.getUsername = function getUsername(){
-              //   return user;
-              // }
-</script>
+
+              </script>
+
               <span class="text-center">
             <h5 class="help-block subscription-block">
             <small>
@@ -163,8 +147,7 @@
   }(window, document, 'script', 'ga'));
   ga('create', 'UA-XXXXX-X');
   ga('send', 'pageview');
-// window.glob = "urface";
-//document.cookie = "username=user1";
-
+  // window.glob = "urface";
+  //document.cookie = "username=user1";
 </script>
 <script type="text/javascript" src="main.js"></script>
