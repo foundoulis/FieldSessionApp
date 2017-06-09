@@ -1,0 +1,21 @@
+{
+  "launcher": {
+    "installation": [
+      {
+        "os": "linux",
+        "platforms": "https://s3.amazonaws.com/di-transform/linuxplatform.json",
+        "applications": "https://s3.amazonaws.com/di-transform/linuxapps.json"
+      },
+      {
+        "os": "macos",
+        "platforms": "https://s3.amazonaws.com/di-transform/macplatform.json",
+        "applications": "https://s3.amazonaws.com/di-transform/macapps.json"
+      },
+      {
+        "os": "windows",
+        "platforms": "https://s3.amazonaws.com/di-transform/winplatform.json",
+        "applications": "https://s3.amazonaws.com/di-transform/winapps.json"
+      }
+    ]
+  }
+}
