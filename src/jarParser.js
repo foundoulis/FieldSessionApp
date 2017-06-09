@@ -1,6 +1,6 @@
 var exec = require('child_process').exec;
-var token;
-//export token to be used in mainscreen.html
+
+let token;
 module.exports.getToken = function getToken() {
   return token;
 }
@@ -48,4 +48,30 @@ module.exports.buildAndRunCommand = function buildAndRunCommand(user, password) 
   execCommand(curlCommand, parser); // will not execute
   // TODO: remove once testing is done
   console.log("We are in the jarParser. Username: " + user + " Password: " + password);
+}
+
+module.exports.storeCookie = function storeCookie(data) {
+    //Setting the date
+    var daysToExpiry = 15;
+    var expirDate = new Date();
+    expirDate.setDate(expirDate.getDate() + daysToExpiry);
+    console.log(expirDate.getDate().toString());
+
+    // Building and storing the cookie
+    global.sess.defaultSession.cookies.set(
+        {
+            url: "https://info.drillinginfo.com/",
+            name: "TL",
+            value: data,
+            secure: true,
+            expirationDate: expirDate.getTime(),
+        },
+    (error) => {
+        if (error === null) {
+        // Show me the cookies
+        console.log(JSON.stringify(loadCookies()))
+    } else {
+        console.log(error);
+    }
+    });
 }
