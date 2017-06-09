@@ -287,32 +287,43 @@
   }
 
   function getVersionFiles() {
+    var fs = require("fs");
     var server = versionsJSON.releases[0].server;
-
-    var list = versionsJSON.releases[0].files;
+    var list = versionsJSON.releases[0].files.slice(1,2);
     // replace this list with the crossreferenced one
     list.forEach(function(file) {
       url = server + "/" + file;
-      child = exec("mkdir ./downloads/" + file + "/" + " && wget -O ./downloads/" + file + " " + url,
-        (error, stdout, stderr) => {
-          // Directs standard out and standard error.
-          //console.log('stdout: ' + stdout);
-          //console.log('stderr: ' + stderr);
-          // Prints error if it doesn't work.
-          if (error !== null) {
-            console.log('exec error: ' + error);
-          }
-        });
-      // request.get(url, function(error, response, body){
-      //   if (!error && response.statusCode == 200) {
-      //     console.log(body);
-      //   } else if (error) {
-      //     console.log(error);
-      //   } else {
-      //     // console.log(new Error("HTML statuscode: " + response.statuscode));
-      //     console.log(body);
-      //   }
-      // });
+      // child = exec("mkdir ./downloads/" + file + "/" + " && wget -O ./downloads/" + file + " " + url,
+      //   (error, stdout, stderr) => {
+      //     // Directs standard out and standard error.
+      //     //console.log('stdout: ' + stdout);
+      //     //console.log('stderr: ' + stderr);
+      //     // Prints error if it doesn't work.
+      //     if (error !== null) {
+      //       console.log('exec error: ' + error);
+      //     }
+      //   });
+      request.get(url, function(error, response, body){
+        if (!error && response.statusCode == 200) {
+          // location = url.format({
+          //     pathname: require('electron').remote.path.join(__dirname, versionsJSON.releases[0].local + "/" + file),
+          //     protocol: 'file:',
+          //     slashes: true,
+          //   });
+          location = require('electron').remote.getGLobal(__dirname) + "./temp/";
+          fs.mkdir("./temp/", () => {});
+          // if (!fs.existsSync(location)){
+          //   fs.mkdirSync(location, (error) => {if (error.code !== "EEXIST") console.log(error)});
+          // }
+          // fs.mkdirSync(location, (error) => {if (error !== null) console.log(error)});
+          // fs.writeFile(location, body);
+        } else if (error) {
+          console.log(error);
+        } else {
+          // console.log(new Error("HTML statuscode: " + response.statuscode));
+          console.log(body);
+        }
+      });
     })
   }
 
