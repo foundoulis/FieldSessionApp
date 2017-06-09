@@ -76,15 +76,15 @@
     <div style="text-align:right; width:180px;"><a href="http://www.surfing-waves.com/feed.htm" target="_blank" style="color:#ccc;font-size:10px">widget @</a> <a href="http://www.surfing-waves.com" target="_blank" style="color:#ccc;font-size:10px">surfing-waves.com</a></div>
     <!-- end sw-rss-feed code -->
   </div>
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js">
-  </script>
-  <script type="text/javascript">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <script>
     $(function() {
       var links = [];
 
       $.getJSON('./tools.json', function(data) {
         $.each(data.tools, function(i, f) {
           var newLink = "<a" + " href='" + f.link + "'>" + f.name + "</a>" + "<br>"
+          console.log(newLink);
           $(newLink).appendTo("#toolContainer");
         });
       });
@@ -92,8 +92,13 @@
   </script>
   <!-- Tools container -->
 
-  <div class="tools">
+  <div class="tools" id="toolContainer">
     <h2 id="header"> Tools </h2>
+    <!-- <a> help </a> -->
+
+
+
+
   </div>
   <!-- Update button -->
   <div class="update">
