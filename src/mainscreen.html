@@ -98,7 +98,6 @@
 <script type="text/javascript">
 
   var jarParser = require('./jarParser');
-  var login = require('./login.js');
 
   var accessToken = jarParser.getToken.access_token; // token from jarParser
 
@@ -182,7 +181,7 @@
 
   // grabs token from server and updates entitlements
   function tokenHandler(){
-    jarParser.buildAndRunCommand("x4m-mines1", "mines1");
+    jarParser.buildAndRunCommand(require('electron').remote.getGlobal('username').name, require('electron').remote.getGlobal('password').pass);
     setTimeout(function() {
       setAccessToken();
       //fetch json from server
@@ -272,6 +271,36 @@
       });
     }
 
+    function getVersionFiles(){
+      var server = versionsJSON.releases[0].server;
+
+      var list = versionsJSON.releases[0].files;
+      // replace this list with the crossreferenced one
+      list.forEach(function(file) {
+        url = server + "/" + file;
+        child = exec("mkdir ./downloads/" + file + "/" + " && wget -O ./downloads/" + file + " " + url,
+        (error, stdout, stderr) => {
+            // Directs standard out and standard error.
+            //console.log('stdout: ' + stdout);
+            //console.log('stderr: ' + stderr);
+            // Prints error if it doesn't work.
+            if(error !== null){
+                console.log('exec error: ' + error);
+            }
+        });
+        // request.get(url, function(error, response, body){
+        //   if (!error && response.statusCode == 200) {
+        //     console.log(body);
+        //   } else if (error) {
+        //     console.log(error);
+        //   } else {
+        //     // console.log(new Error("HTML statuscode: " + response.statuscode));
+        //     console.log(body);
+        //   }
+        // });
+      })
+    }
+
   // automatically called to check for updates
   function updatePlatform(){
     async.series([
@@ -331,6 +360,7 @@
     versionsJSON = JSON.parse(obj);
     updateVersionNumber(versionsJSON.releases[0].version);
     console.log(versionsJSON);
+    getVersionFiles()
   }
 
   /*
@@ -382,7 +412,7 @@
   async.series([
     tokenHandler(),
     updateUsername(require('electron').remote.getGlobal('username').name),
-    updatePlatform()
+    updatePlatform(),
   ]);
 
   require('./renderer.js');

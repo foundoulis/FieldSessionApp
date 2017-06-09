@@ -11,6 +11,7 @@ const url = require('url');
 let win;
 //username variable, set in login.html used in mainscreen.html
 global.username = {name: null};
+global.password = {pass: null};
 global.cook = null;
 global.config = null;
 
