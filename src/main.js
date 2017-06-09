@@ -14,6 +14,7 @@ global.username = {name: null};
 global.password = {pass: null};
 global.cook = null;
 global.config = null;
+global.sess = session;
 
 //changes the window's current .html file on display.
 function loadURL(name) {
@@ -60,6 +61,7 @@ function createWindow() {
     loadCookies(); // Called at the end of storeCookie.
     loadConfig();
     storeCookie("Please work");
+    // storeCookie("Please work, jesus.");
 }
 
 function loadConfig() {
@@ -67,8 +69,8 @@ function loadConfig() {
     child = exec("wget -O ./config.json https://s3.amazonaws.com/di-transform/config.json",
     (error, stdout, stderr) => {
         // Directs standard out and standard error.
-        //console.log('stdout: ' + stdout);
-        //console.log('stderr: ' + stderr);
+        // console.log('stdout: ' + stdout);
+        // console.log('stderr: ' + stderr);
         // Prints error if it doesn't work.
         if(error !== null){
             console.log('exec error: ' + error);
@@ -87,6 +89,7 @@ function loadCookies() {
     });
 }
 
+<<<<<<< Updated upstream
 function storeCookie(data) {
     //Setting the date
     var daysToExpiry = 15;
@@ -114,6 +117,8 @@ function storeCookie(data) {
 
 }
 
+=======
+>>>>>>> Stashed changes
 // Run create window function
 app.on('ready', createWindow);
 
