@@ -1,15 +1,17 @@
+/*font face*/
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+/*********************** Logo container style **************************/
 .logo {
   width: 40%;
   float: left;
 }
-
+/*********************** Logo image style **************************/
 .logo #logo {
   position: static;
   top: 2%;
   left: 2%;
 }
-
+/*********************** Version container style **************************/
 #version {
   float: left;
   width: 20%;
@@ -19,20 +21,18 @@
   margin: 0 auto 10px;
   padding: 0px;
   text-align: center;
-  /*box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);*/
 }
-
+/***********************User container style **************************/
 .user {
   float: right;
   width: 40%;
-  /*background: #b3b3b3;*/
   position: static;
   color: #FFFFFF;
   right: 10px;
   top: 10px;
   text-align: right;
 }
-
+/*********************** Tool tip style **************************/
 .user .tooltiptext {
     visibility: hidden;
     width: 120px;
@@ -42,11 +42,11 @@
     padding: 5px 0;
     border-radius: 6px;
 }
-
+/*********************** TT hover style **************************/
 .tooltip:hover .tooltiptext {
     visibility: visible;
 }
-
+/*********************** Username style **************************/
 .user #username {
   position: relative;
   font-weight: bold;
@@ -54,10 +54,7 @@
   margin-bottom: 2px;
 }
 
-/*.news-border {
-
-}*/
-
+/*********************** News container style **************************/
 .news {
   position: fixed;
   border-radius: 5px;
@@ -70,7 +67,7 @@
   text-align: center;
   overflow-y: hidden;
 }
-
+/*********************** Tools container style **************************/
 .tools {
   border-radius: 5px;
   background: #d3d3d3;
@@ -81,36 +78,88 @@
   top: 23%;
   left: 65%;
 }
-
+/*********************** Tools header style **************************/
 .tools #header {
   text-align: center;
   color: #1c1b1d;
 }
-
+/***********************Footer style **************************/
 #foot {
   position: fixed;
   bottom: 0px;
   width: 100%;
   height: 20%;
-  /*background: #ff6c91;*/
 }
-/*body{margin:0;padding:0;background-image:url(/images/ex-slash.png);}*/
-img {border:0px;}
-.feed-container{font-size:12px;border:1px solid #CCCCCC;}
-.feed-container .header{margin:0px;padding:5px 5px 5px 5px;font-size:12px;border-bottom:1px solid #CCCCCC;}
-.feed-container .footer{margin:0px;padding:5px 5px 5px 5px;color:#fff;}
-.feed-container .header .title{margin:0;padding:0;font-weight:bold;color:#000;}
-.feed-container .header a{text-decoration:none;color:#000;}
-.feed-container .header a:hover{text-decoration:underline;color:#666;}
-.feed-container .content{margin:0px;padding:0 3px;}
-.feed-container .content .item{margin:0 0 7px 0;padding:0 0 7px 0;border-bottom:1px dashed #CCCCCC;}
-.feed-container .content .item .title{margin:1px 0 1px 3px;padding:1px 2px 1px 3px;color:#1c1b1d;font-weight:bold;}
-.feed-container .content .item .title a{color:#1c1b1d;text-decoration:none;}
-.feed-container .content .item .title a:hover{color:#1c1b1d;text-decoration:underline;}
-.feed-container .content .item .description{margin:0 0 0 3px;padding:0 2px 0 3px;color:#666;}
-.feed-container .content .item .description a{text-decoration:none;color:#000;}
-.feed-container .content .item .description a:hover{text-decoration:underline;color:#666;}
-
+/*********************** RSS feed style **************************/
+img {
+  border:0px;
+}
+.feed-container{
+  font-size:12px;
+  border:1px solid #CCCCCC;
+}
+.feed-container .header{
+  margin:0px;
+  padding:5px 5px 5px 5px;
+  font-size:12px;
+  border-bottom:1px solid #CCCCCC;
+}
+.feed-container .footer{
+  margin:0px;
+  padding:5px 5px 5px 5px;
+  color:#fff;
+}
+.feed-container .header .title{
+  margin:0;
+  padding:0;
+  font-weight:bold;
+  color:#000;
+}
+.feed-container .header a{
+  text-decoration:none;
+  color:#000;
+}
+.feed-container .header a:hover{
+  text-decoration:underline;
+  color:#666;
+}
+.feed-container .content{
+  margin:0px;
+  padding:0 3px;
+}
+.feed-container .content .item{
+  margin:0 0 7px 0;
+  padding:0 0 7px 0;
+  border-bottom:1px dashed #CCCCCC;
+}
+.feed-container .content .item .title{
+  margin:1px 0 1px 3px;
+  padding:1px 2px 1px 3px;
+  color:#1c1b1d;
+  font-weight:bold;
+}
+.feed-container .content .item .title a{
+  color:#1c1b1d;
+  text-decoration:none;
+}
+.feed-container .content .item .title a:hover{
+  color:#1c1b1d;
+  text-decoration:underline;
+}
+.feed-container .content .item .description{
+  margin:0 0 0 3px;
+  padding:0 2px 0 3px;
+  color:#666;
+}
+.feed-container .content .item .description a{
+  text-decoration:none;
+  color:#000;
+}
+.feed-container .content .item .description a:hover{
+  text-decoration:underline;
+  color:#666;
+}
+/*********************** Button style **************************/
 button {
   font-family: "Roboto", sans-serif;
   border-radius: 5px;
@@ -126,12 +175,12 @@ button {
   cursor: pointer;
   border: none;
 }
-
+/*Hover style*/
 button:hover {
   background: #87cf54;
   box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
-
+/*********************** Update button style **************************/
 .update {
   background: #76be43;
   border-radius: 5px;
@@ -141,7 +190,7 @@ button:hover {
   height: 10%;
   width: 20%;
 }
-
+/*********************** Launch button style **************************/
 .launch {
   background: #76be43;
   border-radius: 5px;
@@ -151,7 +200,7 @@ button:hover {
   height: 10%;
   width: 20%;
 }
-
+/*********************** Animation for Loading Bar **************************/
 @keyframes loader {
   0% {
     width: 0%
@@ -160,7 +209,7 @@ button:hover {
     width: 100%
   }
 }
-
+/*********************** Loading bar style (shadow part) **************************/
 .progress-bar {
   border-radius: 60px;
   width: 50%;
@@ -173,7 +222,7 @@ button:hover {
     display: block;
   }
 }
-
+/*********************** loading material style (green part) **************************/
 .progress {
   position: relative;
   box-shadow: inset 3px 3px 2px 0 rgba(0, 0, 0, 0.24);
@@ -184,14 +233,9 @@ button:hover {
   padding: 5px;
   width: 0;
 }
-
+/*********************** Body **************************/
 body {
   background: #1C1B1D;
-  /* fallback for old browsers */
-  /*background: -webkit-linear-gradient(right, #ABADB0, #3A383A);
-  background: -moz-linear-gradient(right, #ABADB0, #3A383A);
-  background: -o-linear-gradient(right, #ABADB0, #3A383A);
-  background: linear-gradient(to left, #ABADB0, #3A383A);*/
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

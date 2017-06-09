@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+<!-- html for the main screen of the launcher -->
 <html>
 
 <head>
@@ -7,33 +7,30 @@
   <title>Transform Launcher</title>
   <link rel="stylesheet" href="mainscreen.css">
 </head>
-
+<!-- resize window to optimal size -->
 <body onload="window.resizeTo(900, 550)">
   <div class="logo">
     <div>
       <img src="di_logo_login.png" alt="https://login.drillinginfo.com/auth/resources/7.0.0.ga/login/di-theme/img/di_logo_login.png" width="75%" height="19%" id="logo">
     </div>
   </div>
-
+<!-- Version container -->
   <div>
     <h3 id="version"> Version <!-- default value --> </h3>
   </div>
-
+<!-- Username container -->
   <div class="user">
     <h2 id="username">
       Username: <!-- default value -->
     </h2>
     <div>
-      <!-- TODO add tooltip text to icons -->
-      <img src="../icons/transform.png" width="15%" height="15%" id="basic">
-      <!-- <span class="tooltiptext">transfrom</span> -->
-      <img src="../icons/beta_1.png" width="15%" height="15%" id="beta">
-      <!-- <span class="tooltiptext">beta user</span> -->
-      <img src="../icons/support_1.png" width="15%" height="15%" id="mms">
-      <!-- <span class="tooltiptext">support user</span> -->
+      <!-- images for entitlement -->
+      <img src="../icons/transform.png" alt="alternative text" title="Transform" width="15%" height="15%" id="basic">
+      <img src="../icons/beta_1.png" alt="alternative text" title="Beta"  width="15%" height="15%" id="beta">
+      <img src="../icons/support_1.png" alt="alternative text" title="Support" width="15%" height="15%" id="mms">
     </div>
   </div>
-
+<!-- news container -->
   <div class="news">
     <!-- start sw-rss-feed code -->
     <script type="text/javascript">
@@ -48,7 +45,6 @@
       rssfeed_font_size = "15";
       rssfeed_font_face = "";
       rssfeed_border = "off";
-      // rssfeed_css_url="http://feed.surfing-waves.com/css/style1.css";
       rssfeed_title = "on";
       rssfeed_title_name = "";
       rssfeed_title_bgcolor = "#76be43";
@@ -79,103 +75,32 @@
     <div style="text-align:right; width:180px;"><a href="http://www.surfing-waves.com/feed.htm" target="_blank" style="color:#ccc;font-size:10px">widget @</a> <a href="http://www.surfing-waves.com" target="_blank" style="color:#ccc;font-size:10px">surfing-waves.com</a></div>
     <!-- end sw-rss-feed code -->
   </div>
-
+<!-- Tools container -->
   <div class="tools">
     <h2 id="header"> Tools </h2>
   </div>
-
+<!-- Update button -->
   <div class="update">
     <button id='update'> Update </button>
   </div>
-
+<!-- loading bar -->
   <div class="progress-bar">
     <div class="progress"></div>
   </div>
-
+<!-- Launch button -->
   <div class="launch">
     <button id="launch">Launch</button>
   </div>
-
 </body>
 
 <script src="https://sdk.amazonaws.com/js/aws-sdk-2.61.0.min.js"></script>
+<!-- main script -->
 <script type="text/javascript">
-  // var jarParser = require('./jarParser');
-  //
-  // var login = require('./login.js');
-  //
-  // var accessToken = jarParser.getToken.access_token; // token from jarParser
-  // //var username = login.getUsername(); //username from login
-  //
-  // jarParser.buildAndRunCommand("x4m-mines1", "mines1");
-  // var accessToken;
-  // document.cookie = "username=a test";
-  //
-  //   function readCookie(name) {
-  //   	var nameEQ = name + "=";
-  //   	var ca = document.cookie.split(';');
-  //   	for(var i=0;i < ca.length;i++) {
-  //   		var c = ca[i];
-  //   		while (c.charAt(0)==' ') c = c.substring(1,c.length);
-  //   		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-  //   	}
-  //   	return null;
-  //   }
-  // setTimeout(function() {
-  //   accessToken = jarParser.getToken().access_token; // token from jarParser
-  //   console.log("accessToken: " + accessToken);
-  //   // TODO: do something when update is pressed
-  //   var update = document.getElementById('update');
-  //   update.onclick = function() {
-  //     console.log('Update Button');
-  //   }
-  //
-  //   // TODO: do something when launch is pressed
-  //   var launch = document.getElementById('launch');
-  //   launch.onclick = function() {
-  //     console.log('Launch Button');
-  //   }
-  //
-  //   // Updates version number TODO: use the access token to do so
-  //   function updateVersionNumber(number){
-  //     var version = document.getElementById('version');
-  //     version.innerHTML = "Version " + number;
-  //   }
-  //
-  //   // Updates username TODO: use username from login to do so
-  //   function updateUsername(name){
-  //     var version = document.getElementById('username');
-  //     version.innerHTML = "Username: " + name;
-  //   }
-  //
-  //   // changes entitlement icons
-  //   function showImage(id, visible) {
-  //     var img = document.getElementById(id);
-  //     img.style.opacity = 0.4;
-  //   }
-  //
-  //   // executes the curl instruction
-  //   function execCommand(command, callback) {
-  //     exec(command, (error, stdout, stderr) => {
-  //       if (error !== null) {
-  //         console.log('exec error: ' + error);
-  //       }
-  //       callback(stdout);
-  //     });
-  //   }
-  //
-  //   // var test = require("../test.json");
-  //   var exec = require('child_process').exec;
-  //
-  //   var curlCommand = "curl -X POST https://di-api.dev.drillinginfo.com/v1/x4m/authorizations -H 'authorization: Bearer " + accessToken + "' -H 'cache-control: no-cache' -H 'content-type: application/json' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d '{\"requests\":[{\"uri\":\"http://app.drillinginfo.com/x4m/x4m60\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/4xm/x4mms\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/x4m/x4mbeta\",\"action\":\"GET\"}]}'"
-  //   var auth;
 
   var jarParser = require('./jarParser');
-
   var login = require('./login.js');
 
   var accessToken = jarParser.getToken.access_token; // token from jarParser
-  //var username = login.getUsername(); //username from login
 
   var async = require("async");
 
@@ -218,9 +143,7 @@
     img.style.opacity = 0.4;
   }
 
-  // var test = require("../test.json");
   var exec = require('child_process').exec;
-
   var auth;
 
   // executes the curl instruction
@@ -233,6 +156,7 @@
     });
   }
 
+  //variables to store permissions
   var perm1;
   var perm2;
   var perm3;
@@ -241,12 +165,10 @@
   function parser(commandOutput) {
     console.log(commandOutput);
     auth = JSON.parse(commandOutput);
-    // console.log(auth);
     var perm1 = auth.authorizations[0].result;
     var perm2 = auth.authorizations[1].result;
     var perm3 = auth.authorizations[2].result;
-    // printJSON(commandOutput);
-    // TODO: change these to the actual permissions once TOKEN is global
+    //logic for entitlement tiles
     if (perm1 == "deny") {
       showImage("basic", false);
     }
@@ -258,97 +180,97 @@
     }
   }
 
+  // grabs token from server and updates entitlements
   function tokenHandler(){
     jarParser.buildAndRunCommand("x4m-mines1", "mines1");
     setTimeout(function() {
       setAccessToken();
+      //fetch json from server
       var curlCommand = "curl -X POST https://di-api.dev.drillinginfo.com/v1/x4m/authorizations -H 'authorization: Bearer " + accessToken +
         "' -H 'cache-control: no-cache' -H 'content-type: application/json' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d '{\"requests\":[{\"uri\":\"http://app.drillinginfo.com/x4m/x4m60\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/4xm/x4mms\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/x4m/x4mbeta\",\"action\":\"GET\"}]}'"
       execCommand(curlCommand, parser);
     }, 2500);
   }
 
+    /*
+     ******************************************************************** S3 server stuff********************************************************************
+     */
 
-  /*
-   * S3 server stuff
-   */
+    // import entire SDK
+    // var AWS = require('aws-sdk');
+    // // import AWS object without services
+    // var AWS = require('aws-sdk/global');
 
-  // import entire SDK
-  // var AWS = require('aws-sdk');
-  // // import AWS object without services
-  // var AWS = require('aws-sdk/global');
+    // import individual service
+    // var S3 = require('aws-sdk/clients/s3');
+    //
+    // var s3 = new AWS.S3({
+    //   accessKeyId: "yours3key",
+    //   secretAccessKey: "yours3secret",
+    //   maxRetries: 3,
+    //   // any other options are passed to new AWS.S3()
+    //   // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+    // });
+    //
+    // // var client = s3.createClient({
+    // //   maxAsyncS3: 20, // this is the defaultSo we have to use callbackCounter to keep track of how many tasks have finished. If an error occurs we also have to handle this in a special way for each task. And we have code duplication.
+    // //   s3RetryCount: 3, // this is the default
+    // //   s3RetryDelay: 1000, // this is the default
+    // //   multipartUploadThreshold: 20971520, // this is the default (20 MB)
+    // //   multipartUploadSize: 15728640, // this is the default (15 MB)
+    // //   s3Options: {
+    // //
+    // //   },
+    // // });
+    //
+    // var params = {
+    //   Bucket: 'di-transform',
+    //   Key: 'config.json',
+    //   // other options supported by getObject
+    //   // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#getObject-property
+    //   };
+    //
+    // s3.getObject(params, function(err, data) {
+    //   if (err) console.log(err, err.stack); // an error occurred
+    //   else console.log(data); // successful response
+    //   /*
+    //   data = {
+    //    AcceptRanges: "bytes",
+    //    ContentLength: 3191,
+    //    ContentType: "image/jpeg",
+    //    ETag: "\"6805f2cfc46c0f04559748bb039d69ae\"",
+    //    LastModified: <Date Representation>,
+    //    Metadata: {
+    //    },
+    //    TagCount: 2,
+    //    VersionId: "null"
+    //   }
+    //   */
+    // });
 
-  // import individual service
-  // var S3 = require('aws-sdk/clients/s3');
-  //
-  // var s3 = new AWS.S3({
-  //   accessKeyId: "yours3key",
-  //   secretAccessKey: "yours3secret",
-  //   maxRetries: 3,
-  //   // any other options are passed to new AWS.S3()
-  //   // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
-  // });
-  //
-  // // var client = s3.createClient({
-  // //   maxAsyncS3: 20, // this is the defaultSo we have to use callbackCounter to keep track of how many tasks have finished. If an error occurs we also have to handle this in a special way for each task. And we have code duplication.
-  // //   s3RetryCount: 3, // this is the default
-  // //   s3RetryDelay: 1000, // this is the default
-  // //   multipartUploadThreshold: 20971520, // this is the default (20 MB)
-  // //   multipartUploadSize: 15728640, // this is the default (15 MB)
-  // //   s3Options: {
-  // //
-  // //   },
-  // // });
-  //
-  // var params = {
-  //   Bucket: 'di-transform',
-  //   Key: 'config.json',
-  //   // other options supported by getObject
-  //   // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#getObject-property
-  //   };
-  //
-  // s3.getObject(params, function(err, data) {
-  //   if (err) console.log(err, err.stack); // an error occurred
-  //   else console.log(data); // successful response
-  //   /*
-  //   data = {
-  //    AcceptRanges: "bytes",
-  //    ContentLength: 3191,
-  //    ContentType: "image/jpeg",
-  //    ETag: "\"6805f2cfc46c0f04559748bb039d69ae\"",
-  //    LastModified: <Date Representation>,
-  //    Metadata: {
-  //    },
-  //    TagCount: 2,
-  //    VersionId: "null"
-  //   }
-  //   */
-  // });
+    var request = require("request");
+    var async = require("async");
 
+    var config = "https://s3.amazonaws.com/di-transform/config.json";
+    var platform;
+    var versions;
+    var configJSON;
+    var platformJSON;
+    var versionsJSON;
 
-  var request = require("request");
-
-  var config = "https://s3.amazonaws.com/di-transform/config.json";
-  var platform;
-  var versions;
-  var configJSON;
-  var platformJSON;
-  var versionsJSON;
-
-  // takes url and returns body in callback
-  function getRequest(requestURL, setJSON, callback) {
-    request.get(requestURL, function(error, response, body) {
-      if (!error && response.statusCode == 200) {
-        setJSON(body);
-        callback(null, requestURL)
-      } else if (error) {
-        callback(error, null);
-        // console.log(error);
-      } else {
-        callback(new Error("HTML statuscode: " + response.statuscode), null);
-      }
-    });
-  }
+    // takes url and returns body in callback
+    function getRequest(requestURL, setJSON, callback) {
+      request.get(requestURL, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+          setJSON(body);
+          callback(null, requestURL)
+        } else if (error) {
+          callback(error, null);
+        } else {
+          callback(new Error("HTML statuscode: " + response.statuscode), null);
+        }
+      });
+    }
 
   // automatically called to check for updates
   function updatePlatform(){
@@ -464,10 +386,5 @@
   ]);
 
   require('./renderer.js');
-
-  // var curlCommand = "curl -X POST https://di-api.dev.drillinginfo.com/v1/x4m/authorizations -H 'authorization: Bearer <<ACCESS TOKEN>>' -H 'cache-control: no-cache' -H 'content-type: application/json' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d '{"requests":[{"uri":"http://app.drillinginfo.com/x4m/x4m60","action":"GET"},{"uri":"http://app.drillinginfo.com/4xm/x4mms","action":"GET"},{"uri":"http://app.drillinginfo.com/x4m/x4mbeta","action":"GET"}]}'"
-
-  // execCommand(curlCommand, parser);
 </script>
-
 </html>
