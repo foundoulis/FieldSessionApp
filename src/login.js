@@ -1,4 +1,4 @@
-
+//NOT CURRENTLY IN USE
 // Change this to actually verify through server
 // var user = "user";
 function check(form) {

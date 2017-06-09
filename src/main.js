@@ -1,14 +1,12 @@
-
+//requires for electron
 const {app, BrowserWindow} = require('electron');
 const path = require('path');
 const url = require('url');
-
+const {ipcMain} = require('electron');
 // global window variable
 let win;
-
+//username variable, set in login.html used in mainscreen.html
 global.username = {name: null};
-const {ipcMain} = require('electron');
-
 //changes the window's current .html file on display.
 function loadURL(name) {
   win.loadURL(url.format({
@@ -18,11 +16,11 @@ function loadURL(name) {
     resizeable: false
   }));
 }
-
+// loads the log in screen, takes no parameters, returns a screen
 function loadLogInScreen() {
   loadURL('login.html');
 }
-
+//function which loads jar files to be used by the program, takes no parameters
 function runJarFile() {
   var exec = require('child_process').exec, child;
   child = exec('java -jar ./jars/helloWorld.jar',
@@ -35,7 +33,7 @@ function runJarFile() {
       console.log('exec error: ' + error);
     }
 })};
-
+// creates a new BrowserWindow and calls load loginPage
 function createWindow() {
   // Create browser window
   win = new BrowserWindow({
@@ -47,7 +45,7 @@ function createWindow() {
   win.on('closed', () => {
     win = null;
   });
-
+//load login screen (first screen displayed to the user)
 loadLogInScreen();
 }
 
@@ -60,7 +58,7 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 });
-
+// Create a window on activation
 app.on('activate', () => {
   if (win === null) {
     createWindow();
