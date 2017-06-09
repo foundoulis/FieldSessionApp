@@ -51,7 +51,7 @@ function createWindow() {
     });
 
     loadLogInScreen();
-    // loadCookies(); // Called at the end of storeCookie.
+    loadCookies(); // Called at the end of storeCookie.
     loadConfig();
     storeCookie("Please work, jesus.");
 }
@@ -75,9 +75,9 @@ function loadConfig() {
 
 function loadCookies() {
     session.defaultSession.cookies.get({name: "TL"}, (error, cookies) => {
-        console.log("The cookies are here in the callback: \n" + JSON.stringify(cookies));
+        // console.log("The cookies are here in the callback: \n" + JSON.stringify(cookies));
         global.cook = cookies;
-        console.log("The cookies are here in the global variable: \n" + JSON.stringify(global.cook));
+        // console.log("The cookies are here in the global variable: \n" + JSON.stringify(global.cook));
     });
 }
 
