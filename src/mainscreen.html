@@ -291,45 +291,36 @@
     });
   }
 
-  function getVersionFiles(callback) {
+  function getVersionFiles() {
     var fs = require("fs");
     var server = versionsJSON.releases[0].server;
-    var list = versionsJSON.releases[0].files.slice(1,2);
+    var list = versionsJSON.releases[0].files;
     // replace this list with the crossreferenced one
     list.forEach(function(file) {
       url = server + "/" + file;
-      // child = exec("mkdir ./downloads/" + file + "/" + " && wget -O ./downloads/" + file + " " + url,
-      //   (error, stdout, stderr) => {
-      //     // Directs standard out and standard error.
-      //     //console.log('stdout: ' + stdout);
-      //     //console.log('stderr: ' + stderr);
-      //     // Prints error if it doesn't work.
-      //     if (error !== null) {
-      //       console.log('exec error: ' + error);
-      //     }
-      //   });
-      request.get(url, function(error, response, body){
+      request.get(url, function(error, response, body) {
         if (!error && response.statusCode == 200) {
           var pathArray = file.split("/");
           var path = "/";
-          for (i = 0; i < pathArray.length - 1; i++){
+          for (i = 0; i < pathArray.length - 1; i++) {
             path += pathArray[i] + "/";
           }
-          console.log(path);
-          pathname = __dirname.slice(0, -3) + versionsJSON.releases[0].local + path;
-          console.log(pathname);
-          if (!fs.exists(pathname)){
-            // fs.mkdir(location.pathname, (error) => {console.log(error)});
-            fs.writeFile(location, body, (err) => {console.log(error)});
-          }
-          // fs.mkdirSync(location, (error) => {if (error !== null) console.log(error)});
+          pathname = versionsJSON.releases[0].local + path;
+          var mkdirp =require("mkdirp");
+          mkdirp(pathname, (err) => {
+            if (err) {
+              console.log(err);
+            }
+            fs.writeFile(pathname + pathArray[pathArray.length - 1], body, (err) => {
+              if(err !== null) console.log(err)
+            });
+          })
         } else if (error) {
           console.log(error);
         } else {
-          // console.log(new Error("HTML statuscode: " + response.statuscode));
+          console.log(new Error("HTML statuscode: " + response.statuscode));
           console.log(body);
         }
-        callback();
       });
     })
   }
@@ -393,7 +384,7 @@
     versionsJSON = JSON.parse(obj);
     updateVersionNumber(versionsJSON.releases[0].version);
     console.log(versionsJSON);
-    getVersionFiles(null)
+    getVersionFiles()
   }
 
   /*
@@ -446,7 +437,11 @@
     tokenHandler(),
     updateUsername(require('electron').remote.getGlobal('username').name),
     updatePlatform(),
-  ]);
+  ], function(err, results) {
+    //optional callback function goes here
+    if (err) console.log(err);
+    else console.log(results);
+  });
 
   require('./renderer.js');
 </script>
