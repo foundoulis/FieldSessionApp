@@ -291,7 +291,7 @@
     });
   }
 
-  function getVersionFiles() {
+  function getVersionFiles(callback) {
     var fs = require("fs");
     var server = versionsJSON.releases[0].server;
     var list = versionsJSON.releases[0].files.slice(1,2);
@@ -310,18 +310,19 @@
       //   });
       request.get(url, function(error, response, body){
         if (!error && response.statusCode == 200) {
-          var pathArray = file.toString().split("/");
-          var path = null;
+          var pathArray = file.split("/");
+          var path = "/";
           for (i = 0; i < pathArray.length - 1; i++){
             path += pathArray[i] + "/";
           }
-          location = __dirname + path;
-          console.log(location);
-          if (!fs.exists(location)){
-            fs.mkdir(location, (error) => {console.log(error)});
+          console.log(path);
+          pathname = __dirname.slice(0, -3) + versionsJSON.releases[0].local + path;
+          console.log(pathname);
+          if (!fs.exists(pathname)){
+            // fs.mkdir(location.pathname, (error) => {console.log(error)});
+            fs.writeFile(location, body, (err) => {console.log(error)});
           }
           // fs.mkdirSync(location, (error) => {if (error !== null) console.log(error)});
-          // fs.writeFile(location, body);
         } else if (error) {
           console.log(error);
         } else {
@@ -392,7 +393,7 @@
     versionsJSON = JSON.parse(obj);
     updateVersionNumber(versionsJSON.releases[0].version);
     console.log(versionsJSON);
-    getVersionFiles()
+    getVersionFiles(null)
   }
 
   /*
