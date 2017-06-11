@@ -310,16 +310,15 @@
       //   });
       request.get(url, function(error, response, body){
         if (!error && response.statusCode == 200) {
-          // location = url.format({
-          //     pathname: require('electron').remote.path.join(__dirname, versionsJSON.releases[0].local + "/" + file),
-          //     protocol: 'file:',
-          //     slashes: true,
-          //   });
-          location = require('electron').remote.getGLobal(__dirname) + "./temp/";
-          fs.mkdir("./temp/", () => {});
-          // if (!fs.existsSync(location)){
-          //   fs.mkdirSync(location, (error) => {if (error.code !== "EEXIST") console.log(error)});
-          // }
+          var pathArray = file.split("/");
+          var path;
+          for (int i = 0; i < pathArray.size - 1; i++){
+            path += pathArray[i] + "/";
+          }
+          location = __dirname + path;
+          if (!fs.exists(location)){
+            fs.mkdir(location, (error) => {console.log(error)});
+          }
           // fs.mkdirSync(location, (error) => {if (error !== null) console.log(error)});
           // fs.writeFile(location, body);
         } else if (error) {
