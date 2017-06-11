@@ -310,12 +310,13 @@
       //   });
       request.get(url, function(error, response, body){
         if (!error && response.statusCode == 200) {
-          var pathArray = file.split("/");
-          var path;
-          for (int i = 0; i < pathArray.size - 1; i++){
+          var pathArray = file.toString().split("/");
+          var path = null;
+          for (i = 0; i < pathArray.length - 1; i++){
             path += pathArray[i] + "/";
           }
           location = __dirname + path;
+          console.log(location);
           if (!fs.exists(location)){
             fs.mkdir(location, (error) => {console.log(error)});
           }
@@ -327,6 +328,7 @@
           // console.log(new Error("HTML statuscode: " + response.statuscode));
           console.log(body);
         }
+        callback();
       });
     })
   }
