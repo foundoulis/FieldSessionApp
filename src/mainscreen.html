@@ -117,6 +117,8 @@
 <script src="https://sdk.amazonaws.com/js/aws-sdk-2.61.0.min.js"></script>
 <!-- main script -->
 <script type="text/javascript">
+let numberTotalFiles = 1;
+
 var jarParser = require('./jarParser');
 
 var accessToken = jarParser.getToken.access_token; // token from jarParser
@@ -299,6 +301,7 @@ function getVersionFiles() {
     var fs = require("fs");
     var server = versionsJSON.releases[0].server;
     var list = versionsJSON.releases[0].files;
+    numberTotalFiles = list.length;
 
     list.forEach(function(file, indexOf) {
       url = server + "/" + file;
@@ -331,6 +334,7 @@ function getVersionFiles() {
           });
         }
       });
+      // put update progres bar here *********************************************
     })
 }
 
