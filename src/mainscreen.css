@@ -233,7 +233,7 @@ button:hover {
   background: #76be43;
   color: #ffffff;
   padding: 5px;
-  width: 100%;
+  width: 0%;
 }
 /*********************** Body **************************/
 body {

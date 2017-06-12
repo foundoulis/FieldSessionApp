@@ -139,7 +139,7 @@ var update = document.getElementById('update');
 update.onclick = function() {
     console.log('Update Button');
 
-      moveBar();
+  //    moveBar();
   }
 
 
@@ -467,19 +467,30 @@ async.series([
   });
   require('./renderer.js');
 
+
   function moveBar(){
     var elem = document.getElementById("progBar");
- var width = 0;
- var prog = 0;
+    var width = 1;
+    var prog = 0;
   var id = setInterval(frame, 10);
   function frame() {
 //
-     if (width >= 100) {
+     if (width >= numberTotalFiles) {
          clearInterval(id);
      } else {
+
          width++;
          prog = width / numberTotalFiles;
-         elem.style.width = prog + '%';
+
+         if (prog * 100 >= ((width - 1) / numberTotalFiles) * 100 ){
+           elem.style.width = prog * 100 + '%';
+           console.log(numberTotalFiles);
+           console.log(width);
+           console.log(prog * 100 );
+         }
+         else {
+           console.log("AHHHHH");
+         }
      }
 
 
