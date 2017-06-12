@@ -3,98 +3,99 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <title>Transform Launcher</title>
-  <link rel="stylesheet" href="mainscreen.css">
+    <meta charset="utf-8">
+    <title>Transform Launcher</title>
+    <link rel="stylesheet" href="mainscreen.css">
 </head>
 <!-- resize window to optimal size -->
 
 <body onload="window.resizeTo(900, 550)">
-  <div class="logo">
-    <div>
-      <img src="di_logo_login.png" alt="https://login.drillinginfo.com/auth/resources/7.0.0.ga/login/di-theme/img/di_logo_login.png" width="75%" height="19%" id="logo">
+    <div class="logo">
+        <div>
+            <img src="../icons/di_logo_login.png" alt="https://login.drillinginfo.com/auth/resources/7.0.0.ga/login/di-theme/img/di_logo_login.png" width="75%" height="19%" id="logo">
+        </div>
     </div>
-  </div>
-  <!-- Version container -->
-  <div>
-    <h3 id="version"> Version <!-- default value --> </h3>
-  </div>
-  <!-- Username container -->
-  <div class="user">
-    <h2 id="username">
-      Username: <!-- default value -->
-    </h2>
+    <!-- Version container -->
     <div>
-      <!-- images for entitlement -->
-      <img src="../icons/transform.png" alt="alternative text" title="Transform" width="15%" height="15%" id="basic">
-      <img src="../icons/beta_1.png" alt="alternative text" title="Beta" width="15%" height="15%" id="beta">
-      <img src="../icons/support_1.png" alt="alternative text" title="Support" width="15%" height="15%" id="mms">
+        <h3 id="version"> Version <!-- default value --> </h3>
     </div>
-  </div>
-  <!-- news container -->
-  <div class="news">
-    <!-- start sw-rss-feed code -->
-    <script type="text/javascript">
-      rssfeed_url = new Array();
-      rssfeed_url[0] = "https://www.nasa.gov/rss/dyn/lg_image_of_the_day.rss";
-      rssfeed_frame_width = "100%";
-      rssfeed_frame_height = "600";
-      rssfeed_scroll = "on";
-      rssfeed_scroll_step = "6";
-      rssfeed_scroll_bar = "off";
-      rssfeed_target = "_blank";
-      rssfeed_font_size = "15";
-      rssfeed_font_face = "";
-      rssfeed_border = "off";
-      rssfeed_title = "on";
-      rssfeed_title_name = "";
-      rssfeed_title_bgcolor = "#76be43";
-      rssfeed_title_color = "#fff";
-      rssfeed_title_bgimage = "http://";
-      rssfeed_footer = "off";
-      rssfeed_footer_name = "rss feed";
-      rssfeed_footer_bgcolor = "#d3d3d3";
-      rssfeed_footer_color = "#333";
-      rssfeed_footer_bgimage = "http://";
-      rssfeed_item_title_length = "50";
-      rssfeed_item_title_color = "#1c1b1d";
-      rssfeed_item_bgcolor = "#d3d3d3";
-      rssfeed_item_bgimage = "http://";
-      rssfeed_item_border_bottom = "on";
-      rssfeed_item_source_icon = "off";
-      rssfeed_item_date = "off";
-      rssfeed_item_description = "on";
-      rssfeed_item_description_length = "120";
-      rssfeed_item_description_color = "#666";
-      rssfeed_item_description_link_color = "#333";
-      rssfeed_item_description_tag = "off";
-      rssfeed_no_items = "0";
-      rssfeed_cache = "de820a463df884c6f106de56b1573ecf";
-    </script>
-    <script type="text/javascript" src="http://feed.surfing-waves.com/js/rss-feed.js"></script>
-    <!-- The link below helps keep this service FREE, and helps other people find the SW widget. Please be cool and keep it! Thanks. -->
-    <div style="text-align:right; width:180px;"><a href="http://www.surfing-waves.com/feed.htm" target="_blank" style="color:#ccc;font-size:10px">widget @</a> <a href="http://www.surfing-waves.com" target="_blank" style="color:#ccc;font-size:10px">surfing-waves.com</a></div>
-    <!-- end sw-rss-feed code -->
-  </div>
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-  <script>
+    <!-- Username container -->
+    <div class="user">
+        <h2 id="username">
+            Username: <!-- default value -->
+        </h2>
+        <div>
+            <!-- images for entitlement -->
+            <img src="../icons/transform.png" alt="alternative text" title="Transform" width="15%" height="15%" id="basic">
+            <img src="../icons/beta_1.png" alt="alternative text" title="Beta" width="15%" height="15%" id="beta">
+            <img src="../icons/support_1.png" alt="alternative text" title="Support" width="15%" height="15%" id="mms">
+        </div>
+    </div>
+    <!-- news container -->
+    <div class="news">
+        <!-- start sw-rss-feed code -->
+        <script type="text/javascript">
+        rssfeed_url = new Array();
+        rssfeed_url[0] = "https://www.nasa.gov/rss/dyn/lg_image_of_the_day.rss";
+        rssfeed_frame_width = "100%";
+        rssfeed_frame_height = "600";
+        rssfeed_scroll = "on";
+        rssfeed_scroll_step = "6";
+        rssfeed_scroll_bar = "off";
+        rssfeed_target = "_blank";
+        rssfeed_font_size = "15";
+        rssfeed_font_face = "";
+        rssfeed_border = "off";
+        rssfeed_title = "on";
+        rssfeed_title_name = "";
+        rssfeed_title_bgcolor = "#76be43";
+        rssfeed_title_color = "#fff";
+        rssfeed_title_bgimage = "http://";
+        rssfeed_footer = "off";
+        rssfeed_footer_name = "rss feed";
+        rssfeed_footer_bgcolor = "#d3d3d3";
+        rssfeed_footer_color = "#333";
+        rssfeed_footer_bgimage = "http://";
+        rssfeed_item_title_length = "50";
+        rssfeed_item_title_color = "#1c1b1d";
+        rssfeed_item_bgcolor = "#d3d3d3";
+        rssfeed_item_bgimage = "http://";
+        rssfeed_item_border_bottom = "on";
+        rssfeed_item_source_icon = "off";
+        rssfeed_item_date = "off";
+        rssfeed_item_description = "on";
+        rssfeed_item_description_length = "120";
+        rssfeed_item_description_color = "#666";
+        rssfeed_item_description_link_color = "#333";
+        rssfeed_item_description_tag = "off";
+        rssfeed_no_items = "0";
+        rssfeed_cache = "de820a463df884c6f106de56b1573ecf";
+        </script>
+        <script type="text/javascript" src="http://feed.surfing-waves.com/js/rss-feed.js"></script>
+        <!-- The link below helps keep this service FREE, and helps other people find the SW widget. Please be cool and keep it! Thanks. -->
+        <div style="text-align:right; width:180px;"><a href="http://www.surfing-waves.com/feed.htm" target="_blank" style="color:#ccc;font-size:10px">widget @</a> <a href="http://www.surfing-waves.com" target="_blank" style="color:#ccc;font-size:10px">surfing-waves.com</a></div>
+        <!-- end sw-rss-feed code -->
+    </div>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script>
     $(function() {
-      var links = [];
+        var links = [];
 
-      $.getJSON('./tools.json', function(data) {
-        $.each(data.tools, function(i, f) {
-          var newLink = "<a" + " href='" + f.link + "'>" + f.name + "</a>" + "<br>"
-          console.log(newLink);
-          $(newLink).appendTo("#toolContainer");
+        $.getJSON('./tools.json', function(data) {
+            $.each(data.tools, function(i, f) {
+                var newLink = "<a" + " href='" + f.link + "'>" + f.name + "</a>" + "<br>"
+                console.log(newLink);
+                $(newLink).appendTo("#toolContainer");
+            });
         });
-      });
     });
-  </script>
-  <!-- Tools container -->
+    </script>
+    <!-- Tools container -->
 
-  <div class="tools" id="toolContainer">
-    <h2 id="header"> Tools </h2>
-    <!-- <a> help </a> -->
+    <div class="tools" id="toolContainer">
+        <h2 id="header"> Tools </h2>
+        <!-- <a> help </a> -->
+
 
 
 
@@ -112,77 +113,84 @@
   <div class="launch">
     <button id="launch">Launch</button>
   </div>
+
 </body>
 
 <script src="https://sdk.amazonaws.com/js/aws-sdk-2.61.0.min.js"></script>
 <!-- main script -->
 <script type="text/javascript">
-  var jarParser = require('./jarParser');
+let numberTotalFiles = 1;
 
-  var accessToken = jarParser.getToken.access_token; // token from jarParser
+var jarParser = require('./jarParser');
 
-  var async = require("async");
+var accessToken = jarParser.getToken.access_token; // token from jarParser
 
-  var accessToken;
+var async = require("async");
 
-  function setAccessToken() {
+var accessToken;
+
+function setAccessToken() {
     accessToken = jarParser.getToken().access_token; // token from jarParser
-    console.log("AccessToken: " + accessToken);
+    // console.log("AccessToken: " + accessToken);
   }
 
-  // TODO: do something when update is pressed
-  var update = document.getElementById('update');
-  update.onclick = function() {
+// TODO: do something when update is pressed
+var update = document.getElementById('update');
+update.onclick = function() {
     console.log('Update Button');
+
       moveBar();
   }
 
 
-  // TODO: do something when launch is pressed
-  var launch = document.getElementById('launch');
-  launch.onclick = function() {
-    console.log('Launch Button');
-  }
 
-  // Updates version number TODO: use the access token to do so
-  function updateVersionNumber(number) {
+// TODO: do something when launch is pressed
+var launch = document.getElementById('launch');
+
+
+var exec = require('child_process').exec;
+var auth;
+// executes unix instruction
+function execCommand(command, callback) {
+    exec(command, {shell:'/bin/bash'}, (error, stdout, stderr) => {
+        if (error !== null) {
+            console.log('exec error: ' + error);
+        }
+        callback(stdout);
+    });
+}
+launch.onclick = function() {
+    // Insert the launch string here.
+    execCommand("java -jar ./jars/helloWorld.jar", (stdout) => {console.log(stdout)});
+}
+
+// Updates version number TODO: use the access token to do so
+function updateVersionNumber(number) {
     console.log(number);
     var version = document.getElementById('version');
     version.innerHTML = "Version " + number;
-  }
+}
 
-  // Updates username TODO: use username from login to do so
-  function updateUsername(name) {
+// Updates username TODO: use username from login to do so
+function updateUsername(name) {
     var version = document.getElementById('username');
     version.innerHTML = "Username: " + name;
-  }
+}
 
-  // changes entitlement icons
-  function showImage(id, visible) {
+// changes entitlement icons
+function showImage(id, visible) {
     var img = document.getElementById(id);
     img.style.opacity = 0.4;
-  }
+}
 
-  var exec = require('child_process').exec;
-  var auth;
 
-  // executes the curl instruction
-  function execCommand(command, callback) {
-    exec(command, (error, stdout, stderr) => {
-      if (error !== null) {
-        console.log('exec error: ' + error);
-      }
-      callback(stdout);
-    });
-  }
+//variables to store permissions
+var perm1;
+var perm2;
+var perm3;
 
-  //variables to store permissions
-  var perm1;
-  var perm2;
-  var perm3;
-
-  // parses entitlement JSON
-  function parser(commandOutput) {
+// parses entitlement JSON
+function parser(commandOutput) {
     console.log(commandOutput);
     auth = JSON.parse(commandOutput);
     var perm1 = auth.authorizations[0].result;
@@ -190,260 +198,272 @@
     var perm3 = auth.authorizations[2].result;
     //logic for entitlement tiles
     if (perm1 == "deny") {
-      showImage("basic", false);
+        showImage("basic", false);
     }
     if (perm2 == "deny") {
-      showImage("mms", false);
+        showImage("mms", false);
     }
     if (perm3 == "deny") {
-      showImage("beta", false);
+        showImage("beta", false);
     }
-  }
+}
 
-  // grabs token from server and updates entitlements
-  function tokenHandler() {
+// grabs token from server and updates entitlements
+function tokenHandler() {
     jarParser.buildAndRunCommand(require('electron').remote.getGlobal('username').name, require('electron').remote.getGlobal('password').pass);
+    // delay a bit for jarParser to finish
     setTimeout(function() {
-      setAccessToken();
-      //fetch json from server
-      var curlCommand = "curl -X POST https://di-api.dev.drillinginfo.com/v1/x4m/authorizations -H 'authorization: Bearer " + accessToken +
+        setAccessToken();
+        //fetch json from server
+        var curlCommand = "curl -X POST https://di-api.dev.drillinginfo.com/v1/x4m/authorizations -H 'authorization: Bearer " + accessToken +
         "' -H 'cache-control: no-cache' -H 'content-type: application/json' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d '{\"requests\":[{\"uri\":\"http://app.drillinginfo.com/x4m/x4m60\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/4xm/x4mms\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/x4m/x4mbeta\",\"action\":\"GET\"}]}'"
-      execCommand(curlCommand, parser);
+        console.log("We are executing the curl command here.");
+        execCommand(curlCommand, parser);
     }, 2500);
-  }
+}
 
-  /*
-   ******************************************************************** S3 server stuff********************************************************************
-   */
+/*
+******************************************************************** S3 server stuff********************************************************************
+*/
 
-  // import entire SDK
-  // var AWS = require('aws-sdk');
-  // // import AWS object without services
-  // var AWS = require('aws-sdk/global');
+// import entire SDK
+// var AWS = require('aws-sdk');
+// // import AWS object without services
+// var AWS = require('aws-sdk/global');
 
-  // import individual service
-  // var S3 = require('aws-sdk/clients/s3');
-  //
-  // var s3 = new AWS.S3({
-  //   accessKeyId: "yours3key",
-  //   secretAccessKey: "yours3secret",
-  //   maxRetries: 3,
-  //   // any other options are passed to new AWS.S3()
-  //   // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
-  // });
-  //
-  // // var client = s3.createClient({
-  // //   maxAsyncS3: 20, // this is the defaultSo we have to use callbackCounter to keep track of how many tasks have finished. If an error occurs we also have to handle this in a special way for each task. And we have code duplication.
-  // //   s3RetryCount: 3, // this is the default
-  // //   s3RetryDelay: 1000, // this is the default
-  // //   multipartUploadThreshold: 20971520, // this is the default (20 MB)
-  // //   multipartUploadSize: 15728640, // this is the default (15 MB)
-  // //   s3Options: {
-  // //
-  // //   },
-  // // });
-  //
-  // var params = {
-  //   Bucket: 'di-transform',
-  //   Key: 'config.json',
-  //   // other options supported by getObject
-  //   // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#getObject-property
-  //   };
-  //
-  // s3.getObject(params, function(err, data) {
-  //   if (err) console.log(err, err.stack); // an error occurred
-  //   else console.log(data); // successful response
-  //   /*
-  //   data = {
-  //    AcceptRanges: "bytes",
-  //    ContentLength: 3191,
-  //    ContentType: "image/jpeg",
-  //    ETag: "\"6805f2cfc46c0f04559748bb039d69ae\"",
-  //    LastModified: <Date Representation>,
-  //    Metadata: {
-  //    },
-  //    TagCount: 2,
-  //    VersionId: "null"
-  //   }
-  //   */
-  // });
+// import individual service
+// var S3 = require('aws-sdk/clients/s3');
+//
+// var s3 = new AWS.S3({
+//   accessKeyId: "yours3key",
+//   secretAccessKey: "yours3secret",
+//   maxRetries: 3,
+//   // any other options are passed to new AWS.S3()
+//   // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+// });
+//
+// // var client = s3.createClient({
+// //   maxAsyncS3: 20, // this is the defaultSo we have to use callbackCounter to keep track of how many tasks have finished. If an error occurs we also have to handle this in a special way for each task. And we have code duplication.
+// //   s3RetryCount: 3, // this is the default
+// //   s3RetryDelay: 1000, // this is the default
+// //   multipartUploadThreshold: 20971520, // this is the default (20 MB)
+// //   multipartUploadSize: 15728640, // this is the default (15 MB)
+// //   s3Options: {
+// //
+// //   },
+// // });
+//
+// var params = {
+//   Bucket: 'di-transform',
+//   Key: 'config.json',
+//   // other options supported by getObject
+//   // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#getObject-property
+//   };
+//
+// s3.getObject(params, function(err, data) {
+//   if (err) console.log(err, err.stack); // an error occurred
+//   else console.log(data); // successful response
+//   /*
+//   data = {
+//    AcceptRanges: "bytes",
+//    ContentLength: 3191,
+//    ContentType: "image/jpeg",
+//    ETag: "\"6805f2cfc46c0f04559748bb039d69ae\"",
+//    LastModified: <Date Representation>,
+//    Metadata: {
+//    },
+//    TagCount: 2,
+//    VersionId: "null"
+//   }
+//   */
+// });
 
-  var request = require("request");
-  var async = require("async");
+var request = require("request");
+var async = require("async");
 
-  var config = "https://s3.amazonaws.com/di-transform/config.json";
-  var platform;
-  var versions;
-  var configJSON;
-  var platformJSON;
-  var versionsJSON;
+var config = "https://s3.amazonaws.com/di-transform/config.json";
+var platform;
+var versions;
+var configJSON;
+var platformJSON;
+var versionsJSON;
 
-  // takes url and returns body in callback
-  function getRequest(requestURL, setJSON, callback) {
+// takes url and returns body in callback
+function getRequest(requestURL, setJSON, callback) {
     request.get(requestURL, function(error, response, body) {
-      if (!error && response.statusCode == 200) {
-        setJSON(body);
-        callback(null, requestURL)
-      } else if (error) {
-        callback(error, null);
-      } else {
-        callback(new Error("HTML statuscode: " + response.statuscode), null);
-      }
+        if (!error && response.statusCode == 200) {
+            setJSON(body);
+            callback(null, requestURL)
+        } else if (error) {
+            callback(error, null);
+        } else {
+            callback(new Error("HTML statuscode: " + response.statuscode), null);
+        }
     });
-  }
+}
 
-  function getVersionFiles() {
+function getVersionFiles() {
     var fs = require("fs");
     var server = versionsJSON.releases[0].server;
     var list = versionsJSON.releases[0].files;
-    // replace this list with the crossreferenced one
-    list.forEach(function(file) {
-      url = server + "/" + file;
-      request.get(url, function(error, response, body) {
-        if (!error && response.statusCode == 200) {
-          var pathArray = file.split("/");
-          var path = "/";
-          for (i = 0; i < pathArray.length - 1; i++) {
-            path += pathArray[i] + "/";
-          }
-          pathname = versionsJSON.releases[0].local + path;
-          var mkdirp =require("mkdirp");
-          mkdirp(pathname, (err) => {
-            if (err) {
-              console.log(err);
-            }
-            fs.writeFile(pathname + pathArray[pathArray.length - 1], body, (err) => {
-              if(err !== null) console.log(err)
-            });
-            moveBar();
+    numberTotalFiles = list.length;
 
-          })
-        } else if (error) {
-          console.log(error);
-        } else {
-          console.log(new Error("HTML statuscode: " + response.statuscode));
-          console.log(body);
+    list.forEach(function(file, indexOf) {
+      url = server + "/" + file;
+      fs.stat(versionsJSON.releases[0].local + "/" + file, (err) => {
+        if (err !== null) {
+          request.get(url, function(error, response, body) {
+            console.log(err);
+            if (!error && response.statusCode == 200) {
+              var pathArray = file.split("/");
+              var path = "/";
+              for (i = 0; i < pathArray.length - 1; i++) {
+                path += pathArray[i] + "/";
+              }
+              pathname = versionsJSON.releases[0].local + path;
+              var mkdirp =require("mkdirp");
+              mkdirp(pathname, (err) => {
+                if (err) {
+                  console.log(err);
+                }
+                fs.writeFile(versionsJSON.releases[0].local + "/" + file, body, (err) => {
+                  if(err !== null) console.log(err)
+                });
+
+              })
+            } else if (error) {
+              console.log(error);
+            } else {
+              console.log(new Error("HTML statuscode: " + response.statuscode));
+              console.log(body);
+            }
+
+          });
+
         }
       });
+      moveBar();
+      // put update progres bar here *********************************************
     })
-  }
+}
 
-  // automatically called to check for updates
-  function updatePlatform() {
+// automatically called to check for updates
+function updatePlatform() {
     async.series([
-      function(callback) {
-        getRequest(config, setConfigJSON, callback);
-      },
-      function(callback) {
-        getPlatform(callback);
-      },
-      function(callback) {
-        getRequest(platform, setPlatformJSON, callback);
-      },
-      function(callback) {
-        getRequest(versions, setVersionsJSON, callback);
-      }
+        function(callback) {
+            getRequest(config, setConfigJSON, callback);
+        },
+        function(callback) {
+            getPlatform(callback);
+        },
+        function(callback) {
+            getRequest(platform, setPlatformJSON, callback);
+        },
+        function(callback) {
+            getRequest(versions, setVersionsJSON, callback);
+        }
     ], function(err, results) {
-      //optional callback function goes here
-      if (err) console.log(err);
-      else console.log(results);
+        //optional callback function goes here
+        if (err) console.log(err);
+        else console.log(results);
     });
 
     function setConfigJSON(obj) {
-      configJSON = JSON.parse(obj);
-      console.log(configJSON);
+        configJSON = JSON.parse(obj);
+        console.log(configJSON);
     }
-  }
+}
 
-  function getPlatform(callback) {
+function getPlatform(callback) {
     var os = process.platform;
     console.log(os);
     switch (os) {
-      case "linux":
+        case "linux":
         platform = configJSON.launcher.installation[0].platforms;
         break;
-      case "darwin":
+        case "darwin":
         platform = configJSON.launcher.installation[1].platforms;
         break;
-      case "win32":
-      case "win64":
+        case "win32":
+        case "win64":
         platform = configJSON.launcher.installation[2].platforms;
         break;
-      default:
+        default:
         console.log("platform not supported")
         break;
     }
     callback(null, platform);
-  }
+}
 
-  function setPlatformJSON(obj) {
+function setPlatformJSON(obj) {
     platformJSON = JSON.parse(obj);
     versions = platformJSON.platform[0].versioning;
     // TODO: do something in here to handle platform flags for automatic updating or prompting
     console.log(platformJSON);
-  }
+}
 
-  function setVersionsJSON(obj) {
+function setVersionsJSON(obj) {
     versionsJSON = JSON.parse(obj);
     updateVersionNumber(versionsJSON.releases[0].version);
     console.log(versionsJSON);
     getVersionFiles()
-  }
+}
 
-  /*
-   * S3 server stuff end
-   */
+/*
+* S3 server stuff end
+*/
 
-  // var downloader = client.downloadFile(params);
-  // downloader.on('error', function(err) {
-  //   console.error("unable to download:", err.stack);
-  // });
-  // downloader.on('progress', function() {
-  //   console.log("progress", downloader.progressAmount, downloader.progressTotal);
-  // });
-  // downloader.on('end', function() {
-  //   console.log("done downloading");
-  // });
+// var downloader = client.downloadFile(params);
+// downloader.on('error', function(err) {
+//   console.error("unable to download:", err.stack);
+// });
+// downloader.on('progress', function() {
+//   console.log("progress", downloader.progressAmount, downloader.progressTotal);
+// });
+// downloader.on('end', function() {
+//   console.log("done downloading");
+// });
 
-  // document.cookie = "username=a test; path=./";
-  //
-  // const ses = window.session;
-  // console.log("madeit")
-  //
-  // const cookie = {name: "snickerdoodle", value: "workPlease"};
-  // ses.defaultSession.cookies.set(cookie, (error) => {
-  //   if (error) console.error(error);
-  // })
-  //
-  // ses.defaultSession.cookies.get({}, (error, cookies) => {
-  //   console.log(error, cookies);
-  // })
-  //
-  //   function readCookie(name) {
-  //   	var nameEQ = name + "=";
-  //   	var ca = document.cookie.split(';');
-  //   	for(var i=0;i < ca.length;i++) {
-  //   		var c = ca[i];
-  //   		while (c.charAt(0)==' ') c = c.substring(1,c.length);
-  //   		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-  //   	}
-  //   	return null;
-  //   }
+// document.cookie = "username=a test; path=./";
+//
+// const ses = window.session;
+// console.log("madeit")
+//
+// const cookie = {name: "snickerdoodle", value: "workPlease"};
+// ses.defaultSession.cookies.set(cookie, (error) => {
+//   if (error) console.error(error);
+// })
+//
+// ses.defaultSession.cookies.get({}, (error, cookies) => {
+//   console.log(error, cookies);
+// })
+//
+//   function readCookie(name) {
+//   	var nameEQ = name + "=";
+//   	var ca = document.cookie.split(';');
+//   	for(var i=0;i < ca.length;i++) {
+//   		var c = ca[i];
+//   		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+//   		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+//   	}
+//   	return null;
+//   }
 
-  // console.log(perm1);
-  // console.log(perm2);
-  // console.log(perm3);
+// console.log(perm1);
+// console.log(perm2);
+// console.log(perm3);
 
-  // updateUsername(readCookie(username));
+// updateUsername(readCookie(username));
 
-  async.series([
+async.series([
     tokenHandler(),
     updateUsername(require('electron').remote.getGlobal('username').name),
     updatePlatform(),
-  ], function(err, results) {
+], function(err, results) {
     //optional callback function goes here
     if (err) console.log(err);
     else console.log(results);
+
   });
   require('./renderer.js');
 
@@ -465,6 +485,8 @@
 
   }
   }
+
+
 </script>
 
 </html>
