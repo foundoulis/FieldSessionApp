@@ -211,14 +211,14 @@ button:hover {
   width: 20%;
 }
 /*********************** Animation for Loading Bar **************************/
-@keyframes loader {
+/*@keyframes loader {
   0% {
     width: 0%
   }
   100% {
     width: 100%
   }
-}
+}*/
 /*********************** Loading bar style (shadow part) **************************/
 .progress-bar {
   border-radius: 60px;

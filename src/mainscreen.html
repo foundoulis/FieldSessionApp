@@ -106,7 +106,7 @@
   </div>
   <!-- loading bar -->
   <div class="progress-bar">
-    <div class="progress"></div>
+    <div class="progress" id="progBar"></div>
   </div>
   <!-- Launch button -->
   <div class="launch">
@@ -134,6 +134,7 @@
   var update = document.getElementById('update');
   update.onclick = function() {
     console.log('Update Button');
+      moveBar();
   }
 
 
@@ -442,8 +443,21 @@
     if (err) console.log(err);
     else console.log(results);
   });
-
   require('./renderer.js');
+
+    function moveBar(){
+      var elem = document.getElementById("progBar");
+   var width = 1;
+   var id = setInterval(frame, 10);
+   function frame() {
+       if (width >= 100) {
+           clearInterval(id);
+       } else {
+           width++;
+           elem.style.width = width + '%';
+       }
+   }
+    }
 </script>
 
 </html>
