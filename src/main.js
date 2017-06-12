@@ -55,7 +55,8 @@ function createWindow() {
     win.on('closed', () => {
         win = null;
     });
-    win.setMenu(null);
+    // Uncomment when done with debugging.
+    // win.setMenu(null);
 
     loadLogInScreen();
     loadCookies(); // Called at the end of storeCookie.
