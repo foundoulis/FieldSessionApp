@@ -1,4 +1,5 @@
 
+
 //requires for electron
 
 
@@ -55,7 +56,7 @@ function createWindow() {
     win.on('closed', () => {
         win = null;
     });
-    win.setMenu(null);
+    // win.setMenu(null);
 
     loadLogInScreen();
     loadCookies(); // Called at the end of storeCookie.

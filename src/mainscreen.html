@@ -127,7 +127,7 @@
 
   function setAccessToken() {
     accessToken = jarParser.getToken().access_token; // token from jarParser
-    console.log("AccessToken: " + accessToken);
+    // console.log("AccessToken: " + accessToken);
   }
 
   // TODO: do something when update is pressed
@@ -202,6 +202,7 @@
   // grabs token from server and updates entitlements
   function tokenHandler() {
     jarParser.buildAndRunCommand(require('electron').remote.getGlobal('username').name, require('electron').remote.getGlobal('password').pass);
+    // delay a bit for jarParser to finish
     setTimeout(function() {
       setAccessToken();
       //fetch json from server
@@ -296,34 +297,82 @@
     var server = versionsJSON.releases[0].server;
     var list = versionsJSON.releases[0].files;
     // replace this list with the crossreferenced one
-    list.forEach(function(file) {
+    list.forEach(function(file, indexOf) {
       url = server + "/" + file;
-      request.get(url, function(error, response, body) {
-        if (!error && response.statusCode == 200) {
-          var pathArray = file.split("/");
-          var path = "/";
-          for (i = 0; i < pathArray.length - 1; i++) {
-            path += pathArray[i] + "/";
-          }
-          pathname = versionsJSON.releases[0].local + path;
-          var mkdirp =require("mkdirp");
-          mkdirp(pathname, (err) => {
-            if (err) {
-              console.log(err);
+      fs.stat(versionsJSON.releases[0].local + "/" + file, (err) => {
+        if (err !== null) {
+          request.get(url, function(error, response, body) {
+            console.log(err);
+            if (!error && response.statusCode == 200) {
+              var pathArray = file.split("/");
+              var path = "/";
+              for (i = 0; i < pathArray.length - 1; i++) {
+                path += pathArray[i] + "/";
+              }
+              pathname = versionsJSON.releases[0].local + path;
+              var mkdirp =require("mkdirp");
+              mkdirp(pathname, (err) => {
+                if (err) {
+                  console.log(err);
+                }
+                setTimeout(function() {
+                  fs.writeFile(versionsJSON.releases[0].local + "/" + file, body, (err) => {
+                    if(err !== null) console.log(err)
+                  });
+                }, 5);
+              })
+            } else if (error) {
+              console.log(error);
+            } else {
+              console.log(new Error("HTML statuscode: " + response.statuscode));
+              console.log(body);
             }
-            fs.writeFile(pathname + pathArray[pathArray.length - 1], body, (err) => {
-              if(err !== null) console.log(err)
-            });
-          })
-        } else if (error) {
-          console.log(error);
-        } else {
-          console.log(new Error("HTML statuscode: " + response.statuscode));
-          console.log(body);
+          });
         }
       });
     })
   }
+
+  // function getVersionFiles() {
+  //   var fs = require("fs");
+  //   var server = versionsJSON.releases[0].server;
+  //   var list = versionsJSON.releases[0].files;
+  //
+  //   list.forEach(function(file) {
+  //     var pathArray = file.split("/");
+  //     var path = "/";
+  //     for (i = 0; i < pathArray.length - 1; i++) {
+  //       path += pathArray[i] + "/";
+  //     }
+  //     pathname = versionsJSON.releases[0].local + path;
+  //     fs.stat(pathname + pathArray[pathArray.length - 1], (error) => {
+  //       // if the file does not exist, download it
+  //       if(error){
+  //         url = server + "/" + file;
+  //         request.get(url, function(error, response, body) {
+  //           if (!error && response.statusCode == 200) {
+  //             var mkdirp =require("mkdirp");
+  //             // console.log(pathname);
+  //             mkdirp(pathname, (err) => {
+  //               if (err) {
+  //                 console.log(err);
+  //               }
+  //               fs.writeFile(pathname + pathArray[pathArray.length - 1], body, (err) => {
+  //                 if(err !== null) console.log(err)
+  //               });
+  //             })
+  //           } else if (error) {
+  //             console.log(error);
+  //           } else {
+  //             console.log(new Error("HTML statuscode: " + response.statuscode));
+  //             // console.log(body);
+  //           }
+  //         });
+  //       }
+  //     });
+  //
+  //   })
+  // }
 
   // automatically called to check for updates
   function updatePlatform() {
