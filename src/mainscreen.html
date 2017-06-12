@@ -458,8 +458,8 @@
          clearInterval(id);
      } else {
          width++;
-         prog =
-         elem.style.width = width + '%';
+         prog = width / numberTotalFiles;
+         elem.style.width = prog + '%';
      }
 
 
