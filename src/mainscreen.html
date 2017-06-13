@@ -99,19 +99,21 @@
 
 
 
-    </div>
-    <!-- Update button -->
-    <div class="update">
-        <button id='update'> Update </button>
-    </div>
-    <!-- loading bar -->
-    <div class="progress-bar">
-        <div class="progress"></div>
-    </div>
-    <!-- Launch button -->
-    <div class="launch">
-        <button id="launch">Launch</button>
-    </div>
+
+  </div>
+  <!-- Update button -->
+  <div class="update">
+    <button id='update'> Update </button>
+  </div>
+  <!-- loading bar -->
+  <div class="progress-bar">
+    <div class="progress" id="progBar"></div>
+  </div>
+  <!-- Launch button -->
+  <div class="launch">
+    <button id="launch">Launch</button>
+  </div>
+
 </body>
 
 <script src="https://sdk.amazonaws.com/js/aws-sdk-2.61.0.min.js"></script>
@@ -136,7 +138,10 @@ function setAccessToken() {
 var update = document.getElementById('update');
 update.onclick = function() {
     console.log('Update Button');
-}
+
+  //    moveBar();
+  }
+
 
 
 // TODO: do something when launch is pressed
@@ -323,6 +328,7 @@ function getVersionFiles() {
                 fs.writeFile(versionsJSON.releases[0].local + "/" + file, body, (err) => {
                   if(err !== null) console.log(err)
                 });
+
               })
             } else if (error) {
               console.log(error);
@@ -330,9 +336,12 @@ function getVersionFiles() {
               console.log(new Error("HTML statuscode: " + response.statuscode));
               console.log(body);
             }
+
           });
+
         }
       });
+      moveBar();
       // put update progres bar here *********************************************
     })
 }
@@ -457,9 +466,41 @@ async.series([
     //optional callback function goes here
     if (err) console.log(err);
     else console.log(results);
-});
 
-require('./renderer.js');
+  });
+  require('./renderer.js');
+
+
+  function moveBar(){
+    var elem = document.getElementById("progBar");
+    var width = 1;
+    var prog = 0;
+  var id = setInterval(frame, 10);
+  function frame() {
+//
+     if (width >= numberTotalFiles) {
+         clearInterval(id);
+     } else {
+
+         width++;
+         prog = width / numberTotalFiles;
+
+         if (prog * 100 >= ((width - 1) / numberTotalFiles) * 100 ){
+           elem.style.width = prog * 100 + '%';
+           console.log(numberTotalFiles);
+           console.log(width);
+           console.log(prog * 100 );
+         }
+         else {
+           console.log("AHHHHH");
+         }
+     }
+
+
+  }
+  }
+
+
 </script>
 
 </html>
