@@ -67,7 +67,7 @@
               function check(form) {
                 user = form.username.value;
 
-                if (user == "x4m-mines1" && form.password.value == "mines1") {
+                if ((user == "x4m-mines1" && form.password.value == "mines1") || (user == "x4m-mines2" && form.password.value == "mines2")) {
                   // used to set username in main.js
                   require('electron').remote.getGlobal('username').name = user;
                   require('electron').remote.getGlobal('password').pass = form.password.value;

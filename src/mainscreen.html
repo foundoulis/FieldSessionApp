@@ -143,10 +143,7 @@ update.onclick = function() {
   }
 
 
-
-// TODO: do something when launch is pressed
 var launch = document.getElementById('launch');
-
 
 var exec = require('child_process').exec;
 var auth;
@@ -161,7 +158,8 @@ function execCommand(command, callback) {
 }
 launch.onclick = function() {
     // Insert the launch string here.
-    execCommand("java -jar ./jars/helloWorld.jar", (stdout) => {console.log(stdout)});
+    console.log(JSON.stringify());
+    console.log("./" + versionsJSON.releases[0].launch.command + " " + versionsJSON.releases[0].launch.config + " " + versionsJSON.releases[0].launch.value); //, (stdout) => {console.log(stdout)}
 }
 
 // Updates version number TODO: use the access token to do so
@@ -193,9 +191,9 @@ var perm3;
 function parser(commandOutput) {
     console.log(commandOutput);
     auth = JSON.parse(commandOutput);
-    var perm1 = auth.authorizations[0].result;
-    var perm2 = auth.authorizations[1].result;
-    var perm3 = auth.authorizations[2].result;
+    perm1 = auth.authorizations[0].result;
+    perm2 = auth.authorizations[1].result;
+    perm3 = auth.authorizations[2].result;
     //logic for entitlement tiles
     if (perm1 == "deny") {
         showImage("basic", false);
