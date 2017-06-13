@@ -178,7 +178,6 @@ function showImage(id, visible) {
     img.style.opacity = 0.4;
 }
 
-
 //variables to store permissions
 var perm1;
 var perm2;
@@ -337,6 +336,8 @@ function getVersionFiles() {
       // put update progres bar here *********************************************
     })
 }
+var updates = false;
+var automatic = false;
 
 // automatically called to check for updates
 function updatePlatform() {
@@ -389,6 +390,8 @@ function getPlatform(callback) {
 function setPlatformJSON(obj) {
     platformJSON = JSON.parse(obj);
     versions = platformJSON.platform[0].versioning;
+    updates = platformJSON.platform[0].updates;
+    automatic = platformJSON.platform[0].automatic;
     // TODO: do something in here to handle platform flags for automatic updating or prompting
     console.log(platformJSON);
 }
