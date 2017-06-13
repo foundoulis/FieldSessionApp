@@ -22,8 +22,8 @@
   <!-- Username container -->
   <div class="user">
     <h2 id="username">
-            Username: <!-- default value -->
-        </h2>
+      Username: <!-- default value -->
+    </h2>
     <div>
       <!-- images for entitlement -->
       <img src="../icons/transform.png" alt="alternative text" title="Transform" width="15%" height="15%" id="basic">
@@ -78,23 +78,39 @@
   </div>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
   <script>
+    var exec = require("child_process").exec;
+
+    function execCommand(command, callback) {
+      exec(command, (error, stdout, stderr) => {
+        if (error !== null) {
+          console.log('exec error: ' + error);
+        }
+        callback(stdout);
+      });
+    }
     $(function() {
       var links = [];
 
       $.getJSON('./tools.json', function(data) {
         $.each(data.tools, function(i, f) {
-          var newLink = "<a" + " href='" + f.link + "'>" + f.name + "</a>" + "<br>"
+          // var newLink = "<a" + " onclick='execCommand('echo hello', function(stdout){console.log(stdout)})', href='#'>" + f.name + "</a>" + "<br>"
+
+          var newLink = "<a" + " id='toolButtons' onclick='execCommand(" + f.launch.command + " " + f.launch.value + ", function(stdout) {console.log(stdout);})', href='#', onclick = execCommand(" + f.launch.command + " " + f.launch.value + ")>" + f.name + "</a>" + "<br>"
+
           console.log(newLink);
-          $(newLink).appendTo("#toolContainer");
+
+          if (f.entitlements === 'x4m60') {
+            $(newLink).appendTo("#toolContainer");
+          }
+
         });
       });
-    });
+    })
   </script>
   <!-- Tools container -->
 
   <div class="tools" id="toolContainer">
     <h2 id="header"> Tools </h2>
-    <!-- <a> help </a> -->
   </div>
   <!-- Update button -->
   <div class="update">
@@ -129,13 +145,12 @@
     // console.log("AccessToken: " + accessToken);
   }
 
-
   var versionsList = [];
   // TODO: do something when update is pressed
   var update = document.getElementById('update');
   update.onclick = function() {
     if (versionsList.length > 0) {
-      versionList.forEach(function(ver){
+      versionList.forEach(function(ver) {
         getVersionFiles(ver.obj, ver.releasesIndex);
       });
     }
@@ -164,13 +179,24 @@
     execCommand("java -jar ./jars/helloWorld.jar", (stdout) => {
       // console.log(stdout)
     });
+
+    console.log(JSON.stringify());
+    console.log("./" + versionsJSON.releases[0].launch.command + " " + versionsJSON.releases[0].launch.config + " " + versionsJSON.releases[0].launch.value); //, (stdout) => {console.log(stdout)}
   }
+
+  var fs = require("fs");
+
 
   // Updates version number TODO: use the access token to do so
   function updateVersionNumber(number) {
     var version = document.getElementById('version');
     version.innerHTML = "Version " + number;
   }
+
+  // checks for if the transform file alread exists and extracts version number
+  fs.readdir("./transform/release/", (err, files) => {
+    updateVersionNumber(files[1].slice(files[1].indexOf('_') + 1, files[1].lastIndexOf('.')));
+  });
 
   // Updates username TODO: use username from login to do so
   function updateUsername(name) {
@@ -179,7 +205,7 @@
   }
 
   // changes entitlement icons
-  function showImage(id, visible) {
+  function showImage(id) {
     var img = document.getElementById(id);
     img.style.opacity = 0.4;
   }
@@ -193,24 +219,25 @@
     var perm1 = auth.authorizations[0].result;
     var perm2 = auth.authorizations[1].result;
     var perm3 = auth.authorizations[2].result;
+
     //logic for entitlement tiles
     if (perm1 == "deny") {
-      showImage("basic", false);
+      showImage("basic");
     } else {
       var perm1Name = auth.authorizations[0].resource.split("/");
-      userEntitlements.push(perm1Name[perm1Name.length-1]);
+      userEntitlements.push(perm1Name[perm1Name.length - 1]);
     }
     if (perm2 == "deny") {
-      showImage("mms", false);
+      showImage("mms");
     } else {
       var perm2Name = auth.authorizations[0].resource.split("/");
-      userEntitlements.push(perm2Name[perm2Name.length-1]);
+      userEntitlements.push(perm2Name[perm2Name.length - 1]);
     }
     if (perm3 == "deny") {
-      showImage("beta", false);
+      showImage("beta");
     } else {
       var perm3Name = auth.authorizations[0].resource.split("/");
-      userEntitlements.push(perm3Name[perm3Name.length-1]);
+      userEntitlements.push(perm3Name[perm3Name.length - 1]);
     }
   }
 
@@ -438,14 +465,16 @@
 
   function setVersionsJava(obj) {
     versionsJava = JSON.parse(obj);
-    updateVersionNumber(versionsJava.releases[0].version);
     console.log(versionsJava);
     if (automaticJava) {
       // automatically update java
       getVersionFiles(versionsJava, 0);
     } else {
       // add version file to list to be updated on Update button click
-      versionsList.push({"obj": versionsJava, "releasesIndex": 1});
+      versionsList.push({
+        "obj": versionsJava,
+        "releasesIndex": 1
+      });
     }
   }
 
@@ -463,13 +492,13 @@
     });
   }
 
-  function setVersionsTransform(obj){
+  function setVersionsTransform(obj) {
     versionsTransform = JSON.parse(obj);
 
     // TODO: think about putting the chunk below in its own function??
     updateVersionNumber(versionsTransform.releases[1].version);
     // update Transform jar (already clicked update or it was automatic)
-    if(userAccess(versionsTransform.releases[1].entitlements.split(','))){
+    if (userAccess(versionsTransform.releases[1].entitlements.split(','))) {
       // if user has proper entitlements download files and set up launch button
       getVersionFiles(versionsTransform, 1);
       // handle the rest of the version file here
@@ -479,8 +508,8 @@
 
   }
 
-  function userAccess(entitlements){
-    entitlements.forEach(function(indexOf){
+  function userAccess(entitlements) {
+    entitlements.forEach(function(indexOf) {
       if (!userEntitlements.includes(entitlements[indexOf])) {
         return false;
         console.log("User does not have access");
@@ -543,7 +572,7 @@
     updatePlatform(),
     function() {
       // automatically update transform
-      if (automaticTransform){
+      if (automaticTransform) {
         updateApplication();
       }
     }
@@ -576,8 +605,6 @@
           //  console.log(numberTotalFiles);
           //  console.log(width);
           //  console.log(prog * 100 );
-        } else {
-          //  console.log("AHHHHH");
         }
       }
     }

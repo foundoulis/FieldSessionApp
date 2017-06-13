@@ -1,13 +1,24 @@
 {
-    "tools": [{
-      "name": "Cat Video",
-      "link": "https://www.youtube.com/watch?v=5dsGWM5XGdg"
-    }, {
-      "name": "Dog Video",
-      "link": "https://www.youtube.com/watch?v=GF60Iuh643I"
-    }, {
-      "name": "VIM Adventures",
-      "link": "https://vim-adventures.com/"
-    }]
-}
-
+  "tools": [
+        {
+          "category": "Database",
+          "name": "Create DB",
+          "entitlements": "x4m60",
+          "launch": {
+            "command": "xdg-open",
+            "config": "",
+            "value": "transform/release/guide.txt"
+          }
+        },
+        {
+          "category": "Data",
+          "name": "Connect to DI",
+          "entitlements": "x4m60",
+          "launch": {
+            "command": "xdg-open",
+            "config": "",
+            "value": "http://info.drillinginfo.com/products/di-basic"
+          }
+        }
+      ]
+    }
