@@ -142,7 +142,7 @@
 
   function setAccessToken() {
     accessToken = jarParser.getToken().access_token; // token from jarParser
-    // console.log("AccessToken: " + accessToken);
+    console.log("AccessToken: " + accessToken);
   }
 
   var versionsList = [];
@@ -185,7 +185,6 @@
   }
 
   var fs = require("fs");
-
 
   // Updates version number TODO: use the access token to do so
   function updateVersionNumber(number) {
@@ -240,6 +239,25 @@
       userEntitlements.push(perm3Name[perm3Name.length - 1]);
     }
   }
+
+  // grabs token from server and updates entitlements
+  // function tokenHandler() {
+  //   async.series([
+  //     function (callback) {
+  //       jarParser.buildAndRunCommand(require('electron').remote.getGlobal('username').name, require('electron').remote.getGlobal('password').pass);
+  //     },
+  //     function () {
+  //       setAccessToken();
+  //       var curlCommand = "curl -X POST https://di-api.dev.drillinginfo.com/v1/x4m/authorizations -H 'authorization: Bearer " + accessToken +
+  //       "' -H 'cache-control: no-cache' -H 'content-type: application/json' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d '{\"requests\":[{\"uri\":\"http://app.drillinginfo.com/x4m/x4m60\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/4xm/x4mms\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/x4m/x4mbeta\",\"action\":\"GET\"}]}'"
+  //       execCommand(curlCommand, parser);
+  //       console.log(accessToken);
+  //     }
+  //   ], function(err, results){
+  //     if(err) (console.log(err));
+  //     console.log(results);
+  //   });
+  // }
 
   // grabs token from server and updates entitlements
   function tokenHandler() {
@@ -311,7 +329,6 @@
   // });
 
   var request = require("request");
-  var async = require("async");
 
   var config = "https://s3.amazonaws.com/di-transform/config.json";
   // for the java platform
@@ -349,28 +366,50 @@
     if (versionsJava === {}) return;
     // console.log(releasesIndex);
     var server = versionObj.releases[releasesIndex].server;
-    var list = versionObj.releases[releasesIndex].files;
-    numberTotalFiles = list.length;
 
-    list.forEach(function(file) {
+    var list = []
+    // assuming that all patch releases will be at a smaller index than full file
+    if (versionObj.releases.length > 1 && releasesIndex !== versionObj.releases.length-1) {
+      // release is a patch and only the jar needs updating
+      // should only put transform_X.Y.Z in list file
+      var patchFileIndex = versionObj.releases[releasesIndex].files.indexOf("transform_" + versionObj.releases[releasesIndex].version + ".jar")
+      list.push(versionObj.releases[releasesIndex].files[patchFileIndex]);
+      list.push("");
+      console.log("Installing patch...");
+    } else {
+      list = versionObj.releases[releasesIndex].files;
+    }
+    numberTotalFiles = list.length;
+    // TODO: reintialize loading bar here
+
+    Array.prototype.forEach.call(list, function(file) {
+      if (file === "") return;
       url = server + "/" + file;
-      fs.stat(versionObj.releases[0].local + "/" + file, (err) => {
+      // check if file exists before downloading it
+      fs.stat(versionObj.releases[releasesIndex].local + "/" + file, (err) => {
         if (err !== null) {
           request.get(url, function(error, response, body) {
-            console.log(err);
             if (!error && response.statusCode == 200) {
               var pathArray = file.split("/");
               var path = "/";
               for (i = 0; i < pathArray.length - 1; i++) {
                 path += pathArray[i] + "/";
               }
-              pathname = versionObj.releases[0].local + path;
+              pathname = versionObj.releases[releasesIndex].local + path;
               var mkdirp = require("mkdirp");
               mkdirp(pathname, (err) => {
                 if (err) {
                   console.log(err);
                 }
-                fs.writeFile(versionObj.releases[0].local + "/" + file, body, (err) => {
+                // removes old tranform_X.Y.Z.jar when trying to install an updated version
+                console.log("transform_" + versionObj.releases[versionObj.releases.length-1].version + ".jar");
+                if (file.includes("transform_" + versionObj.releases[versionObj.releases.length-1].version + ".jar")){
+                  console.log("removing: "  + "transform_" + versionObj.releases[versionObj.releases.length-1].version + ".jar");
+                  fs.unlink("../" + versionObj.releases[releasesIndex].local + "/" + "transform_" + versionObj.releases[versionObj.releases.length-1].version + ".jar", (err) => {
+                    console.log(err);
+                  });
+                }
+                fs.writeFile(versionObj.releases[releasesIndex].local + "/" + file, body, (err) => {
                   if (err !== null) console.log(err)
                 });
 
@@ -379,7 +418,6 @@
               console.log(error);
             } else {
               console.log(new Error("HTML statuscode: " + response.statuscode));
-              console.log(body);
             }
           }); // end request
         }
@@ -505,17 +543,18 @@
     }
 
     // TODO: ask what the protocol is for adding patches and if they will always be above the base version
-
+    if (userAccess("x4mms")){ // patch access
+      console.log("User has access to x4mms patches");
+      getVersionFiles(versionsTransform, 0);
+    }
   }
 
   function userAccess(entitlements) {
-    entitlements.forEach(function(indexOf) {
+    Array.prototype.forEach.call(entitlements, function(indexOf) {
       if (!userEntitlements.includes(entitlements[indexOf])) {
         return false;
-        console.log("User does not have access");
       }
     });
-    console.log("User has access");
     return true;
   }
 
