@@ -178,11 +178,17 @@
   launch.onclick = function() {
     // Insert the launch string here.
     execCommand("java -jar ./jars/helloWorld.jar", (stdout) => {
-      // console.log(stdout)
+    //   console.log(stdout)
     });
-
-    console.log(JSON.stringify());
-    console.log("./" + versionsJSON.releases[0].launch.command + " " + versionsJSON.releases[0].launch.config + " " + versionsJSON.releases[0].launch.value); //, (stdout) => {console.log(stdout)}
+    // console.log(JSON.stringify(versionsTransform));
+    console.log("./" + versionsTransform.releases[1].launch.command + " " + versionsTransform.releases[1].launch.config + " " + versionsTransform.releases[1].launch.value); //, (stdout) => {console.log(stdout)}
+    execCommand("./" + versionsTransform.releases[1].launch.command + " " + versionsTransform.releases[1].launch.config + " " + versionsTransform.releases[1].launch.value,
+    (error, stdout, stderr) => {
+        console.log(stdout);
+        if(error !== null) {
+            console.log(error);
+        }
+    });
   }
 
   var fs = require("fs");
