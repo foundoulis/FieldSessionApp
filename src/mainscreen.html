@@ -538,34 +538,53 @@
   }
 
   function setVersionsTransform(obj) {
-    versionsTransform = JSON.parse(obj);
+      versionsTransform = JSON.parse(obj);
+      releaseNumber = 1;
 
-    // TODO: think about putting the chunk below in its own function??
-    updateVersionNumber(versionsTransform.releases[1].version);
-    // update Transform jar (already clicked update or it was automatic)
-    if (userAccess(versionsTransform.releases[1].entitlements.split(','))) {
-      // if user has proper entitlements download files and set up launch button
-      getVersionFiles(versionsTransform, 1);
-      // handle the rest of the version file here
-    }
-  }
-
-  function checkForPatch(){
-    // TODO: ask what the protocol is for adding patches and if they will always be above the base version
-    if (userAccess("x4mms")){ // patch access
-      console.log("User has access to x4mms patches");
-      getVersionFiles(versionsTransform, 0);
-    }
-  }
-
-  function userAccess(entitlements) {
-    Array.prototype.forEach.call(entitlements, function(indexOf) {
-      if (!userEntitlements.includes(entitlements[indexOf])) {
-        return false;
+      // TODO: think about putting the chunk below in its own function??
+      updateVersionNumber(versionsTransform.releases[releaseNumber].version);
+      // update Transform jar (already clicked update or it was automatic)
+      if (userAccess(versionsTransform.releases[releaseNumber].entitlements.split(','))) {
+        // if user has proper entitlements download files and set up launch button
+        getVersionFiles(versionsTransform, releaseNumber);
+        // handle the rest of the version file here
+        setLaunchCommand(releaseNumber);
       }
-    });
-    return true;
-  }
+    }
+
+    function checkForPatch(){
+      // TODO: ask what the protocol is for adding patches and if they will always be above the base version
+      if (userAccess("x4mms")){ // patch access
+        releaseNumber = 0;
+        console.log("User has access to x4mms patches");
+        getVersionFiles(versionsTransform, releaseNumber);
+
+        // handle the rest of the version file here
+        updateVersionNumber(versionsTransform.releases[releaseNumber].version);
+        setLaunchCommand(releaseNumber);
+      }
+    }
+
+    function setLaunchCommand(releaseIndex){
+      launchCommand = "./" + versionsTransform.releases[releaseIndex].launch.command + " " + versionsTransform.releases[releaseIndex].launch.config + " " + versionsTransform.releases[releaseIndex].launch.value;
+    }
+
+    function userAccess(entitlements) {
+      if (entitlements.length != 1){
+        console.log(entitlements.length);
+        Array.prototype.forEach.call(entitlements, function(element) {
+          if (!userEntitlements.includes(element)) {
+            return false;
+          }
+        });
+        return true;
+      } else {
+        if (userEntitlements.includes(entitlements)){
+          return true;
+        }
+      }
+      return false;
+    }
 
   /*
    * S3 server stuff end
