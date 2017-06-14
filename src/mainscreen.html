@@ -375,7 +375,7 @@ function getVersionFiles(versionObj, releasesIndex) {
     // console.log(releasesIndex);
     var server = versionObj.releases[releasesIndex].server;
 
-    var list = []
+    var list = [];
     // assuming that all patch releases will be at a smaller index than full file
     if (versionObj.releases.length > 1 && releasesIndex !== versionObj.releases.length-1) {
       // release is a patch and only the jar needs updating
@@ -418,16 +418,17 @@ function getVersionFiles(versionObj, releasesIndex) {
                 fs.writeFile(versionObj.releases[releasesIndex].local + "/" + file, body, (err) => {
                   if (err !== null) console.log(err)
                 });
-
-              })
+              });
             } else if (error) {
               console.log(error);
             } else {
               console.log(new Error("HTML statuscode: " + response.statuscode));
             }
-        }); // end file.stat
-        // update progress bar
-        moveBar();
+          }); // end of request
+        }
+      }); // end file.stat
+      // update progress bar
+      moveBar();
     }); // end file loop
 }
 
@@ -566,7 +567,6 @@ function setVersionsTransform(obj) {
   }
 
   function userAccess(entitlements) {
-    list []
     if (entitlements.length != 1){
       console.log(entitlements.length);
       Array.prototype.forEach.call(entitlements, function(element) {
