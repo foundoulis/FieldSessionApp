@@ -7,6 +7,7 @@ const {app, BrowserWindow, ipcMain, session} = require('electron');
 
 const path = require('path');
 const url = require('url');
+const request = require('request');
 
 // global window variable
 let win;
@@ -29,7 +30,7 @@ function loadURL(name) {
 function loadLogInScreen() {
     loadURL('login.html');
 }
-//function which loads jar files to be used by the program, takes no parameters
+//function which loads jar files to be used by the program
 function runJarFile() {
 
     var exec = require('child_process').exec, child;
@@ -61,25 +62,36 @@ function createWindow() {
 
     loadLogInScreen();
     loadCookies(); // Called at the end of storeCookie.
-    loadConfig();
+    loadConfig(global.config);
     storeCookie("Please work");
 }
 
 function loadConfig() {
-    var exec = require('child_process').exec, child;
-    child = exec("wget -O ./config.json https://s3.amazonaws.com/di-transform/config.json",
-    (error, stdout, stderr) => {
-        // Directs standard out and standard error.
-        //console.log('stdout: ' + stdout);
-        //console.log('stderr: ' + stderr);
-        // Prints error if it doesn't work.
-        if(error !== null){
-            console.log('exec error: ' + error);
+    request.get("https://s3.amazonaws.com/di-transform/config.json", function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            global.config = body;
+            // callback(null, "https://s3.amazonaws.com/di-transform/config.json");
+        } else if (error) {
+            console.log(error);
+            // callback(error, null);
         } else {
-            global.config1 = require('../config.json');
-            console.log(global.config);
+            // callback(new Error("HTML statuscode: " + response.statuscode), null);
         }
     });
+    // var exec = require('child_process').exec, child;
+    // child = exec("wget -O ./config.json https://s3.amazonaws.com/di-transform/config.json",
+    // (error, stdout, stderr) => {
+    //     // Directs standard out and standard error.
+    //     //console.log('stdout: ' + stdout);
+    //     //console.log('stderr: ' + stderr);
+    //     // Prints error if it doesn't work.
+    //     if(error !== null){
+    //         console.log('exec error: ' + error);
+    //     } else {
+    //         global.config1 = require('../config.json');
+    //         console.log(global.config);
+    //     }
+    // });
 }
 
 function loadCookies() {
@@ -88,6 +100,7 @@ function loadCookies() {
         global.cook = cookies;
         // console.log("The cookies are here in the global variable: \n" + JSON.stringify(global.cook));
     });
+    return global.cook;
 }
 
 function storeCookie(data) {
@@ -95,7 +108,7 @@ function storeCookie(data) {
     var daysToExpiry = 15;
     var expirDate = new Date();
     expirDate.setDate(expirDate.getDate() + daysToExpiry);
-    console.log(expirDate.getDate().toString());
+    // console.log(expirDate.getDate().toString());
 
     // Building and storing the cookie
     session.defaultSession.cookies.set(
@@ -106,29 +119,29 @@ function storeCookie(data) {
             secure: true,
             expirationDate: expirDate.getTime(),
         },
-    (error) => {
-        if (error === null) {
-        // Show me the cookies
-        console.log(JSON.stringify(loadCookies()))
-    } else {
-        console.log(error);
+        (error) => {
+            if (error === null) {
+                // Show me the cookies
+                // console.log(JSON.stringify(loadCookies()))
+            } else {
+                console.log(error);
+            }
+        });
+
     }
+
+    // Run create window function
+    app.on('ready', createWindow);
+
+    // Quit when all windows are closed
+    app.on('window-all-closed', () => {
+        if (process.platform !== 'darwin') {
+            app.quit();
+        }
     });
-
-}
-
-// Run create window function
-app.on('ready', createWindow);
-
-// Quit when all windows are closed
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit();
-    }
-});
-// Create a window on activation
-app.on('activate', () => {
-    if (win === null) {
-        createWindow();
-    }
-})
+    // Create a window on activation
+    app.on('activate', () => {
+        if (win === null) {
+            createWindow();
+        }
+    })
