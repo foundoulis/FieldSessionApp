@@ -131,6 +131,19 @@
 <script src="https://sdk.amazonaws.com/js/aws-sdk-2.61.0.min.js"></script>
 <!-- main script -->
 <script type="text/javascript">
+
+function greyOut(id, grayOut) { // grayOut changes the buttons ability
+  var element = document.getElementById(id);
+  if (grayOut) {
+    element.style.opacity = 0.4;
+  } else {
+    element.style.opacity = 1.0;
+  }
+  element.disabled = grayOut;
+}
+greyOut("update", false);
+greyOut("launch", false);
+
 let numberTotalFiles = 1;
 
 var jarParser = require('./jarParser');
