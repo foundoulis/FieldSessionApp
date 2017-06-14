@@ -95,7 +95,7 @@
         $.each(data.tools, function(i, f) {
           // var newLink = "<a" + " onclick='execCommand('echo hello', function(stdout){console.log(stdout)})', href='#'>" + f.name + "</a>" + "<br>"
 
-          var newLink = "<a" + " id='toolButtons' onclick='execCommand(" + f.launch.command + " " + f.launch.value + ", function(stdout) {console.log(stdout);})', href='#', onclick = execCommand(" + f.launch.command + " " + f.launch.value + ")>" + f.name + "</a>" + "<br>"
+          var newLink = "<a" + " id='toolButtons' onclick='execCommand('" + f.launch.command + " " + f.launch.value + "', function(stdout) {console.log(stdout);})', href='#', onclick = execCommand(" + f.launch.command + " " + f.launch.value + ")>" + f.name + "</a>" + "<br>"
 
           console.log(newLink);
 
@@ -111,6 +111,7 @@
 
   <div class="tools" id="toolContainer">
     <h2 id="header"> Tools </h2>
+    <a id='toolButtons' onclick='execCommand('xdg-open transform/release/guide.txt', function(stdout)', href='#'>Create DB</a><br>
   </div>
   <!-- Update button -->
   <div class="update">
@@ -177,11 +178,17 @@
   launch.onclick = function() {
     // Insert the launch string here.
     execCommand("java -jar ./jars/helloWorld.jar", (stdout) => {
-      // console.log(stdout)
+    //   console.log(stdout)
     });
-
-    console.log(JSON.stringify());
-    console.log("./" + versionsJSON.releases[0].launch.command + " " + versionsJSON.releases[0].launch.config + " " + versionsJSON.releases[0].launch.value); //, (stdout) => {console.log(stdout)}
+    // console.log(JSON.stringify(versionsTransform));
+    console.log("./" + versionsTransform.releases[1].launch.command + " " + versionsTransform.releases[1].launch.config + " " + versionsTransform.releases[1].launch.value); //, (stdout) => {console.log(stdout)}
+    execCommand("./" + versionsTransform.releases[1].launch.command + " " + versionsTransform.releases[1].launch.config + " " + versionsTransform.releases[1].launch.value,
+    (error, stdout, stderr) => {
+        console.log(stdout);
+        if(error !== null) {
+            console.log(error);
+        }
+    });
   }
 
   var fs = require("fs");
