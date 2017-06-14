@@ -95,7 +95,7 @@
         $.each(data.tools, function(i, f) {
           // var newLink = "<a" + " onclick='execCommand('echo hello', function(stdout){console.log(stdout)})', href='#'>" + f.name + "</a>" + "<br>"
 
-          var newLink = "<a" + " id='toolButtons' onclick='execCommand(" + f.launch.command + " " + f.launch.value + ", function(stdout) {console.log(stdout);})', href='#', onclick = execCommand(" + f.launch.command + " " + f.launch.value + ")>" + f.name + "</a>" + "<br>"
+          var newLink = "<a" + " id='toolButtons' onclick='execCommand('" + f.launch.command + " " + f.launch.value + "', function(stdout) {console.log(stdout);})', href='#', onclick = execCommand(" + f.launch.command + " " + f.launch.value + ")>" + f.name + "</a>" + "<br>"
 
           console.log(newLink);
 
@@ -111,6 +111,7 @@
 
   <div class="tools" id="toolContainer">
     <h2 id="header"> Tools </h2>
+    <a id='toolButtons' onclick='execCommand('xdg-open transform/release/guide.txt', function(stdout)', href='#'>Create DB</a><br>
   </div>
   <!-- Update button -->
   <div class="update">
