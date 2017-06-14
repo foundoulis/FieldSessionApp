@@ -78,6 +78,7 @@
   </div>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
   <script>
+
     var exec = require("child_process").exec;
 
     function execCommand(command, callback) {
@@ -88,14 +89,16 @@
         callback(stdout);
       });
     }
+    function runFile(command){
+      console.log('hello');
+    }
     $(function() {
       var links = [];
 
-      $.getJSON('./tools.json', function(data) {
-        $.each(data.tools, function(i, f) {
-          // var newLink = "<a" + " onclick='execCommand('echo hello', function(stdout){console.log(stdout)})', href='#'>" + f.name + "</a>" + "<br>"
 
-          var newLink = "<a" + " id='toolButtons' onclick='execCommand('" + f.launch.command + " " + f.launch.value + "', function(stdout) {console.log(stdout);})', href='#', onclick = execCommand(" + f.launch.command + " " + f.launch.value + ")>" + f.name + "</a>" + "<br>"
+        $.each(versionsTransform.releases[releaseNumber].tools, function(i, f) {
+
+           var newLink = "<a id='t_"+ f.name + "' onclick='runFile('" + f.launch.command + " " + f.launch.value + "', function(stdout) {console.log(stdout);})' href='#' >" + f.name + "</a>" + "<br>"
 
           console.log(newLink);
 
@@ -104,16 +107,18 @@
           }
 
         });
-      });
+
     })
+
   </script>
   <!-- Tools container -->
 
   <div class="tools" id="toolContainer">
     <h2 id="header"> Tools </h2>
-    <a id='toolButtons' onclick='execCommand('xdg-open transform/release/guide.txt', function(stdout)', href='#'>Create DB</a><br>
+    <!-- <a id='toolButtons' onclick='execCommand('xdg-open transform/release/guide.txt', function(stdout)', href='#'>Create DB</a><br> -->
   </div>
   <!-- Update button -->
+
   <div class="update">
     <button id='update'> Update </button>
   </div>
@@ -616,6 +621,7 @@
       }
     }
   }
+
 </script>
 
 </html>
