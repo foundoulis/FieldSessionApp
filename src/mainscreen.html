@@ -194,22 +194,27 @@ setTimeout(function(){
     });
   }
   launch.onclick = function() {
-    // Insert the launch string here.
-    execCommand("java -jar ./jars/helloWorld.jar", (stdout) => {
-      //   console.log(stdout)
-    });
-    // console.log(JSON.stringify(versionsTransform));
-    // console.log("./" + versionsTransform.releases[1].launch.command + " " + versionsTransform.releases[1].launch.config + " " + versionsTransform.releases[1].launch.value); //, (stdout) => {console.log(stdout)}
-    execCommand("./" +
-      versionsTransform.releases[indexOfTranformVersionToBeLaunched].launch.command +
-      " " + versionsTransform.releases[indexOfTranformVersionToBeLaunched].launch.config +
-      " " + versionsTransform.releases[indexOfTranformVersionToBeLaunched].launch.value,
-      (error, stdout, stderr) => {
-        console.log(stdout);
-        if (error !== null) {
-          console.log(error);
-        }
+    if (userEntitlements.includes('x4m60')){
+      // Insert the launch string here.
+      execCommand("java -jar ./jars/helloWorld.jar", (stdout) => {
+        //   console.log(stdout)
       });
+      // console.log(JSON.stringify(versionsTransform));
+      // console.log("./" + versionsTransform.releases[1].launch.command + " " + versionsTransform.releases[1].launch.config + " " + versionsTransform.releases[1].launch.value); //, (stdout) => {console.log(stdout)}
+      execCommand("./" +
+        versionsTransform.releases[indexOfTranformVersionToBeLaunched].launch.command +
+        " " + versionsTransform.releases[indexOfTranformVersionToBeLaunched].launch.config +
+        " " + versionsTransform.releases[indexOfTranformVersionToBeLaunched].launch.value,
+        (error, stdout, stderr) => {
+          console.log(stdout);
+          if (error !== null) {
+            console.log(error);
+          }
+        });
+    }
+else{
+  window.alert("You must have permission on launch!")
+}
   }
 
   var fs = require("fs");
