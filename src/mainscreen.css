@@ -79,18 +79,30 @@
   left: 65%;
 }
 .tools #header {
-  text-align: center;
-  color: #1c1b1d;
+  text-align: left;
+  color: white;
+  background: #76be43;
+  margin:0px;
+  padding:5px 5px 5px 5px;
+  font-size:17px;
+  border-bottom:1px solid #CCCCCC;
+  font-weight: bold;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  font-family: "Roboto", sans-serif;
 }
 .tools {
   text-align: center;
+
 }
 .tools a{
   color: #626065;
-  left: 25%;
-text-align: center;
+  /*left: 25%;*/
+  top: 1%;
+  margin-top: 0%;
+/*text-align: center;*/
   font-weight: bold;
-  font-size: 20px;
+  font-size: 17px;
 }
 .tools button {
   font-family: "Roboto", sans-serif;
@@ -106,6 +118,16 @@ text-align: center;
   /*transition: all 0.3 ease;*/
   cursor: pointer;
   border: none;
+}
+.tools p {
+  font-family: "Roboto", sans-serif;
+  color: #1c1b1d;
+  margin-bottom: -5%;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 5%;
+
+  /*border-style: dotted;*/
 }
 .tools button:hover {
   background: #d3d3d3;
@@ -144,6 +166,7 @@ img {
   color:#000;
 }
 .feed-container .header a{
+  font-family: "Roboto", sans-serif;
   text-decoration:none;
   color:#000;
 }
