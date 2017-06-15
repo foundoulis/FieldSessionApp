@@ -438,15 +438,15 @@
       list.push("");
       console.log("Installing patch...");
     } else {
-      list = versionObj.releases[releasesIndex].files//.slice(0, versionObj.releases[releasesIndex].files.length - 1);
+      list = versionObj.releases[releasesIndex].files//.slice(versionObj.releases[releasesIndex].files.length - 5, versionObj.releases[releasesIndex].files.length - 3);
     }
     numberTotalFiles = list.length;
     // TODO: reintialize loading bar here
     resetProgressBar();
 
     Array.prototype.forEach.call(list, function(file) {
-      if (file === "") return;
       url = server + "/" + file;
+      if (file === "") return;
       // check if file exists before downloading it
       fs.stat(versionObj.releases[releasesIndex].local + "/" + file, (err) => {
         if (err !== null) {
@@ -637,6 +637,8 @@
     if (userAccess(versionsTransform.releases[releaseNumber].entitlements.split(','))) {
       // if user has proper entitlements download files and set up launch button
       getVersionFiles(versionsTransform, releaseNumber);
+      // downloadFile("https://s3.amazonaws.com/di-transform/transform/release/lib/launcher.jar", "./transform/release/lib/launcher.jar");
+      // downloadFile("https://s3.amazonaws.com/di-transform/transform/release/transform_6.0.0.jar", "./transform/release/transform_6.0.0.jar");
       // handle the rest of the version file here
       setLaunchCommand(releaseNumber);
     }
