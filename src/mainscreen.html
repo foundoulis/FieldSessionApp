@@ -17,7 +17,7 @@
   </div>
   <!-- Version container -->
   <div>
-    <h3 id="version"> Version <!-- default value --> </h3>
+    <h3 id="version"> No Version Installed <!-- default value --> </h3>
   </div>
   <!-- Username container -->
   <div class="user">
@@ -113,7 +113,7 @@ setTimeout(function(){
       });
 
   })
-}, 4000);
+}, 5000);
 
   </script>
   <!-- Tools container -->
@@ -447,8 +447,8 @@ setTimeout(function(){
     // TODO: reintialize loading bar here
     resetProgressBar();
 
-    Array.prototype.forEach.call(list, function(file) {
-      url = server + "/" + file;
+    // async.eachSeries(list, function(file, callback){
+    list.forEach(function(file) {
       if (file === "") return;
       // check if file exists before downloading it
       fs.stat(versionObj.releases[releasesIndex].local + "/" + file, (err) => {
@@ -464,7 +464,7 @@ setTimeout(function(){
             if (err) {
               console.log(err);
             }
-            downloadFile(url, versionObj.releases[releasesIndex].local + "/" + file);
+            downloadFile(server + "/" + file, versionObj.releases[releasesIndex].local + "/" + file);
 
             // request.get(url, function(error, response, body) {
             //   if (!error && response.statusCode == 200) {
@@ -513,12 +513,13 @@ setTimeout(function(){
         getRequest(platformURL, setPlatformJSON, callback);
       },
       function(callback) {
-        getRequest(versionsJavaURL, setVersionsJava, callback);
-      },
-      function(callback) {
         getRequest(versionsTransformURL, setVersionsTransform, callback);
       },
       function(callback) {
+        getRequest(versionsJavaURL, setVersionsJava, callback);
+      },
+      function(callback) {
+        console.log("make it work you bastard")
         if (!automaticTransform && updatesTransform) {
           // user needs to update manually
           greyOut("update", false);
@@ -634,6 +635,12 @@ setTimeout(function(){
   }
 
   function updateTransform(){
+    execCommand("chmod -R 777 ./java/*", (err, stdout, stderr) => {
+      if (err){
+        console.log(stderr);
+        console.log(err);
+      }
+    });
     resetProgressBar();
     updateVersionNumber(versionsTransform.releases[releaseNumber].version);
     // update Transform jar (already clicked update or it was automatic)
