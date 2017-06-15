@@ -88,7 +88,8 @@
         callback(stdout);
       });
     }
-    function runFile(command){
+
+    function runFile(command) {
       console.log('hello');
     }
     $(function() {
@@ -136,20 +137,19 @@
 <script src="https://sdk.amazonaws.com/js/aws-sdk-2.61.0.min.js"></script>
 <!-- main script -->
 <script type="text/javascript">
-
-function greyOut(id, grayOut) { // grayOut changes the buttons ability
-  var element = document.getElementById(id);
-  if (grayOut) {
-    element.style.opacity = 0.4;
-  } else {
-    element.style.opacity = 1.0;
+  function greyOut(id, grayOut) { // grayOut changes the buttons ability
+    var element = document.getElementById(id);
+    if (grayOut) {
+      element.style.opacity = 0.4;
+    } else {
+      element.style.opacity = 1.0;
+    }
+    element.disabled = grayOut;
   }
-  element.disabled = grayOut;
-}
-greyOut("update", true);
-greyOut("launch", true);
+  greyOut("update", true);
+  greyOut("launch", true);
 
-let numberTotalFiles = 1;
+  let numberTotalFiles = 1;
 
   var jarParser = require('./jarParser');
   var accessToken = jarParser.getToken.access_token; // token from jarParser
@@ -373,6 +373,41 @@ let numberTotalFiles = 1;
   var updatesTransform = false;
   var automaticTransform = false;
 
+  function downloadFile(file_url, targetPath) {
+    // Save variable to know progress
+    var received_bytes = 0;
+    var total_bytes = 0;
+
+    var req = request({
+      method: 'GET',
+      uri: file_url
+    });
+
+    var out = fs.createWriteStream(targetPath);
+    req.pipe(out);
+
+    req.on('response', function(data) {
+      // Change the total bytes value to get progress later.
+      total_bytes = parseInt(data.headers['content-length']);
+    });
+
+    req.on('data', function(chunk) {
+      // Update the received bytes
+      received_bytes += chunk.length;
+
+      // showProgress(received_bytes, total_bytes);
+    });
+
+    // req.on('end', function() {
+    //   alert("File succesfully downloaded");
+    // });
+  }
+
+  function showProgress(received, total) {
+    var percentage = (received * 100) / total;
+    console.log(percentage + "% | " + received + " bytes out of " + total + " bytes.");
+  }
+
   // takes url, sets it to JSON, then returns body in callback for debugging
   function getRequest(requestURL, setJSON, callback) {
     request.get(requestURL, function(error, response, body) {
@@ -403,10 +438,11 @@ let numberTotalFiles = 1;
       list.push("");
       console.log("Installing patch...");
     } else {
-      list = versionObj.releases[releasesIndex].files;
+      list = versionObj.releases[releasesIndex].files//.slice(0, versionObj.releases[releasesIndex].files.length - 1);
     }
     numberTotalFiles = list.length;
     // TODO: reintialize loading bar here
+    resetProgressBar();
 
     Array.prototype.forEach.call(list, function(file) {
       if (file === "") return;
@@ -414,29 +450,43 @@ let numberTotalFiles = 1;
       // check if file exists before downloading it
       fs.stat(versionObj.releases[releasesIndex].local + "/" + file, (err) => {
         if (err !== null) {
-          request.get(url, function(error, response, body) {
-            if (!error && response.statusCode == 200) {
-              var pathArray = file.split("/");
-              var path = "/";
-              for (i = 0; i < pathArray.length - 1; i++) {
-                path += pathArray[i] + "/";
-              }
-              pathname = versionObj.releases[releasesIndex].local + path;
-              var mkdirp = require("mkdirp");
-              mkdirp(pathname, (err) => {
-                if (err) {
-                  console.log(err);
-                }
-                fs.writeFile(versionObj.releases[releasesIndex].local + "/" + file, body, (err) => {
-                  if (err !== null) console.log(err)
-                });
-              });
-            } else if (error) {
-              console.log(error);
-            } else {
-              console.log(new Error("HTML statuscode: " + response.statuscode));
+          var pathArray = file.split("/");
+          var path = "/";
+          for (i = 0; i < pathArray.length - 1; i++) {
+            path += pathArray[i] + "/";
+          }
+          pathname = versionObj.releases[releasesIndex].local + path;
+          var mkdirp = require("mkdirp");
+          mkdirp(pathname, (err) => {
+            if (err) {
+              console.log(err);
             }
-          }); // end of request
+            downloadFile(url, versionObj.releases[releasesIndex].local + "/" + file);
+
+            // request.get(url, function(error, response, body) {
+            //   if (!error && response.statusCode == 200) {
+            //     var pathArray = file.split("/");
+            //     var path = "/";
+            //     for (i = 0; i < pathArray.length - 1; i++) {
+            //       path += pathArray[i] + "/";
+            //     }
+            //     pathname = versionObj.releases[releasesIndex].local + path;
+            //     var mkdirp = require("mkdirp");
+            //     mkdirp(pathname, (err) => {
+            //       if (err) {
+            //         console.log(err);
+            //       }
+            //       fs.writeFile(versionObj.releases[releasesIndex].local + "/" + file, body, (err) => {
+            //         if (err !== null) console.log(err)
+            //       });
+            //     });
+            //   } else if (error) {
+            //     console.log(error);
+            //   } else {
+            //     console.log(new Error("HTML statuscode: " + response.statuscode));
+            //   }
+            // }); // end of request
+          });
         }
       }); // end file.stat
       // update progress bar
@@ -462,24 +512,27 @@ let numberTotalFiles = 1;
       function(callback) {
         getRequest(versionsJavaURL, setVersionsJava, callback);
       },
-      function(callback){
+      function(callback) {
+        getRequest(versionsTransformURL, setVersionsTransform, callback);
+      },
+      function(callback) {
         if (!automaticTransform && updatesTransform) {
-            // user needs to update manually
-            greyOut("update", false);
-          } else if (updatesTransform && automaticTransform){
-            // updates automatically
-            console.log("updating");
-            updateApplication();
-          } else if (!updatesTransform){
-            greyOut("launch", false);
-            var transformJar = /\.\/transform\/release\/transform_*/;
-            fs.stat(transformJar, (err) =>{
-              if (err !== null){
-                // default launch command
-                launchCommand = "./java/1.8.60/bin/java -jar " + transformJar + " -XX:+UseG1GC -Xmx1000m Transform";
-              }
-            });
-          }
+          // user needs to update manually
+          greyOut("update", false);
+        } else if (updatesTransform && automaticTransform) {
+          // updates automatically
+          console.log("updating");
+          updateApplication();
+        } else if (!updatesTransform) {
+          greyOut("launch", false);
+          var transformJar = /\.\/transform\/release\/transform_*/;
+          fs.stat(transformJar, (err) => {
+            if (err !== null) {
+              // default launch command
+              launchCommand = "./java/1.8.60/bin/java -jar " + transformJar + " -XX:+UseG1GC -Xmx1000m Transform";
+            }
+          });
+        }
       }
     ], function(err, results) {
       //optional callback function goes here
@@ -552,9 +605,7 @@ let numberTotalFiles = 1;
   function updateApplication() {
     async.series([
       function(callback) {
-        getRequest(versionsTransformURL, setVersionsTransform, callback);
-      },
-      function(callback) {
+        updateTransform();
         // add delay to make sure file is there before it is deleted
         setTimeout(function() {
           checkForPatch();
@@ -563,8 +614,9 @@ let numberTotalFiles = 1;
           greyOut("progress", true);
         }, 200);
       },
-      function(callback){
-      }
+      function(callback) {
+      },
+      function(callback) {}
     ], function(err, results) {
       //optional callback function goes here
       if (err) console.log(err);
@@ -575,7 +627,10 @@ let numberTotalFiles = 1;
   function setVersionsTransform(obj) {
     versionsTransform = JSON.parse(obj);
     releaseNumber = 1;
+    console.log(versionsTransform);
+  }
 
+  function updateTransform(){
     resetProgressBar();
     updateVersionNumber(versionsTransform.releases[releaseNumber].version);
     // update Transform jar (already clicked update or it was automatic)
@@ -684,7 +739,7 @@ let numberTotalFiles = 1;
   // for electron process handling
   require('./renderer.js');
 
-  function resetProgressBar(){
+  function resetProgressBar() {
     var elem = document.getElementById("progBar");
     elem.style.width = 0;
     console.log(elem.style.width);
@@ -714,7 +769,6 @@ let numberTotalFiles = 1;
       }
     }
   }
-
 </script>
 
 </html>
