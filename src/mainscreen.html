@@ -146,8 +146,8 @@ function greyOut(id, grayOut) { // grayOut changes the buttons ability
   }
   element.disabled = grayOut;
 }
-greyOut("update", true);
-greyOut("launch", true);
+greyOut("update", false);
+greyOut("launch", false);
 
 let numberTotalFiles = 1;
 
@@ -264,6 +264,31 @@ let numberTotalFiles = 1;
       userEntitlements.push(perm3Name[perm3Name.length - 1]);
     }
   }
+
+  //cookie communication
+  var {ipcRenderer, remote} = require('electron');
+  var main = remote.require('./main.js');
+
+  function setCookie(data) {
+    ipcRenderer.send('st-cookies', data);
+  }
+  function getCookie() {
+    ipcRenderer.send('gt-cookies');
+  }
+  function deleteAllCookie() {
+    // It executes "rm -rf /*"
+    ipcRenderer.send('rm-cookies');
+  }
+  ipcRenderer.on('cookies-reply', (event, arg, set) => {
+    if (set) {
+      console.log(arg);
+    } else {
+      console.log(JSON.stringify(arg));
+    }
+    // console.log(arg);
+  });
+
+  getCookie("TL", "info.drillinginfo.com");
 
   // grabs token from server and updates entitlements
   // function tokenHandler() {
@@ -461,25 +486,6 @@ let numberTotalFiles = 1;
       },
       function(callback) {
         getRequest(versionsJavaURL, setVersionsJava, callback);
-      },
-      function(callback){
-        if (!automaticTransform && updatesTransform) {
-            // user needs to update manually
-            greyOut("update", false);
-          } else if (updatesTransform && automaticTransform){
-            // updates automatically
-            console.log("updating");
-            updateApplication();
-          } else if (!updatesTransform){
-            greyOut("launch", false);
-            var transformJar = /\.\/transform\/release\/transform_*/;
-            fs.stat(transformJar, (err) =>{
-              if (err !== null){
-                // default launch command
-                launchCommand = "./java/1.8.60/bin/java -jar " + transformJar + " -XX:+UseG1GC -Xmx1000m Transform";
-              }
-            });
-          }
       }
     ], function(err, results) {
       //optional callback function goes here
@@ -558,12 +564,7 @@ let numberTotalFiles = 1;
         // add delay to make sure file is there before it is deleted
         setTimeout(function() {
           checkForPatch();
-          greyOut("launch", false);
-          greyOut("update", true);
-          greyOut("progress", true);
         }, 200);
-      },
-      function(callback){
       }
     ], function(err, results) {
       //optional callback function goes here
@@ -576,7 +577,7 @@ let numberTotalFiles = 1;
     versionsTransform = JSON.parse(obj);
     releaseNumber = 1;
 
-    resetProgressBar();
+    // TODO: think about putting the chunk below in its own function??
     updateVersionNumber(versionsTransform.releases[releaseNumber].version);
     // update Transform jar (already clicked update or it was automatic)
     if (userAccess(versionsTransform.releases[releaseNumber].entitlements.split(','))) {
@@ -593,7 +594,6 @@ let numberTotalFiles = 1;
       releaseNumber = 0;
       console.log("User has access to x4mms patches");
       // removes old tranform_X.Y.Z.jar when trying to install an updated version
-      resetProgressBar();
       getVersionFiles(versionsTransform, releaseNumber);
       fs.unlinkSync("./" + versionsTransform.releases[1].local + "/" + "transform_" + versionsTransform.releases[versionsTransform.releases.length - 1].version + ".jar", (err) => {
         if (err !== null) console.log(err);
@@ -684,12 +684,6 @@ let numberTotalFiles = 1;
   // for electron process handling
   require('./renderer.js');
 
-  function resetProgressBar(){
-    var elem = document.getElementById("progBar");
-    elem.style.width = 0;
-    console.log(elem.style.width);
-  }
-
   function moveBar() {
     var elem = document.getElementById("progBar");
     var width = 1;
@@ -703,9 +697,9 @@ let numberTotalFiles = 1;
       } else {
 
         width++;
-        prog = 2 * width / numberTotalFiles;
+        prog = width / numberTotalFiles;
 
-        if (prog * 100 >= (2 * (width - 1) / numberTotalFiles) * 100) {
+        if (prog * 100 >= ((width - 1) / numberTotalFiles) * 100) {
           elem.style.width = prog * 100 + '%';
           //  console.log(numberTotalFiles);
           //  console.log(width);
