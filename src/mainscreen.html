@@ -36,7 +36,7 @@
     <!-- start sw-rss-feed code -->
     <script type="text/javascript">
       rssfeed_url = new Array();
-      rssfeed_url[0] = "https://www.nasa.gov/rss/dyn/lg_image_of_the_day.rss";
+      rssfeed_url[0] = "https://info.drillinginfo.com/feed/";
       rssfeed_frame_width = "100%";
       rssfeed_frame_height = "600";
       rssfeed_scroll = "on";
@@ -78,35 +78,29 @@
   </div>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
   <script>
-    var exec = require("child_process").exec;
 
-    function execCommand(command, callback) {
-      exec(command, (error, stdout, stderr) => {
-        if (error !== null) {
-          console.log('exec error: ' + error);
-        }
-        callback(stdout);
-      });
-    }
-    function runFile(command){
-      console.log('hello');
-    }
+  var child = require('child_process').execFile;
+var executablePath = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe";
+var parameters = ["--incognito"];
+
+child(executablePath, parameters, function(err, data) {
+     console.log(err)
+     console.log(data.toString());
+});
+
+
     $(function() {
-      var links = [];
+
 
       $.getJSON('./tools.json', function(data) {
         $.each(data.tools, function(i, f) {
           // var newLink = "<a" + " onclick='execCommand('echo hello', function(stdout){console.log(stdout)})', href='#'>" + f.name + "</a>" + "<br>"
 
-          var newLink = "<a" + " id='toolButtons' onclick='execCommand(" + f.launch.command + " " + f.launch.value + ", function(stdout) {console.log(stdout);})', href='#', onclick = execCommand(" + f.launch.command + " " + f.launch.value +
-            ")>" + f.name + "</a>" + "<br>"
+        var newButton = <button id="tool" onclick="child(executablePath, parameters, function(err, data))"> Click me </button> 
 
 
-          console.log(newLink);
-
-          if (f.entitlements === 'x4m60') {
             $(newLink).appendTo("#toolContainer");
-          }
+
 
         });
       });
@@ -139,15 +133,17 @@
 
 function greyOut(id, grayOut) { // grayOut changes the buttons ability
   var element = document.getElementById(id);
+  console.log(element.style);
   if (grayOut) {
     element.style.opacity = 0.4;
+    // element.style.background = "#000000";
   } else {
     element.style.opacity = 1.0;
   }
   element.disabled = grayOut;
 }
-greyOut("update", false);
-greyOut("launch", false);
+greyOut("update", true);
+greyOut("launch", true);
 
 let numberTotalFiles = 1;
 
