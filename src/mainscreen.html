@@ -36,7 +36,7 @@
     <!-- start sw-rss-feed code -->
     <script type="text/javascript">
       rssfeed_url = new Array();
-      rssfeed_url[0] = "https://www.nasa.gov/rss/dyn/lg_image_of_the_day.rss";
+      rssfeed_url[0] = "https://info.drillinginfo.com/feed/";
       rssfeed_frame_width = "100%";
       rssfeed_frame_height = "600";
       rssfeed_scroll = "on";
@@ -80,38 +80,41 @@
   <script>
     var exec = require("child_process").exec;
 
-    function execCommand(command, callback) {
-      exec(command, (error, stdout, stderr) => {
-        if (error !== null) {
-          console.log('exec error: ' + error);
-        }
-        callback(stdout);
+
+//   var child = require('child_process').execFile;
+// var executablePath = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe";
+// var parameters = ["--incognito"];
+//
+// child(executablePath, parameters, function(err, data) {
+//      console.log(err);
+//      console.log(data.toString());
+// });
+
+setTimeout(function(){
+  $(function() {
+
+
+    // $.getJSON('./tools.json', function(data) {
+      $.each(versionsTransform.releases[releaseNumber].tools, function(i, f) {
+      //  if(f(i).category !== f.category){
+            var newHead = "<p> " + f.category + " Tools </p> <br>"
+
+    //    }
+
+      var newLink = "<a id='tool' href='https://info.drillinginfo.com/' target='_blank'> " + f.name + " </button> <br>"
+
+
+      $(newHead).appendTo("#toolContainer");
+  $(newLink).appendTo("#toolContainer");
+//   $(newLink).appendTo("#toolContainer");
+// $(newLink).appendTo("#toolContainer");
+// $(newLink).appendTo("#toolContainer");
+
       });
-    }
 
-    function runFile(command) {
-      console.log('hello');
-    }
-    $(function() {
-      var links = [];
+  })
+}, 4000);
 
-      $.getJSON('./tools.json', function(data) {
-        $.each(data.tools, function(i, f) {
-          // var newLink = "<a" + " onclick='execCommand('echo hello', function(stdout){console.log(stdout)})', href='#'>" + f.name + "</a>" + "<br>"
-
-          var newLink = "<a" + " id='toolButtons' onclick='execCommand(" + f.launch.command + " " + f.launch.value + ", function(stdout) {console.log(stdout);})', href='#', onclick = execCommand(" + f.launch.command + " " + f.launch.value +
-            ")>" + f.name + "</a>" + "<br>"
-
-
-          console.log(newLink);
-
-          if (f.entitlements === 'x4m60') {
-            $(newLink).appendTo("#toolContainer");
-          }
-
-        });
-      });
-    })
   </script>
   <!-- Tools container -->
 
