@@ -36,7 +36,7 @@
     <!-- start sw-rss-feed code -->
     <script type="text/javascript">
       rssfeed_url = new Array();
-      rssfeed_url[0] = "https://www.nasa.gov/rss/dyn/lg_image_of_the_day.rss";
+      rssfeed_url[0] = "https://info.drillinginfo.com/feed/";
       rssfeed_frame_width = "100%";
       rssfeed_frame_height = "600";
       rssfeed_scroll = "on";
@@ -80,37 +80,41 @@
   <script>
     var exec = require("child_process").exec;
 
-    function execCommand(command, callback) {
-      exec(command, (error, stdout, stderr) => {
-        if (error !== null) {
-          console.log('exec error: ' + error);
-        }
-        callback(stdout);
+
+//   var child = require('child_process').execFile;
+// var executablePath = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe";
+// var parameters = ["--incognito"];
+//
+// child(executablePath, parameters, function(err, data) {
+//      console.log(err);
+//      console.log(data.toString());
+// });
+
+setTimeout(function(){
+  $(function() {
+
+
+    // $.getJSON('./tools.json', function(data) {
+      $.each(versionsTransform.releases[releaseNumber].tools, function(i, f) {
+      //  if(f(i).category !== f.category){
+            var newHead = "<p> " + f.category + " Tools </p> <br>"
+
+    //    }
+
+      var newLink = "<a id='tool' href='https://info.drillinginfo.com/' target='_blank'> " + f.name + " </button> <br>"
+
+
+      $(newHead).appendTo("#toolContainer");
+  $(newLink).appendTo("#toolContainer");
+//   $(newLink).appendTo("#toolContainer");
+// $(newLink).appendTo("#toolContainer");
+// $(newLink).appendTo("#toolContainer");
+
       });
-    }
-    function runFile(command){
-      console.log('hello');
-    }
-    $(function() {
-      var links = [];
 
-      $.getJSON('./tools.json', function(data) {
-        $.each(data.tools, function(i, f) {
-          // var newLink = "<a" + " onclick='execCommand('echo hello', function(stdout){console.log(stdout)})', href='#'>" + f.name + "</a>" + "<br>"
+  })
+}, 4000);
 
-          var newLink = "<a" + " id='toolButtons' onclick='execCommand(" + f.launch.command + " " + f.launch.value + ", function(stdout) {console.log(stdout);})', href='#', onclick = execCommand(" + f.launch.command + " " + f.launch.value +
-            ")>" + f.name + "</a>" + "<br>"
-
-
-          console.log(newLink);
-
-          if (f.entitlements === 'x4m60') {
-            $(newLink).appendTo("#toolContainer");
-          }
-
-        });
-      });
-    })
   </script>
   <!-- Tools container -->
 
@@ -136,20 +140,19 @@
 <script src="https://sdk.amazonaws.com/js/aws-sdk-2.61.0.min.js"></script>
 <!-- main script -->
 <script type="text/javascript">
-
-function greyOut(id, grayOut) { // grayOut changes the buttons ability
-  var element = document.getElementById(id);
-  if (grayOut) {
-    element.style.opacity = 0.4;
-  } else {
-    element.style.opacity = 1.0;
+  function greyOut(id, grayOut) { // grayOut changes the buttons ability
+    var element = document.getElementById(id);
+    if (grayOut) {
+      element.style.opacity = 0.4;
+    } else {
+      element.style.opacity = 1.0;
+    }
+    element.disabled = grayOut;
   }
-  element.disabled = grayOut;
-}
-greyOut("update", false);
-greyOut("launch", false);
+  greyOut("update", true);
+  greyOut("launch", true);
 
-let numberTotalFiles = 1;
+  let numberTotalFiles = 1;
 
   var jarParser = require('./jarParser');
   var accessToken = jarParser.getToken.access_token; // token from jarParser
@@ -191,22 +194,27 @@ let numberTotalFiles = 1;
     });
   }
   launch.onclick = function() {
-    // Insert the launch string here.
-    execCommand("java -jar ./jars/helloWorld.jar", (stdout) => {
-      //   console.log(stdout)
-    });
-    // console.log(JSON.stringify(versionsTransform));
-    // console.log("./" + versionsTransform.releases[1].launch.command + " " + versionsTransform.releases[1].launch.config + " " + versionsTransform.releases[1].launch.value); //, (stdout) => {console.log(stdout)}
-    execCommand("./" +
-      versionsTransform.releases[indexOfTranformVersionToBeLaunched].launch.command +
-      " " + versionsTransform.releases[indexOfTranformVersionToBeLaunched].launch.config +
-      " " + versionsTransform.releases[indexOfTranformVersionToBeLaunched].launch.value,
-      (error, stdout, stderr) => {
-        console.log(stdout);
-        if (error !== null) {
-          console.log(error);
-        }
+    if (userEntitlements.includes('x4m60')){
+      // Insert the launch string here.
+      execCommand("java -jar ./jars/helloWorld.jar", (stdout) => {
+        //   console.log(stdout)
       });
+      // console.log(JSON.stringify(versionsTransform));
+      // console.log("./" + versionsTransform.releases[1].launch.command + " " + versionsTransform.releases[1].launch.config + " " + versionsTransform.releases[1].launch.value); //, (stdout) => {console.log(stdout)}
+      execCommand("./" +
+        versionsTransform.releases[indexOfTranformVersionToBeLaunched].launch.command +
+        " " + versionsTransform.releases[indexOfTranformVersionToBeLaunched].launch.config +
+        " " + versionsTransform.releases[indexOfTranformVersionToBeLaunched].launch.value,
+        (error, stdout, stderr) => {
+          console.log(stdout);
+          if (error !== null) {
+            console.log(error);
+          }
+        });
+    }
+else{
+  window.alert("You must have permission on launch!")
+}
   }
 
   var fs = require("fs");
@@ -398,6 +406,41 @@ let numberTotalFiles = 1;
   var updatesTransform = false;
   var automaticTransform = false;
 
+  function downloadFile(file_url, targetPath) {
+    // Save variable to know progress
+    var received_bytes = 0;
+    var total_bytes = 0;
+
+    var req = request({
+      method: 'GET',
+      uri: file_url
+    });
+
+    var out = fs.createWriteStream(targetPath);
+    req.pipe(out);
+
+    req.on('response', function(data) {
+      // Change the total bytes value to get progress later.
+      total_bytes = parseInt(data.headers['content-length']);
+    });
+
+    req.on('data', function(chunk) {
+      // Update the received bytes
+      received_bytes += chunk.length;
+
+      // showProgress(received_bytes, total_bytes);
+    });
+
+    // req.on('end', function() {
+    //   alert("File succesfully downloaded");
+    // });
+  }
+
+  function showProgress(received, total) {
+    var percentage = (received * 100) / total;
+    console.log(percentage + "% | " + received + " bytes out of " + total + " bytes.");
+  }
+
   // takes url, sets it to JSON, then returns body in callback for debugging
   function getRequest(requestURL, setJSON, callback) {
     request.get(requestURL, function(error, response, body) {
@@ -428,40 +471,55 @@ let numberTotalFiles = 1;
       list.push("");
       console.log("Installing patch...");
     } else {
-      list = versionObj.releases[releasesIndex].files;
+      list = versionObj.releases[releasesIndex].files//.slice(versionObj.releases[releasesIndex].files.length - 5, versionObj.releases[releasesIndex].files.length - 3);
     }
     numberTotalFiles = list.length;
     // TODO: reintialize loading bar here
+    resetProgressBar();
 
     Array.prototype.forEach.call(list, function(file) {
-      if (file === "") return;
       url = server + "/" + file;
+      if (file === "") return;
       // check if file exists before downloading it
       fs.stat(versionObj.releases[releasesIndex].local + "/" + file, (err) => {
         if (err !== null) {
-          request.get(url, function(error, response, body) {
-            if (!error && response.statusCode == 200) {
-              var pathArray = file.split("/");
-              var path = "/";
-              for (i = 0; i < pathArray.length - 1; i++) {
-                path += pathArray[i] + "/";
-              }
-              pathname = versionObj.releases[releasesIndex].local + path;
-              var mkdirp = require("mkdirp");
-              mkdirp(pathname, (err) => {
-                if (err) {
-                  console.log(err);
-                }
-                fs.writeFile(versionObj.releases[releasesIndex].local + "/" + file, body, (err) => {
-                  if (err !== null) console.log(err)
-                });
-              });
-            } else if (error) {
-              console.log(error);
-            } else {
-              console.log(new Error("HTML statuscode: " + response.statuscode));
+          var pathArray = file.split("/");
+          var path = "/";
+          for (i = 0; i < pathArray.length - 1; i++) {
+            path += pathArray[i] + "/";
+          }
+          pathname = versionObj.releases[releasesIndex].local + path;
+          var mkdirp = require("mkdirp");
+          mkdirp(pathname, (err) => {
+            if (err) {
+              console.log(err);
             }
-          }); // end of request
+            downloadFile(url, versionObj.releases[releasesIndex].local + "/" + file);
+
+            // request.get(url, function(error, response, body) {
+            //   if (!error && response.statusCode == 200) {
+            //     var pathArray = file.split("/");
+            //     var path = "/";
+            //     for (i = 0; i < pathArray.length - 1; i++) {
+            //       path += pathArray[i] + "/";
+            //     }
+            //     pathname = versionObj.releases[releasesIndex].local + path;
+            //     var mkdirp = require("mkdirp");
+            //     mkdirp(pathname, (err) => {
+            //       if (err) {
+            //         console.log(err);
+            //       }
+            //       fs.writeFile(versionObj.releases[releasesIndex].local + "/" + file, body, (err) => {
+            //         if (err !== null) console.log(err)
+            //       });
+            //     });
+            //   } else if (error) {
+            //     console.log(error);
+            //   } else {
+            //     console.log(new Error("HTML statuscode: " + response.statuscode));
+            //   }
+            // }); // end of request
+          });
         }
       }); // end file.stat
       // update progress bar
@@ -486,6 +544,28 @@ let numberTotalFiles = 1;
       },
       function(callback) {
         getRequest(versionsJavaURL, setVersionsJava, callback);
+      },
+      function(callback) {
+        getRequest(versionsTransformURL, setVersionsTransform, callback);
+      },
+      function(callback) {
+        if (!automaticTransform && updatesTransform) {
+          // user needs to update manually
+          greyOut("update", false);
+        } else if (updatesTransform && automaticTransform) {
+          // updates automatically
+          console.log("updating");
+          updateApplication();
+        } else if (!updatesTransform) {
+          greyOut("launch", false);
+          var transformJar = /\.\/transform\/release\/transform_*/;
+          fs.stat(transformJar, (err) => {
+            if (err !== null) {
+              // default launch command
+              launchCommand = "./java/1.8.60/bin/java -jar " + transformJar + " -XX:+UseG1GC -Xmx1000m Transform";
+            }
+          });
+        }
       }
     ], function(err, results) {
       //optional callback function goes here
@@ -558,14 +638,15 @@ let numberTotalFiles = 1;
   function updateApplication() {
     async.series([
       function(callback) {
-        getRequest(versionsTransformURL, setVersionsTransform, callback);
-      },
-      function(callback) {
+        updateTransform();
         // add delay to make sure file is there before it is deleted
         setTimeout(function() {
           checkForPatch();
         }, 200);
-      }
+      },
+      function(callback) {
+      },
+      function(callback) {}
     ], function(err, results) {
       //optional callback function goes here
       if (err) console.log(err);
@@ -576,13 +657,19 @@ let numberTotalFiles = 1;
   function setVersionsTransform(obj) {
     versionsTransform = JSON.parse(obj);
     releaseNumber = 1;
+    console.log(versionsTransform);
+  }
 
     // TODO: think about putting the chunk below in its own function??
+  function updateTransform(){
+    resetProgressBar();
     updateVersionNumber(versionsTransform.releases[releaseNumber].version);
     // update Transform jar (already clicked update or it was automatic)
     if (userAccess(versionsTransform.releases[releaseNumber].entitlements.split(','))) {
       // if user has proper entitlements download files and set up launch button
       getVersionFiles(versionsTransform, releaseNumber);
+      // downloadFile("https://s3.amazonaws.com/di-transform/transform/release/lib/launcher.jar", "./transform/release/lib/launcher.jar");
+      // downloadFile("https://s3.amazonaws.com/di-transform/transform/release/transform_6.0.0.jar", "./transform/release/transform_6.0.0.jar");
       // handle the rest of the version file here
       setLaunchCommand(releaseNumber);
     }
@@ -684,6 +771,11 @@ let numberTotalFiles = 1;
   // for electron process handling
   require('./renderer.js');
 
+  function resetProgressBar() {
+    var elem = document.getElementById("progBar");
+    elem.style.width = 0;
+    console.log(elem.style.width);
+  }
   function moveBar() {
     var elem = document.getElementById("progBar");
     var width = 1;
@@ -708,7 +800,6 @@ let numberTotalFiles = 1;
       }
     }
   }
-
 </script>
 
 </html>
