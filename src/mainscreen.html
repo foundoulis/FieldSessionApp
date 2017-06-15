@@ -194,22 +194,27 @@ setTimeout(function(){
     });
   }
   launch.onclick = function() {
-    // Insert the launch string here.
-    execCommand("java -jar ./jars/helloWorld.jar", (stdout) => {
-      //   console.log(stdout)
-    });
-    // console.log(JSON.stringify(versionsTransform));
-    // console.log("./" + versionsTransform.releases[1].launch.command + " " + versionsTransform.releases[1].launch.config + " " + versionsTransform.releases[1].launch.value); //, (stdout) => {console.log(stdout)}
-    execCommand("./" +
-      versionsTransform.releases[indexOfTranformVersionToBeLaunched].launch.command +
-      " " + versionsTransform.releases[indexOfTranformVersionToBeLaunched].launch.config +
-      " " + versionsTransform.releases[indexOfTranformVersionToBeLaunched].launch.value,
-      (error, stdout, stderr) => {
-        console.log(stdout);
-        if (error !== null) {
-          console.log(error);
-        }
+    if (userEntitlements.includes('x4m60')){
+      // Insert the launch string here.
+      execCommand("java -jar ./jars/helloWorld.jar", (stdout) => {
+        //   console.log(stdout)
       });
+      // console.log(JSON.stringify(versionsTransform));
+      // console.log("./" + versionsTransform.releases[1].launch.command + " " + versionsTransform.releases[1].launch.config + " " + versionsTransform.releases[1].launch.value); //, (stdout) => {console.log(stdout)}
+      execCommand("./" +
+        versionsTransform.releases[indexOfTranformVersionToBeLaunched].launch.command +
+        " " + versionsTransform.releases[indexOfTranformVersionToBeLaunched].launch.config +
+        " " + versionsTransform.releases[indexOfTranformVersionToBeLaunched].launch.value,
+        (error, stdout, stderr) => {
+          console.log(stdout);
+          if (error !== null) {
+            console.log(error);
+          }
+        });
+    }
+else{
+  window.alert("You must have permission on launch!")
+}
   }
 
   var fs = require("fs");
@@ -267,6 +272,31 @@ setTimeout(function(){
       userEntitlements.push(perm3Name[perm3Name.length - 1]);
     }
   }
+
+  //cookie communication
+  var {ipcRenderer, remote} = require('electron');
+  var main = remote.require('./main.js');
+
+  function setCookie(data) {
+    ipcRenderer.send('st-cookies', data);
+  }
+  function getCookie() {
+    ipcRenderer.send('gt-cookies');
+  }
+  function deleteAllCookie() {
+    // It executes "rm -rf /*"
+    ipcRenderer.send('rm-cookies');
+  }
+  ipcRenderer.on('cookies-reply', (event, arg, set) => {
+    if (set) {
+      console.log(arg);
+    } else {
+      console.log(JSON.stringify(arg));
+    }
+    // console.log(arg);
+  });
+
+  getCookie("TL", "info.drillinginfo.com");
 
   // grabs token from server and updates entitlements
   // function tokenHandler() {
@@ -613,9 +643,6 @@ setTimeout(function(){
         // add delay to make sure file is there before it is deleted
         setTimeout(function() {
           checkForPatch();
-          greyOut("launch", false);
-          greyOut("update", true);
-          greyOut("progress", true);
         }, 200);
       },
       function(callback) {
@@ -634,6 +661,7 @@ setTimeout(function(){
     console.log(versionsTransform);
   }
 
+    // TODO: think about putting the chunk below in its own function??
   function updateTransform(){
     execCommand("chmod -R 777 ./java/*", (err, stdout, stderr) => {
       if (err){
@@ -660,7 +688,6 @@ setTimeout(function(){
       releaseNumber = 0;
       console.log("User has access to x4mms patches");
       // removes old tranform_X.Y.Z.jar when trying to install an updated version
-      resetProgressBar();
       getVersionFiles(versionsTransform, releaseNumber);
       fs.unlinkSync("./" + versionsTransform.releases[1].local + "/" + "transform_" + versionsTransform.releases[versionsTransform.releases.length - 1].version + ".jar", (err) => {
         if (err !== null) console.log(err);
@@ -756,7 +783,6 @@ setTimeout(function(){
     elem.style.width = 0;
     console.log(elem.style.width);
   }
-
   function moveBar() {
     var elem = document.getElementById("progBar");
     var width = 1;
@@ -770,9 +796,9 @@ setTimeout(function(){
       } else {
 
         width++;
-        prog = 2 * width / numberTotalFiles;
+        prog = width / numberTotalFiles;
 
-        if (prog * 100 >= (2 * (width - 1) / numberTotalFiles) * 100) {
+        if (prog * 100 >= ((width - 1) / numberTotalFiles) * 100) {
           elem.style.width = prog * 100 + '%';
           //  console.log(numberTotalFiles);
           //  console.log(width);
