@@ -79,32 +79,37 @@
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
   <script>
 
-  var child = require('child_process').execFile;
-var executablePath = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe";
-var parameters = ["--incognito"];
+//   var child = require('child_process').execFile;
+// var executablePath = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe";
+// var parameters = ["--incognito"];
+//
+// child(executablePath, parameters, function(err, data) {
+//      console.log(err);
+//      console.log(data.toString());
+// });
 
-child(executablePath, parameters, function(err, data) {
-     console.log(err)
-     console.log(data.toString());
-});
-
-
-    $(function() {
-
-
-      $.getJSON('./tools.json', function(data) {
-        $.each(data.tools, function(i, f) {
-          // var newLink = "<a" + " onclick='execCommand('echo hello', function(stdout){console.log(stdout)})', href='#'>" + f.name + "</a>" + "<br>"
-
-        var newButton = <button id="tool" onclick="child(executablePath, parameters, function(err, data))"> Click me </button> 
+setTimeout(function(){
+  $(function() {
 
 
-            $(newLink).appendTo("#toolContainer");
+    // $.getJSON('./tools.json', function(data) {
+      $.each(versionsTransform.releases[releaseNumber].tools, function(i, f) {
+        if(f(i).category !== f.category){
+            var newHead = "<h3> " + f.category + "</h3> <br>"
+            $(newLink).appendTo("#toolContainer")
+        }
+
+      var newLink = "<a id='tool' href='https://info.drillinginfo.com/' target='_blank'> " + f.name + " </button> <br>"
 
 
-        });
+          $(newLink).appendTo("#toolContainer");
+
+
       });
-    })
+
+  })
+}, 250);
+
   </script>
   <!-- Tools container -->
 

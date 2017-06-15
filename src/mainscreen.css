@@ -78,7 +78,6 @@
   top: 23%;
   left: 65%;
 }
-/*********************** Tools header style **************************/
 .tools #header {
   text-align: center;
   color: #1c1b1d;
@@ -92,6 +91,25 @@
 text-align: center;
   font-weight: bold;
   font-size: 20px;
+}
+.tools button {
+  font-family: "Roboto", sans-serif;
+  border-radius: 5px;
+  width: 100%;
+  height: 10%;
+  text-transform: none;
+  background: #d3d3d3;
+  color: #1c1b1d;
+  font-size: 15px;
+  font-weight: bolder;
+  /*-webkit-transition: all 0.3 ease;*/
+  /*transition: all 0.3 ease;*/
+  cursor: pointer;
+  border: none;
+}
+.tools button:hover {
+  background: #d3d3d3;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0), 0 17px 50px 0 rgba(0, 0, 0, 0);
 }
 /***********************Footer style **************************/
 #foot {
@@ -190,21 +208,7 @@ button:hover {
   background: #87cf54;
   box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
-button #tool {
-  font-family: "Roboto", sans-serif;
-  border-radius: 5px;
-  width: 100%;
-  height: 20%;
-  text-transform: uppercase;
-  background: #76be43;
-  color: #FFFFFF;
-  font-size: 12px;
-  font-weight: bolder;
-  -webkit-transition: all 0.3 ease;
-  transition: all 0.3 ease;
-  cursor: pointer;
-  border: none;
-}
+
 /*********************** Update button style **************************/
 .update {
   background: #76be43;
