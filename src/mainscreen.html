@@ -105,9 +105,50 @@
 <!-- main script -->
 <script type="text/javascript">
 
+  let numberTotalFiles = 1; // default value
+
+  var accessToken; // stores user's accessToken and is also stored in cookie for offline use
+
+  // SECURITY_ISSUE: releaseNumber has a security issues because it is not a private variable, it could be
+  // easily changed to allow patch access if the release structure is understood
+  //
+  // It won't launch with the launch button because the entitlements are checked again
+  // at launch, but the launch command could be used in the terminal
+  var releaseNumber;
+
+  var auth; // stores jarParser's JSON
+
+  // required modules
+  var jarParser = require('./jarParser'); // exports some functions used for grabbing authentication from server
+  var async = require("async");
+  var exec = require('child_process').exec;
+  var fs = require("fs");
+  var mkdirp = require("mkdirp");
+
+  // executes unix instruction
+  function execCommand(command, callback) {
+    exec(command, {
+      shell: '/bin/bash'
+    }, (error, stdout, stderr) => {
+      if (error !== null) {
+        console.log('exec error: ' + error);
+      }
+      callback(stdout);
+    });
+  }
+
+  // greyOut update and launch buttons by default
+  greyOut("update", true);
+  greyOut("launch", true);
+
+  // checks for if the transform file alread exists and extracts version number
+  fs.readdir("./transform/release/", (err, files) => {
+    if (files !== undefined) updateVersionNumber(files[1].slice(files[1].indexOf('_') + 1, files[1].lastIndexOf('.')));
+  });
+
   // used to greyOut element "id"
   // grey == true => element is greyed out
-  function greyOut(id, grey) { // grey (bool) changes the buttons ability
+  function greyOut(id, grey) { // grey (bool) changes the buttons visability
     var element = document.getElementById(id);
     if (grey) {
       element.style.opacity = 0.4;
@@ -146,23 +187,6 @@
     }
   }
 
-  // greyOut update and launch buttons by default
-  greyOut("update", true);
-  greyOut("launch", true);
-
-  let numberTotalFiles = 1; // default value
-
-  var jarParser = require('./jarParser');
-  var async = require("async");
-  var accessToken;
-
-  // SECURITY_ISSUE: releaseNumber has a security issues because it is not a private variable, it could be
-  // easily changed to allow patch access if the release structure is understood
-  //
-  // It won't launch with the launch button because the entitlements are checked again
-  // at launch, but the launch command could be used in the terminal
-  var releaseNumber;
-
   function setAccessToken() {
     accessToken = jarParser.getToken().access_token; // token from jarParser
   }
@@ -173,26 +197,14 @@
   update.onclick = function() {
     if (versionsList.length > 0) {
       versionList.forEach(function(ver) {
-        getVersionFiles(ver.obj, ver.releasesIndex);
+        getVersionFiles(ver.obj, ver.releasesIndex); // handles downloading of files from server
       });
     }
-    updateApplication();
+    updateApplication(); // sets up launch
   }
 
+  // launch button logic
   var launch = document.getElementById('launch');
-  var exec = require('child_process').exec;
-  var auth;
-  // executes unix instruction
-  function execCommand(command, callback) {
-    exec(command, {
-      shell: '/bin/bash'
-    }, (error, stdout, stderr) => {
-      if (error !== null) {
-        console.log('exec error: ' + error);
-      }
-      callback(stdout);
-    });
-  }
   launch.onclick = function() {
     if (userEntitlements.includes('x4m60')) {
       execCommand("./" +
@@ -210,18 +222,11 @@
     }
   }
 
-  var fs = require("fs");
-
   // Updates version number TODO: use the access token to do so
   function updateVersionNumber(number) {
     var version = document.getElementById('version');
     version.innerHTML = "Version " + number;
   }
-
-  // checks for if the transform file alread exists and extracts version number
-  fs.readdir("./transform/release/", (err, files) => {
-    if (files !== undefined) updateVersionNumber(files[1].slice(files[1].indexOf('_') + 1, files[1].lastIndexOf('.')));
-  });
 
   // Updates username
   function updateUsername(name, callback) {
@@ -306,19 +311,19 @@
 
   // needs to be called after retrieveToken finishes
   function tokenHandler(callback){
-    // delay a bit for jarParser to finish
-    // setTimeout(function() {
+    // delay a bit for jarParser to finish retrieving token
+    setTimeout(function() {
       setAccessToken();
       //fetch json from server
       var curlCommand = "curl -X POST https://di-api.dev.drillinginfo.com/v1/x4m/authorizations -H 'authorization: Bearer " + accessToken +
         "' -H 'cache-control: no-cache' -H 'content-type: application/json' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d '{\"requests\":[{\"uri\":\"http://app.drillinginfo.com/x4m/x4m60\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/4xm/x4mms\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/x4m/x4mbeta\",\"action\":\"GET\"}]}'"
       execCommand(curlCommand, parser);
       callback(null, null);
-    // }, 3000);
+    }, 3000);
   }
 
   /*
-   ******************************************************************** S3 server stuff********************************************************************
+   *************************************************************** S3 server handling ****************************************************************
    */
 
   var request = require("request");
@@ -341,11 +346,11 @@
   var updatesTransform = false;
   var automaticTransform = false;
 
-  function downloadFile(file_url, targetPath) {
+  function downloadFile(fileURL, targetPath) {
     // Save variable to know progress
     var req = request({
       method: 'GET',
-      uri: file_url
+      uri: fileURL
     });
 
     // pipe output into target file
@@ -371,12 +376,13 @@
     });
   }
 
+  // handles downloading of version files and also cross references with local directory
   function getVersionFiles(versionObj, releasesIndex) {
-    var fs = require("fs");
     if (versionsJava === {}) return;
-    var server = versionObj.releases[releasesIndex].server;
 
+    var server = versionObj.releases[releasesIndex].server;
     var list = [];
+
     // assuming that all patch releases will be at a smaller index than full file
     if (versionObj.releases.length > 1 && releasesIndex !== versionObj.releases.length - 1) {
       // release is a patch and only the jar needs updating
@@ -403,7 +409,6 @@
             path += pathArray[i] + "/";
           }
           pathname = versionObj.releases[releasesIndex].local + path;
-          var mkdirp = require("mkdirp");
           mkdirp(pathname, (err) => {
             if (err) {
               console.log(err);
@@ -412,13 +417,13 @@
           }); // end mkdirp
         }
       }); // end file.stat
-      // update progress bar
-      moveBar();
+      moveBar(); // update progress bar
     }); // end file loop
   }
 
-  // automatically called to check for updatesJava
+  // automatically called to check for Java platform updates
   function updatePlatform() {
+    // runs function calls synchronously
     async.series([
       function(callback) {
         getRequest(config, setConfigJSON, callback);
@@ -444,6 +449,7 @@
       function(callback) {
         if (!automaticTransform && updatesTransform) {
           // user needs to update manually
+          greyOut("progBar", true);
           greyOut("update", false);
         } else if (updatesTransform && automaticTransform) {
           // updates automatically
@@ -527,24 +533,34 @@
     }
   }
 
-  //************** transform jar stuff ******************
+  function setVersionsTransform(obj) {
+    versionsTransform = JSON.parse(obj);
+    releaseNumber = 1;
+  }
+
+  /*
+   ************** transform jar functions + calls ******************
+   */
+
   function updateApplication() {
+    // runs function calls synchronously
     async.series([
       function(callback) {
         updateTransform(callback);
       },
       function(callback) {
         checkForPatch(callback);
+      },
+      function(callback) {
+        // make launch button visible, and make update invisible
+        greyOut("update", true);
+        greyOut("progBar", true);
+        greyOut("launch", false);
       }
     ], function(err, results) {
       if (err) console.log(err);
       else console.log(results);
     });
-  }
-
-  function setVersionsTransform(obj) {
-    versionsTransform = JSON.parse(obj);
-    releaseNumber = 1;
   }
 
   // shows tools once the versionsTransform object is loaded
@@ -610,38 +626,38 @@
   }
 
   /*
-   * S3 server stuff end
+   ************************************************************* S3 server handling end **************************************************************
    */
 
-  // run automatically
-  async.series([
-    function(callback){
-      retrieveToken(callback);
-    },
-    function(callback){
-      tokenHandler(callback);
-    },
-    function(callback){
-      updateUsername(require('electron').remote.getGlobal('username').name, callback);
-    },
-    function(callback){
-      updatePlatform();
-    },
-    // showTools(),
-    function() {
-      // automatically update transform
-      if (automaticTransform) {
-        updateApplication();
-      }
-    }
-  ], function(err, results) {
-    //optional callback function goes here
-    if (err) console.log(err);
-    else console.log(results);
-  });
+   // runs automatically, done at end of script to allow for rendering
+   async.series([
+     function(callback){
+       retrieveToken(callback);
+     },
+     function(callback){
+       tokenHandler(callback);
+     },
+     function(callback){
+       updateUsername(require('electron').remote.getGlobal('username').name, callback);
+     },
+     function(callback){
+       updatePlatform();
+     },
+     function() {
+       // automatically update transform
+       if (automaticTransform) {
+         updateApplication();
+       }
+     }
+   ], function(err, results) {
+     //optional callback function goes here
+     if (err) console.log(err);
+     else console.log(results);
+   });
 
   // for electron process handling
   require('./renderer.js');
+
 </script>
 
 </html>
