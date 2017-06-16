@@ -11,11 +11,11 @@ const request = require('request');
 
 // global window variable
 let win;
+
 //username variable, set in login.html used in mainscreen.html
 global.username = {name: null};
 global.password = {pass: null};
 global.cook = null;
-global.config = null;
 
 //changes the window's current .html file on display.
 function loadURL(name) {
@@ -26,10 +26,12 @@ function loadURL(name) {
     resizeable: false
   }));
 }
+
 // loads the log in screen, takes no parameters, returns a screen
 function loadLogInScreen() {
   loadURL('login.html');
 }
+
 //function which loads jar files to be used by the program
 function runJarFile() {
 
@@ -58,6 +60,7 @@ function createWindow() {
     win = null;
   });
 
+  // gets rid of menuBar
   //  win.setMenu(null);
 
   loadLogInScreen();
@@ -78,20 +81,6 @@ function loadConfig() {
       // callback(new Error("HTML statuscode: " + response.statuscode), null);
     }
   });
-  // var exec = require('child_process').exec, child;
-  // child = exec("wget -O ./config.json https://s3.amazonaws.com/di-transform/config.json",
-  // (error, stdout, stderr) => {
-  //     // Directs standard out and standard error.
-  //     //console.log('stdout: ' + stdout);
-  //     //console.log('stderr: ' + stderr);
-  //     // Prints error if it doesn't work.
-  //     if(error !== null){
-  //         console.log('exec error: ' + error);
-  //     } else {
-  //         global.config1 = require('../config.json');
-  //         console.log(global.config);
-  //     }
-  // });
 }
 
 function loadCookies(nameInfo, urlInfo) {
@@ -170,6 +159,7 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 });
+
 // Create a window on activation
 app.on('activate', () => {
   if (win === null) {
