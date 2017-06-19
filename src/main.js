@@ -64,9 +64,7 @@ function createWindow() {
   //  win.setMenu(null);
 
   loadLogInScreen();
-  loadCookies(); // Called at the end of storeCookie.
   loadConfig(global.config);
-  storeCookie("Please work");
 }
 
 function loadConfig() {
@@ -83,72 +81,7 @@ function loadConfig() {
   });
 }
 
-function loadCookies(nameInfo, urlInfo) {
-  var filter = {
-    name: nameInfo,
-    domain: urlInfo
-  }
-  session.defaultSession.cookies.get(filter, (error, cookies) => {
-    // console.log("The cookies are here in the callback: \n" + JSON.stringify(cookies));
-    global.cook = cookies;
-    // console.log("The cookies are here in the global variable: \n" + JSON.stringify(global.cook));
-  });
-}
 
-function storeCookie(data, nameInfo) {
-  //Setting the date
-  var daysToExpiry = 15;
-  var expirDate = new Date();
-  expirDate.setDate(expirDate.getDate() + daysToExpiry);
-  // console.log(expirDate.getDate().toString());
-
-  // Building and storing the cookie
-  session.defaultSession.cookies.set({
-    url: "https://info.drillinginfo.com/",
-    name: nameInfo,
-    value: data,
-    secure: true,
-    expirationDate: expirDate.getTime(),
-  },
-  (error) => {
-    if (error === null) {
-      // Show me the cookies
-      // console.log(JSON.stringify(loadCookies()))
-    } else {
-      console.log(error);
-    }
-  });
-}
-
-ipcMain.on('st-cookies', (event, arg1) => {
-  // storeCookie(arg1, arg2);
-  var fs = require('fs');
-  fs.writeFile("./data/cookies.bake", JSON.stringify(arg1), (err) => {
-    if (err) {
-      console.log("Could not store cookies");
-      event.sender.send('cookies-reply', "Could not store cookies.", true);
-    } else {
-      console.log("Cookies stored");
-      event.sender.send('cookies-reply', "Cookies stored.", true);
-    }
-  });
-});
-ipcMain.on('gt-cookies', (event) => {
-  var fs = require('fs');
-  fs.readFile("./data/cookies.bake", (error, data) => {
-    if (error) {
-      console.log("Could not retrieve cookies.");
-      event.sender.send('cookies-reply', "Could not store cookies", false);
-    } else {
-      console.log("Cookies recieved");
-      event.sender.send('cookies-reply', JSON.parse(data), false);
-    }
-  });
-});
-ipcMain.on('rm-cookies', (event, arg) => {
-  console.log("You like to take risks don't you?");
-  console.log("Uncaught SyntaxError: missing ) after argument list.");
-});
 
 // Run create window function
 app.on('ready', createWindow);
@@ -165,4 +98,112 @@ app.on('activate', () => {
   if (win === null) {
     createWindow();
   }
-})
+});
+
+
+// cookies stuff
+ipcMain.on('set-cookie', (event, cookieInfo) => {
+// Must pass keep, name and value to store a cookie
+    if (cookieInfo.keep) {
+        var daysToExpiry = 15;
+        var expirDate = new Date();
+        expirDate.setDate(expirDate.getDate() + daysToExpiry);
+        session.defaultSession.cookies.set({
+            url: "http://info.drillinginfo.com/",
+            name: cookieInfo.name,
+            value: cookieInfo.value,
+            expirationDate: expirDate.getTime(),
+        }, (error) => {
+            if (error) {
+                console.log(error);
+            }
+        });
+    } else {
+        session.defaultSession.cookies.set({
+            url: "http://www.foundoulis.io/",
+            name: cookieInfo.name,
+            value: cookieInfo.value,
+        }, (error) => {
+            if (error) {
+                console.log(error);
+            }
+        });
+    }
+});
+ipcMain.on('get-cookie', (event, filterInfo) => {
+    session.defaultSession.cookies.get(filterInfo, (error, cookies) => {
+        if (error) {
+            console.log(error);
+        } else {
+            event.sender.send('get-cookie-reply', cookies);
+        }
+    });
+});
+
+// Defunct cookies code
+// function loadCookies(nameInfo, urlInfo) {
+//     var filter = {
+//         name: nameInfo,
+//         domain: urlInfo
+//     }
+//     session.defaultSession.cookies.get(filter, (error, cookies) => {
+//         // console.log("The cookies are here in the callback: \n" + JSON.stringify(cookies));
+//         global.cook = cookies;
+//         // console.log("The cookies are here in the global variable: \n" + JSON.stringify(global.cook));
+//     });
+// }
+//
+// function storeCookie(data, nameInfo) {
+//     //Setting the date
+//     var daysToExpiry = 15;
+//     var expirDate = new Date();
+//     expirDate.setDate(expirDate.getDate() + daysToExpiry);
+//     // console.log(expirDate.getDate().toString());
+//
+//     // Building and storing the cookie
+//     session.defaultSession.cookies.set({
+//         url: "https://info.drillinginfo.com/",
+//         name: nameInfo,
+//         value: data,
+//         secure: true,
+//         expirationDate: expirDate.getTime(),
+//     },
+//     (error) => {
+//         if (error === null) {
+//             // Show me the cookies
+//             // console.log(JSON.stringify(loadCookies()))
+//         } else {
+//             console.log(error);
+//         }
+//     });
+// }
+//
+// ipcMain.on('st-cookies', (event, arg1) => {
+//     // storeCookie(arg1, arg2);
+//     var fs = require('fs');
+//     fs.writeFile("./data/cookies.bake", JSON.stringify(arg1), (err) => {
+//         if (err) {
+//             console.log("Could not store cookies");
+//             event.sender.send('cookies-reply', "Could not store cookies.", true);
+//         } else {
+//             console.log("Cookies stored");
+//             event.sender.send('cookies-reply', "Cookies stored.", true);
+//         }
+//     });
+// });
+// ipcMain.on('gt-cookies', (event) => {
+//     var fs = require('fs');
+//     fs.readFile("./data/cookies.bake", (error, data) => {
+//         if (error) {
+//             console.log("Could not retrieve cookies.");
+//             event.sender.send('cookies-reply', "Could not store cookies", false);
+//         } else {
+//             console.log("Cookies recieved");
+//             event.sender.send('cookies-reply', JSON.parse(data), false);
+//         }
+//     });
+// });
+// ipcMain.on('rm-cookies', (event, arg) => {
+//     console.log("You like to take risks don't you?");
+//     console.log("Uncaught SyntaxError: missing ) after argument list.");
+// });

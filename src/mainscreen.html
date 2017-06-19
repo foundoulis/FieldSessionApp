@@ -274,34 +274,53 @@
   }
 
   //cookie communication
-  var {
-    ipcRenderer,
-    remote
-  } = require('electron');
-  var main = remote.require('./main.js');
 
-  function setCookie(data) {
-    ipcRenderer.send('st-cookies', data);
+  const ipcRenderer = require('electron').ipcRenderer;
+
+  var globalCookie;
+
+  function setCookie(cookieInfo) {
+      ipcRenderer.send('set-cookie', cookieInfo);
+  }
+  function getCookies(filterInfo) {
+      ipcRenderer.send('get-cookie', filterInfo);
   }
 
-  function getCookie() {
-    ipcRenderer.send('gt-cookies');
-  }
+  ipcRenderer.on('set-cookie-reply', (event, cookie) => {
 
-  function deleteAllCookie() {
-    // It executes "rm -rf /*"
-    ipcRenderer.send('rm-cookies');
-  }
-  ipcRenderer.on('cookies-reply', (event, arg, set) => {
-    if (set) {
-      console.log(arg);
-    } else {
-      console.log(JSON.stringify(arg));
-    }
-    // console.log(arg);
+  });
+  ipcRenderer.on('get-cookie-reply', (event, cookie) => {
+      globalCookie = cookie;
+      console.log('Cookie from main: ' + JSON.stringify(globalCookie));
   });
 
-  getCookie("TL", "info.drillinginfo.com");
+  // Defunct Cookies code
+  // var {
+  //   ipcRenderer,
+  //   remote
+  // } = require('electron');
+  // var main = remote.require('./main.js');
+  //
+  // function setCookie(data) {
+  //   ipcRenderer.send('st-cookies', data);
+  // }
+  //
+  // function getCookie() {
+  //   ipcRenderer.send('gt-cookies');
+  // }
+  //
+  // function deleteAllCookie() {
+  //   // It executes "rm -rf /*"
+  //   ipcRenderer.send('rm-cookies');
+  // }
+  // ipcRenderer.on('cookies-reply', (event, arg, set) => {
+  //   if (set) {
+  //     console.log(arg);
+  //   } else {
+  //     console.log(JSON.stringify(arg));
+  //   }
+  //   // console.log(arg);
+  // });
 
   // grabs token from server and updates entitlements
   function retrieveToken(callback) {
