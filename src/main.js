@@ -100,6 +100,10 @@ app.on('activate', () => {
   }
 });
 
+// removes all cookies
+electronConstants().mySession.clearStorageData([], function (data) {
+    console.log(data);
+})
 
 // cookies stuff
 ipcMain.on('set-cookie', (event, cookieInfo) => {
@@ -120,7 +124,7 @@ ipcMain.on('set-cookie', (event, cookieInfo) => {
         });
     } else {
         session.defaultSession.cookies.set({
-            url: "http://www.foundoulis.io/",
+            url: "http://info.drillinginfo.com/",
             name: cookieInfo.name,
             value: cookieInfo.value,
         }, (error) => {

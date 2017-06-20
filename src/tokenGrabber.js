@@ -15,6 +15,7 @@ function execCommand(command, callback) {
 }
 //parse the json file
 function parser(commandOutput, callback) {
+  console.log(commandOutput);
   token = JSON.parse(commandOutput);
 }
 //print json object (use for testing)

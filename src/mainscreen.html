@@ -143,6 +143,8 @@
   greyOut("update", true);
   greyOut("launch", true);
 
+  getCookies({});
+
   // reads if version is already installed
   getCookies({name: "x4mVersionInstalled"});
   setTimeout(function () {
@@ -307,7 +309,7 @@
   });
   ipcRenderer.on('get-cookie-reply', (event, cookie) => {
     globalCookie = cookie;
-    // console.log('Cookie from main: ' + JSON.stringify(globalCookie));
+    // console.log('Cookie from main: ' + JSON.stringify(cookie));
   });
 
   // grabs token from server and updates entitlements
@@ -326,7 +328,7 @@
         var curlCommand = "curl -X POST https://di-api.dev.drillinginfo.com/v1/x4m/authorizations -H 'authorization: Bearer " + accessToken +
         "' -H 'cache-control: no-cache' -H 'content-type: application/json' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d '{\"requests\":[{\"uri\":\"http://app.drillinginfo.com/x4m/x4m60\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/4xm/x4mms\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/x4m/x4mbeta\",\"action\":\"GET\"}]}'"
         execCommand(curlCommand, parser);
-      }, 3000);
+      }, 6000);
     } else {
       //fetch json from server
       var curlCommand = "curl -X POST https://di-api.dev.drillinginfo.com/v1/x4m/authorizations -H 'authorization: Bearer " + accessToken +
@@ -463,12 +465,17 @@
       function(callback) {
         getCookies({name: "x4mVersionInstalled"});
         setTimeout(function () {
-          if (globalCookie !== undefined) {
-            if (globalCookie[0].value != versionsTransform.releases[versionsTransform.releases.length - 1].version) {
+          var fileNotFound = false;
+          fs.stat(versionsTransform.releases[0].local + "/release/lib/launcher.jar", (err) =>{
+            if (err) fileNotFound = true;
+          });
+          // console.log(globalCookie[0].value != versionsTransform.releases[versionsTransform.releases.length - 1].version);
+            if (globalCookie == undefined || globalCookie[0].value != versionsTransform.releases[versionsTransform.releases.length - 1].version
+              || fileNotFound) {
               // version does not match server version -> needs to update
               greyOut("update", false);
             } else {
-              console.log("ready to launch");
+              // console.log(globalCookie[0].value);
               // program is good to launch
               getCookies({name: "launchCommand"});
               setTimeout(function () {
@@ -476,10 +483,9 @@
                   launchCommand = globalCookie[0].value;
                   greyOut("launch", false);
                 }
-              }, 800)
+              }, 900)
             }
-          };
-        }, 800)
+        }, 900)
       }
     ], function(err, results) {
       //optional callback function goes here
@@ -569,15 +575,16 @@
       function(callback) {
         // sets cookie that stores version number after update pressed
         setCookie({
-          keep: "true",
+          keep: true,
           name: "launchCommand",
           value: launchCommand
         });
         setCookie({
-          keep: "true",
+          keep: true,
           name: "x4mVersionInstalled",
           value: versionsTransform.releases[releaseNumber].version
         });
+        callback(null, null);
       },
       function(callback) {
         // make launch button visible, and make update invisible
