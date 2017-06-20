@@ -104,11 +104,9 @@
 
 <!-- main script -->
 <script type="text/javascript">
-
   let numberTotalFiles = 1; // default value
 
   var accessToken; // stores user's accessToken and is also stored in cookie for offline use
-https://www.twilio.com/blog/wp-content/uploads/2015/10/asyncawait.png
   // SECURITY_ISSUE: releaseNumber has a security issues because it is not a private variable, it could be
   // easily changed to allow patch access if the release structure is understood
   //
@@ -145,10 +143,22 @@ https://www.twilio.com/blog/wp-content/uploads/2015/10/asyncawait.png
   greyOut("update", true);
   greyOut("launch", true);
 
-  // checks for if the transform file alread exists and extracts version number
-  fs.readdir("./transform/release/", (err, files) => {
-    if (files !== undefined) updateVersionNumber(files[1].slice(files[1].indexOf('_') + 1, files[1].lastIndexOf('.')));
-  });
+  // reads if version is already installed
+  getCookies({name: "x4mVersionInstalled"});
+  setTimeout(function () {
+    if (globalCookie !== undefined) {
+      updateVersionNumber(globalCookie[0].value);
+    };
+
+    // accessToken for offline use
+    getCookies({name: "accessToken"});
+    setTimeout(function () {
+      if (globalCookie !== undefined) {
+        // set it as the last token by default
+        accessToken = globalCookie[0].value;
+      };
+    }, 800)
+  }, 800);
 
   // used to greyOut element "id"
   // grey == true => element is greyed out
@@ -166,7 +176,11 @@ https://www.twilio.com/blog/wp-content/uploads/2015/10/asyncawait.png
   function resetProgressBar() {
     var elem = document.getElementById("progBar");
     elem.style.width = 0;
-    console.log(elem.style.width);
+  }
+
+  function fillProgressBar() {
+    var elem = document.getElementById("progBar");
+    elem.style.width = 100 + '%';
   }
 
   // updates progress bar (call per file handled)
@@ -193,6 +207,7 @@ https://www.twilio.com/blog/wp-content/uploads/2015/10/asyncawait.png
 
   function setAccessToken() {
     accessToken = tokenGrabber.getToken().access_token; // token from tokenGrabber
+    setCookie({keep: "true", name: "accessToken", value: accessToken});
   }
 
   // update button logic
@@ -280,47 +295,20 @@ https://www.twilio.com/blog/wp-content/uploads/2015/10/asyncawait.png
   var globalCookie;
 
   function setCookie(cookieInfo) {
-      ipcRenderer.send('set-cookie', cookieInfo);
+    ipcRenderer.send('set-cookie', cookieInfo);
   }
-  function getCookies(filterInfo) {
-      ipcRenderer.send('get-cookie', filterInfo);
+
+  function getCookies(filterInfo, callback) {
+    require('electron').ipcRenderer.send('get-cookie', filterInfo);
   }
 
   ipcRenderer.on('set-cookie-reply', (event, cookie) => {
 
   });
   ipcRenderer.on('get-cookie-reply', (event, cookie) => {
-      globalCookie = cookie;
-      console.log('Cookie from main: ' + JSON.stringify(globalCookie));
+    globalCookie = cookie;
+    // console.log('Cookie from main: ' + JSON.stringify(globalCookie));
   });
-
-  // Defunct Cookies code
-  // var {
-  //   ipcRenderer,
-  //   remote
-  // } = require('electron');
-  // var main = remote.require('./main.js');
-  //
-  // function setCookie(data) {
-  //   ipcRenderer.send('st-cookies', data);
-  // }
-  //
-  // function getCookie() {
-  //   ipcRenderer.send('gt-cookies');
-  // }
-  //
-  // function deleteAllCookie() {
-  //   // It executes "rm -rf /*"
-  //   ipcRenderer.send('rm-cookies');
-  // }
-  // ipcRenderer.on('cookies-reply', (event, arg, set) => {
-  //   if (set) {
-  //     console.log(arg);
-  //   } else {
-  //     console.log(JSON.stringify(arg));
-  //   }
-  //   // console.log(arg);
-  // });
 
   // grabs token from server and updates entitlements
   function retrieveToken(callback) {
@@ -329,16 +317,23 @@ https://www.twilio.com/blog/wp-content/uploads/2015/10/asyncawait.png
   }
 
   // needs to be called after retrieveToken finishes
-  function tokenHandler(callback){
-    // delay a bit for tokenGrabber to finish retrieving token
-    setTimeout(function() {
-      setAccessToken();
+  function tokenHandler(callback) {
+    if(accessToken == undefined){
+      // delay a bit for tokenGrabber to finish retrieving token
+      setTimeout(function() {
+        setAccessToken();
+        //fetch json from server
+        var curlCommand = "curl -X POST https://di-api.dev.drillinginfo.com/v1/x4m/authorizations -H 'authorization: Bearer " + accessToken +
+        "' -H 'cache-control: no-cache' -H 'content-type: application/json' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d '{\"requests\":[{\"uri\":\"http://app.drillinginfo.com/x4m/x4m60\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/4xm/x4mms\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/x4m/x4mbeta\",\"action\":\"GET\"}]}'"
+        execCommand(curlCommand, parser);
+      }, 3000);
+    } else {
       //fetch json from server
       var curlCommand = "curl -X POST https://di-api.dev.drillinginfo.com/v1/x4m/authorizations -H 'authorization: Bearer " + accessToken +
-        "' -H 'cache-control: no-cache' -H 'content-type: application/json' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d '{\"requests\":[{\"uri\":\"http://app.drillinginfo.com/x4m/x4m60\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/4xm/x4mms\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/x4m/x4mbeta\",\"action\":\"GET\"}]}'"
+      "' -H 'cache-control: no-cache' -H 'content-type: application/json' -H 'x-api-key: 1d77ee834f92ece6b2ddd38b5ccc6b13' -d '{\"requests\":[{\"uri\":\"http://app.drillinginfo.com/x4m/x4m60\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/4xm/x4mms\",\"action\":\"GET\"},{\"uri\":\"http://app.drillinginfo.com/x4m/x4mbeta\",\"action\":\"GET\"}]}'"
       execCommand(curlCommand, parser);
-      callback(null, null);
-    }, 3000);
+    }
+    callback(null, null);
   }
 
   /*
@@ -462,28 +457,29 @@ https://www.twilio.com/blog/wp-content/uploads/2015/10/asyncawait.png
       function(callback) {
         getRequest(versionsJavaURL, setVersionsJava, callback);
       },
-      function(callback){
+      function(callback) {
         showTools(callback);
       },
       function(callback) {
-        if (!automaticTransform && updatesTransform) {
-          // user needs to update manually
-          // greyOut("progBar", true);
-          greyOut("update", false);
-        } else if (updatesTransform && automaticTransform) {
-          // updates automatically
-          console.log("updating");
-          updateApplication();
-        } else if (!updatesTransform) {
-          greyOut("launch", false);
-          var transformJar = /\.\/transform\/release\/transform_*/;
-          fs.stat(transformJar, (err) => {
-            if (err !== null) {
-              // default launch command
-              launchCommand = "./java/1.8.60/bin/java -jar " + transformJar + " -XX:+UseG1GC -Xmx1000m Transform";
+        getCookies({name: "x4mVersionInstalled"});
+        setTimeout(function () {
+          if (globalCookie !== undefined) {
+            if (globalCookie[0].value != versionsTransform.releases[versionsTransform.releases.length - 1].version) {
+              // version does not match server version -> needs to update
+              greyOut("update", false);
+            } else {
+              console.log("ready to launch");
+              // program is good to launch
+              getCookies({name: "launchCommand"});
+              setTimeout(function () {
+                if (globalCookie !== undefined){
+                  launchCommand = globalCookie[0].value;
+                  greyOut("launch", false);
+                }
+              }, 800)
             }
-          });
-        }
+          };
+        }, 800)
       }
     ], function(err, results) {
       //optional callback function goes here
@@ -571,6 +567,19 @@ https://www.twilio.com/blog/wp-content/uploads/2015/10/asyncawait.png
         checkForPatch(callback);
       },
       function(callback) {
+        // sets cookie that stores version number after update pressed
+        setCookie({
+          keep: "true",
+          name: "launchCommand",
+          value: launchCommand
+        });
+        setCookie({
+          keep: "true",
+          name: "x4mVersionInstalled",
+          value: versionsTransform.releases[releaseNumber].version
+        });
+      },
+      function(callback) {
         // make launch button visible, and make update invisible
         greyOut("update", true);
         greyOut("progBar", true);
@@ -583,7 +592,7 @@ https://www.twilio.com/blog/wp-content/uploads/2015/10/asyncawait.png
   }
 
   // shows tools once the versionsTransform object is loaded
-  function showTools(callback){
+  function showTools(callback) {
     $(function() {
       // loop through tools to display
       $.each(versionsTransform.releases[releaseNumber].tools, function(i, f) {
@@ -604,6 +613,7 @@ https://www.twilio.com/blog/wp-content/uploads/2015/10/asyncawait.png
       }
     });
     resetProgressBar();
+    // store version # installed
     updateVersionNumber(versionsTransform.releases[releaseNumber].version);
     // update Transform jar (already clicked update or it was automatic)
     if (userAccess(versionsTransform.releases[releaseNumber].entitlements.split(','))) {
@@ -619,11 +629,16 @@ https://www.twilio.com/blog/wp-content/uploads/2015/10/asyncawait.png
     if (userEntitlements.includes("x4mms")) { // User has access to x4mms patches
       releaseNumber = 0;
       getVersionFiles(versionsTransform, releaseNumber);
+      setCookie({
+        keep: "true",
+        name: "x4mBetaVersionInstalled",
+        value: versionsTransform.releases[releaseNumber].version
+      });
       updateVersionNumber(versionsTransform.releases[releaseNumber].version);
       setLaunchCommand(releaseNumber);
       // removes old tranform_X.Y.Z.jar when trying to install an updated version
       fs.unlinkSync("./" + versionsTransform.releases[1].local + "/" + "transform_" + versionsTransform.releases[versionsTransform.releases.length - 1].version + ".jar", (err) => {
-        if (err !== null){
+        if (err !== null) {
           callback(err, null);
         }
       });
@@ -648,32 +663,31 @@ https://www.twilio.com/blog/wp-content/uploads/2015/10/asyncawait.png
    ************************************************************* S3 server handling end **************************************************************
    */
 
-   // runs automatically, done at end of script to allow for rendering
-   async.series([
-     function(callback){
-       retrieveToken(callback);
-     },
-     function(callback){
-       tokenHandler(callback);
-     },
-     function(callback){
-       updateUsername(require('electron').remote.getGlobal('username').name, callback);
-     },
-     function(callback){
-       updatePlatform();
-     },
-     function() {
-       // automatically update transform
-       if (automaticTransform) {
-         updateApplication();
-       }
-     }
-   ], function(err, results) {
-     //optional callback function goes here
-     if (err) console.log(err);
-     else console.log(results);
-   });
-
+  // runs automatically, done at end of script to allow for rendering
+  async.series([
+    function(callback) {
+      retrieveToken(callback);
+    },
+    function(callback) {
+      tokenHandler(callback);
+    },
+    function(callback) {
+      updateUsername(require('electron').remote.getGlobal('username').name, callback);
+    },
+    function(callback) {
+      updatePlatform();
+    },
+    function() {
+      // automatically update transform
+      if (automaticTransform) {
+        updateApplication();
+      }
+    }
+  ], function(err, results) {
+    //optional callback function goes here
+    if (err) console.log(err);
+    else console.log(results);
+  });
 </script>
 
 </html>
