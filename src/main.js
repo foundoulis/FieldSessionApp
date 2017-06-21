@@ -101,9 +101,9 @@ app.on('activate', () => {
 });
 
 // removes all cookies
-electronConstants().mySession.clearStorageData([], function (data) {
-    console.log(data);
-})
+// electronConstants().mySession.clearStorageData([], function (data) {
+//     console.log(data);
+// })
 
 // cookies stuff
 ipcMain.on('set-cookie', (event, cookieInfo) => {
